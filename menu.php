@@ -17,10 +17,11 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kupi & Kuki - Menu</title>
+    <title>Kopi & Kuki - Menu</title>
     <link rel="stylesheet" href="css/style2.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     
 </head>
 <body>

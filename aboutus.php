@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Bodrin Coffee</title>
+    <title>About Us - Kupi & Kuki - Menu</title>
     <link rel="stylesheet" href="css/style2.css">
     <link rel="stylesheet" href="css/navbar.css">
 </head>
 <body>
 
   <header class="navbar">
-    <div class="logo">Bean Scene</div>
+    <div class="logo">Kupi & Kuki - Menu</div>
     <nav>
       <a href="index.php">Home</a>
       <a href="menu.php">Menu</a>

@@ -21,7 +21,7 @@
 
     <header class="hero">
         <h1>About Bodrin Coffee</h1>
-        <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik!</p>
+        <p>“Bukan sekadar kopi dan kukis — ini tentang rasa hangat, senyum manis, dan hari yang lebih bahagia.”!</p>
         <a href="menu.php" class="btn">View Menu</a>
     </header>
 

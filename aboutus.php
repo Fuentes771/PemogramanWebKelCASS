@@ -22,16 +22,25 @@
     </nav>
   </header>
 
-    <header class="hero">
-        <h1>Tentang Kupi & Kuki</h1>
-        <p>"Di setiap cangkir kopi kami, ada kehangatan yang menenangkan. Di setiap kukis yang kami panggang, 
-            tersimpan rasa manis yang memanjakan hati. 
-            Kami tidak sekadar menjual kopi dan kukis — kami menghadirkan momen istimewa yang mengubah hari biasa jadi luar biasa. 
-            Karena bagi kami, kebahagiaan dimulai dari hal sederhana: aroma kopi yang membangkitkan semangat, dan gigitan kukis yang membuatmu tersenyum tanpa sadar."
-
-</p>
-        <a href="menu.php" class="btn">View Menu</a>
-    </header>
+<header class="hero">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Discover the best coffee</h1>
+                <div class="hero-description">
+                    <p>Di setiap cangkir kopi kami, ada kehangatan yang menenangkan. Di setiap kukis yang kami panggang, tersimpan rasa manis yang memanjakan hati.</p>
+                    <p>Kami tidak sekadar menjual kopi dan kukis — kami menghadirkan momen istimewa yang mengubah hari biasa jadi luar biasa. Karena bagi kami, kebahagiaan dimulai dari hal sederhana: aroma kopi yang membangkitkan semangat, dan gigitan kukis yang membuatmu tersenyum tanpa sadar."</p>
+                </div>
+                <div class="hero-button">
+                    <a href="menu.php" class="btn">View Menu</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="img/hero-atas.jpg" alt="Premium Coffee">
+            </div>
+        </div>
+    </div>
+</header>
 
     <section class="why-section">
         <h2>Mengapa Kami Berbeda?</h2>

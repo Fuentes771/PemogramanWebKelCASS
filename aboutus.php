@@ -32,7 +32,7 @@
     </header>
 
     <section class="why-section">
-        <h2>Why are we different?</h2>
+        <h2>Mengapa Kami Berbeda?</h2>
         <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik dan menjadi bahagia!</p>
         <div class="why-grid">
             <div class="why-box"><h3>Supreme Beans</h3><p>Biji kopi terbaik pilihan.</p></div>

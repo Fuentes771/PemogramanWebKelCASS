@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
 :root {
     --primary-color: #6F4E37;
     --secondary-color: #C4A484;
@@ -7,7 +9,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Playfair Display', sans-serif;
     background-color: var(--light-color);
     color: var(--dark-color);
     margin: 0;

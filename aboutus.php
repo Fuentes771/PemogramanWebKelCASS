@@ -82,6 +82,10 @@
             </div>
         </div>
     </section>
+<footer class="footer">
+  <p>&copy; 2025 Kupi & Kuki. All rights reserved.</p>
+  <p>Follow us on <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
+</footer>
 
 </body>
 </html>

@@ -20,35 +20,11 @@
     </nav>
   </header>
 
-   <!DOCTYPE html> 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Kupi & Kuki</title>
-    <link href=<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-    <div class="hero">
-        <h1>Kupi & Kuki</h1>
-        <p>
-            "Di setiap cangkir kopi kami, ada kehangatan yang menenangkan. 
-            Di setiap kukis yang kami panggang, tersimpan rasa manis yang memanjakan hati. 
-            Kami tidak sekadar menjual kopi dan kukis — kami menghadirkan momen istimewa yang mengubah hari biasa jadi luar biasa. 
-            Karena bagi kami, kebahagiaan dimulai dari hal sederhana: aroma kopi yang membangkitkan semangat, 
-            dan gigitan kukis yang membuatmu tersenyum tanpa sadar."
-        </p>
     <header class="hero">
         <h1>Tentang Kupi & Kuki</h1>
         <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik!</p>
         <a href="menu.php" class="btn">View Menu</a>
-    </div>
-
-</body>
-</html>
-
-
+    </header>
 
     <section class="why-section">
         <h2>Why are we different?</h2>
@@ -107,6 +83,5 @@
             </div>
         </div>
     </section>
-
 </body>
 </html>

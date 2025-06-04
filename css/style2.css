@@ -138,23 +138,3 @@ body {
     font-size: 0.9rem;
     color: #7a6e57;
 }
-.footer {
-    background-color: #f8f8f8;         
-    color: #555;                       
-    text-align: center;                
-    padding: 20px 0;                  
-    font-size: 14px;                  
-    border-top: 1px solid #e0e0e0;     
-    margin-top: 50px;                  
-}
-
-.footer a {
-    color: #333;                     
-    text-decoration: none;           
-    margin: 0 8px;                     
-    transition: color 0.3s ease;     
-}
-
-.footer a:hover {
-    color: #000;                      
-}

@@ -1,6 +1,7 @@
 /* Navbar.css */
 
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Clicker+Script&display=swap');
 
 .navbar {
   position: fixed;
@@ -30,6 +31,7 @@ nav a {
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
+  font-family: 'Playfair Display', cursive;
 }
 
 nav a:hover {

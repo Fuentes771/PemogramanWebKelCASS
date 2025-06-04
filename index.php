@@ -9,8 +9,7 @@ session_start();
   <link href="https://fonts.googleapis.com/css2?family=Clicker+Script&display=swap" rel="stylesheet">
   <title>Kopi & Kuki</title>
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/navbar.css" />
-  
+  <link rel="stylesheet" href="css/navbar.css" />  
 </head>
 <body>
   <header class="navbar">
@@ -25,10 +24,10 @@ session_start();
 
   <section class="hero">
     <div class="hero-text">
-      <p class="subtitle">We've got your morning covered with My Coffee</p>
+      <p class="subtitle">Awali harimu dengan sempurna bersama kopi spesial dari kami.</p>
       <h1 class="title">Kopi & Kuki</h1>
       <p class="description">
-        It is best to start your day with a cup of coffee. Discover the best flavours coffee you will ever have. We provide the best for our customers.
+      Kopi & Kuki adalah tempat di mana aroma kopi segar berpadu sempurna dengan manisnya kuki hangat. Temukan kenyamanan dalam setiap tegukan dan gigitan.
       </p>
       <a href="#" class="order-button">Order Sekarang</a>
     </div>

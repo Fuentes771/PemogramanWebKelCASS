@@ -27,7 +27,7 @@
 
     <section class="why-section">
         <h2>Why are we different?</h2>
-        <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik!</p>
+        <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik dan menjadi bahagia!</p>
         <div class="why-grid">
             <div class="why-box"><h3>Supreme Beans</h3><p>Biji kopi terbaik pilihan.</p></div>
             <div class="why-box"><h3>High Quality</h3><p>Kualitas rasa terjamin.</p></div>

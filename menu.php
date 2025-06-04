@@ -27,7 +27,7 @@ try {
 <body>
 
     <header class="navbar">
-        <div class="logo">Kupi & Kuki</div>
+        <div class="logo">Kopi & Kuki</div>
         <nav>
             <a href="index.php">Home</a>
             <a href="menu.php">Menu</a>

@@ -9,8 +9,7 @@ session_start();
   <link href="https://fonts.googleapis.com/css2?family=Clicker+Script&display=swap" rel="stylesheet">
   <title>Kopi & Kuki</title>
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/navbar.css" />
-  
+  <link rel="stylesheet" href="css/navbar.css" />  
 </head>
 <body>
   <header class="navbar">

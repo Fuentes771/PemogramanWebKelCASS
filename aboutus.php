@@ -43,7 +43,7 @@
     <p>Biji kopi terbaik pilihan.</p>
 </div>
             <div class="why-box">
-    <img src="../img/quality.jpg" alt="High Quality" class="why-icon">
+    <img src="img/img quality.jpg" alt="High Quality" class="why-icon">
     <h3>High Quality</h3>
     <p>Kualitas rasa terjamin.</p>
 </div>

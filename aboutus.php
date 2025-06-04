@@ -54,7 +54,7 @@
 <div class="why-box">
     <img src="img/img extraordinary.jpg" alt="Extraordinary" class="why-icon">
     <h3>Extraordinary</h3>
-    <p>Kopi yang belum pernah Anda rasakan.</p>
+    <p>Kopi yang belum pernah Anda rasakan sensasinya.</p>
 </div>
 
 <div class="why-box">

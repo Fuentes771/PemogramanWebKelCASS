@@ -37,22 +37,22 @@
         <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik dan menjadi bahagia!</p>
         <div class="why-grid">
             <div class="why-box">
-    <img src="img beans.jpg" alt="Supreme Beans" class="why-icon">
+    <img src="img/img beans.jpg" alt="Supreme Beans" class="why-icon">
     <h3>Supreme Beans</h3>
     <p>Biji kopi terbaik pilihan.</p>
 </div>
             <div class="why-box">
-    <img src="img quality.jpg" alt="High Quality" class="why-icon">
+    <img src="img/img quality.jpg" alt="High Quality" class="why-icon">
     <h3>High Quality</h3>
     <p>Kualitas rasa terjamin.</p>
 </div>
 <div class="why-box">
-    <img src="img extraordinary.jpg" alt="Extraordinary" class="why-icon">
+    <img src="img/img extraordinary.jpg" alt="Extraordinary" class="why-icon">
     <h3>Extraordinary</h3>
     <p>Kopi yang belum pernah Anda rasakan.</p>
 </div>
 <div class="why-box">
-    <img src="img price.jpg" alt="Affordable Price" class="why-icon">
+    <img src="img/img price.jpg" alt="Affordable Price" class="why-icon">
     <h3>Affordable Price</h3>
     <p>Harga bersahabat di kantong.</p>
 </div>

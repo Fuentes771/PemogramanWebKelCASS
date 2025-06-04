@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style2.css">
     <link rel="stylesheet" href="css/navbar.css">
 </head>
+
 <body>
 
   <header class="navbar">
@@ -48,7 +49,7 @@
             <div class="testimonial-content">
                 <span class="quote">❝</span>
                 <p class="testimonial-text">
-                    Bodrin Coffee adalah tempat terbaik untuk menikmati kopi berkualitas. Pelayanannya ramah dan suasananya nyaman. Sungguh pengalaman yang luar biasa!
+                    Kupi & Kuki adalah tempat terbaik untuk menikmati kopi berkualitas. Pelayanannya ramah dan suasananya nyaman. Sungguh pengalaman yang luar biasa!
                 </p>
 
                 <div class="testimonial-nav">

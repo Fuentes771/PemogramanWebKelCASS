@@ -11,7 +11,7 @@
 <body>
 
 <header class="navbar">
-    <div class="logo">Bean Scene</div>
+    <div class="logo">Kopi & Kuki</div>
     <nav>
       <a href="index.php">Home</a>
       <a href="menu.php">Menu</a>
@@ -36,8 +36,8 @@
   <!-- Form subscribe -->
   <section class="subscribe-section">
     <div class="content-wrapper">
-    <h1>Subscribe to get the Latest News</h1>
-    <p>Don't miss out on our latest news, updates, tips and special offers</p>
+    <h1>Berlangganan untuk Penawaran dari Kami</h1>
+    <p>Jangan lewatkan berita terkini, pembaruan, tips menarik, dan penawaran spesial dari kami. </p>
 
   <?php
       session_start();
@@ -70,7 +70,7 @@
 
     <form method="POST" action="">
       <input type="email" name="email" placeholder="Enter your mail" required />
-      <button type="submit">Subscribe</button>
+      <button type="submit">Berlangganan</button>
     </form>
   </section>
 
@@ -79,8 +79,8 @@
     <div class="footer-overlay">
       <div class="footer-container">
         <div class="footer-column">
-          <h2>Bean Scene</h2>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
+          <h2>Kopi & Kuki</h2>
+          <p>Awali harimu dengan kopi dan kue terbaik pilihan kami. Nikmati rasa, nikmati hidup — hanya di Kopi & Kuki.</p>
           <div class="social-icons">
             <a href="#"><img src="img/faceb.png" alt="Facebook"/></a>
             <a href="#"><img src="img/Inst.png" alt="Instagram"/></a>
@@ -111,10 +111,10 @@
 
         <div class="footer-column">
           <h3>Contact Us</h3>
-          <p>Akshya Nagar 1st Block 1st Cross,<br>Rammurthy nagar, Bangalore-560016</p>
-          <p>+1 202-918-2132</p>
-          <p>beanscene@mail.com</p>
-          <p>www.beanscene.com</p>
+          <p>Jl. Prof. Dr. Sumantri Brojonegoro No. 1 Bandar Lampung, 35145, INDONESIA. </p>
+          <p>+62 85712345678</p>
+          <p>KopiKuki@mail.com</p>
+          <p>www.Kopikuki.com</p>
         </div>
       </div>
     </div>

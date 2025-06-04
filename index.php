@@ -23,7 +23,7 @@ session_start();
 
   <section class="hero">
     <div class="hero-text">
-      <p class="subtitle">We've got your morning covered with</p>
+      <p class="subtitle">We've got your morning covered with My Coffee</p>
       <h1 class="title">Coffee & Cookies</h1>
       <p class="description">
         It is best to start your day with a cup of coffee. Discover the best flavours coffee you will ever have. We provide the best for our customers.

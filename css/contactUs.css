@@ -7,7 +7,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f9f5f0;
-  color: #333;
   position: relative;
 }
 
@@ -21,11 +20,13 @@ body {
 .coffee-cup.left {
   left: 0;
   top: 150px;
+  margin-top: 100px;
 }
 
 .coffee-cup.right {
   right: 0;
   top: 150px;
+  margin-top: 100px;
 }
 
 
@@ -39,14 +40,13 @@ body {
   background-repeat: no-repeat;
   color: white;
   overflow: hidden;
-  height: 100vh;
 }
 
 .subscribe-section::before {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(58, 44, 26, 0.8);  /* warna kopi 80% opacity */
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 0;
 }
 
@@ -81,7 +81,7 @@ body {
 
 .subscribe-section button {
   padding: 15px 30px;
-  background-color: #8b5a2b;
+  background-color: #5E2E14;
   color: white;
   border: none;
   border-radius: 5px;
@@ -91,7 +91,7 @@ body {
 }
 
 .subscribe-section button:hover {
-  background-color: #6d4722;
+  background-color: #f4c06f;
 }
 
 .subscribe-section .content-wrapper {
@@ -122,14 +122,14 @@ body {
 
 /* Footer Styles */
 footer {
-  background: #442808 url('../IMG/fotter_image.png') no-repeat center center/cover;
+  background: #3B1F0B url('../IMG/fotter_image.png') no-repeat center center/cover;
   color: #fff;
   padding: 0;
   position: relative;
 }
 
 .footer-overlay {
-  background-color: rgba(58, 44, 26, 0.85);
+  background-color: rgba(0, 0, 0, 0.8);
   padding: 80px 20px 50px;
 }
 
@@ -143,13 +143,13 @@ footer {
 }
 
 .footer-column h2 {
-  color: #d4a762;
+  color: #f4c06f;
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
 
 .footer-column h3 {
-  color: #d4a762;
+  color: #f4c06f;
   font-size: 1.3rem;
   margin-bottom: 20px;
 }
@@ -170,7 +170,7 @@ footer {
 }
 
 .footer-column ul li:hover {
-  color: #d4a762;
+  color: #f4c06f;
 }
 
 .social-icons {

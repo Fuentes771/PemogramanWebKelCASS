@@ -37,7 +37,7 @@ try {
 
     <header class="hero">
         <h1>Discover the best coffee</h1>
-        <p>Rasakan sensasi kopi yang nikmat dan berkualitas tinggi di Bean Scene.</p>
+        <p>Rasakan sensasi kopi yang nikmat dan berkualitas tinggi di Kupi Kuki.</p>
     </header>
 
     <section class="menu-section" id="menu">

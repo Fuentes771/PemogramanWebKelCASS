@@ -2,9 +2,14 @@
 session_start();
 require 'php/config.php';
 
-// Ambil data menu dari database
-$stmt = $pdo->query("SELECT * FROM menu ORDER BY id ASC");
-$menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Get menu data from database
+try {
+    $stmt = $pdo->query("SELECT * FROM menu ORDER BY id ASC");
+    $menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Database error: " . $e->getMessage());
+    $menus = [];
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +31,6 @@ $menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="menu.php">Menu</a>
             <a href="aboutus.php">About Us</a>
             <a href="ContactUs.php">Contact Us</a>
-            <a href="php/cart.php" id="openCartBtn">🛒 Keranjang (<span id="cartCount">0</span>)</a>
         </nav>
     </header>
 
@@ -51,32 +55,5 @@ $menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php endforeach; ?>
         </div>
     </section>
-
-    <script>
-    let cart = JSON.parse(localStorage.getItem('beanSceneCart')) || [];
-
-    function addToCart(id) {
-        const item = <?php echo json_encode($menus); ?>.find(m => m.id === id);
-        if (!item) return;
-
-        const found = cart.find(c => c.id === id);
-        if (found) {
-            found.qty++;
-        } else {
-            cart.push({...item, qty: 1});
-        }
-        localStorage.setItem('beanSceneCart', JSON.stringify(cart));
-        alert(`Berhasil menambah ${item.name} ke keranjang!`);
-        updateCartCount();
-    }
-
-    function updateCartCount() {
-        const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
-        document.getElementById('cartCount').textContent = totalQty;
-    }
-
-    // Inisialisasi hitung keranjang saat halaman dimuat
-    updateCartCount();
-    </script>
 </body>
 </html>

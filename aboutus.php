@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Clicker+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <title>About Us - Kupi & Kuki - Menu</title>
     <link rel="stylesheet" href="css/aboutus.css">
     <link rel="stylesheet" href="css/navbar.css">
@@ -11,7 +13,7 @@
 <body>
 
   <header class="navbar">
-    <div class="logo">Kupi & Kuki - Menu</div>
+    <div class="logo">Kopi & Kuki</div>
     <nav>
       <a href="index.php">Home</a>
       <a href="menu.php">Menu</a>
@@ -22,20 +24,41 @@
 
     <header class="hero">
         <h1>Tentang Kupi & Kuki</h1>
-        <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik!</p>
+        <p>"Di setiap cangkir kopi kami, ada kehangatan yang menenangkan. Di setiap kukis yang kami panggang, 
+            tersimpan rasa manis yang memanjakan hati. 
+            Kami tidak sekadar menjual kopi dan kukis — kami menghadirkan momen istimewa yang mengubah hari biasa jadi luar biasa. 
+            Karena bagi kami, kebahagiaan dimulai dari hal sederhana: aroma kopi yang membangkitkan semangat, dan gigitan kukis yang membuatmu tersenyum tanpa sadar."
+
+</p>
         <a href="menu.php" class="btn">View Menu</a>
     </header>
 
     <section class="why-section">
-        <h2>Why are we different?</h2>
+        <h2>Mengapa Kami Berbeda?</h2>
         <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik dan menjadi bahagia!</p>
         <div class="why-grid">
-            <div class="why-box"><h3>Supreme Beans</h3><p>Biji kopi terbaik pilihan.</p></div>
-            <div class="why-box"><h3>High Quality</h3><p>Kualitas rasa terjamin.</p></div>
-            <div class="why-box"><h3>Extraordinary</h3><p>Kopi yang belum pernah Anda rasakan.</p></div>
-            <div class="why-box"><h3>Affordable Price</h3><p>Harga bersahabat di kantong.</p></div>
+            <div class="why-box">
+    <img src="img/img beans.jpg" alt="Supreme Beans" class="why-icon">
+    <h3>Supreme Beans</h3>
+    <p>Biji kopi terbaik pilihan.</p>
+</div>
+            <div class="why-box">
+    <img src="../img/quality.jpg" alt="High Quality" class="why-icon">
+    <h3>High Quality</h3>
+    <p>Kualitas rasa terjamin.</p>
+</div>
+<div class="why-box">
+    <img src="img/img extraordinary.jpg" alt="Extraordinary" class="why-icon">
+    <h3>Extraordinary</h3>
+    <p>Kopi yang belum pernah Anda rasakan.</p>
+</div>
+<div class="why-box">
+    <img src="img/img price.jpg" alt="Affordable Price" class="why-icon">
+    <h3>Affordable Price</h3>
+    <p>Harga bersahabat di kantong.</p>
+</div>
         </div>
-        <p class="call">Ayo mulai hari ini bersama kami!</p>
+        <p class="call">Ayo mulai hari ini bersama kami Kupi&Kuki!</p>
         <a href="ContactUs.php" class="btn">Contact Us</a>
     </section>
 
@@ -49,8 +72,10 @@
             <div class="testimonial-content">
                 <span class="quote">❝</span>
                 <p class="testimonial-text">
-                    Kupi & Kuki adalah tempat terbaik untuk menikmati kopi berkualitas. Pelayanannya ramah dan suasananya nyaman. Sungguh pengalaman yang luar biasa!
-                </p>
+                    “Pertama kali nyoba Kupi & Kuki, aku langsung jatuh cinta! Aromanya bikin rileks, 
+                    dan kukisnya lembut banget. Cocok buat nemenin kerja atau sekadar santai sore. 
+                    Rasanya seperti pelukan dalam bentuk makanan.”
+— Dina, Mahasiswa</p>
 
                 <div class="testimonial-nav">
                     <button class="nav-btn">←</button>
@@ -83,10 +108,5 @@
             </div>
         </div>
     </section>
-<footer class="footer">
-  <p>&copy; 2025 Kupi & Kuki. All rights reserved.</p>
-  <p>Follow us on <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
-</footer>
-
 </body>
 </html>

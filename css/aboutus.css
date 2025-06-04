@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Playfair Display', sans-serif;
     background-color: #fffaf3;
     color: #3e2f1c;
 }
@@ -29,19 +31,12 @@ body {
     margin-top: 10px;
 }
 
-.author-list {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-top: 2rem;
-}
-
+/* ================= AUTHOR LIST ================= */
 .author-list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
-    justify-items: center; /* supaya konten di tengah tiap grid */
+    justify-items: center;
     margin-top: 2rem;
 }
 
@@ -64,7 +59,6 @@ body {
     color: #7a6e57;
 }
 
-
 /* ================= WHY SECTION ================= */
 .why-section {
     padding: 4rem 2rem;
@@ -75,16 +69,40 @@ body {
 .why-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: 2rem;
     justify-content: center;
 }
 
 .why-box {
     background: #fff;
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 10px;
-    width: 200px;
+    width: 220px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.why-box img {
+    width: 200px;
+    height: 140px;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.why-box h3 {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    border-radius: 10px;
+}
+
+.why-box p {
+    font-size: 0.95rem;
+    color: #5c4a37;
 }
 
 /* ================= TESTIMONIAL ================= */

@@ -1,6 +1,7 @@
 /* Navbar.css */
 
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Clicker+Script&display=swap');
 
 .navbar {
   position: fixed;
@@ -12,19 +13,15 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 60px;
-  background-color: rgb(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.8);
   box-sizing: border-box;
-}
-
-/* Optional: Tambahkan box-shadow agar terlihat lebih rapi */
-.navbar {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0 .1); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
   font-size: 28px;
   font-weight: bold;
-  font-family: 'Brush Script MT', cursive;
+  font-family: 'Clicker Script', cursive;
   color: #fff;
 }
 
@@ -34,6 +31,7 @@ nav a {
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
+  font-family: 'Playfair Display', cursive;
 }
 
 nav a:hover {

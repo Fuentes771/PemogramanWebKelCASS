@@ -54,11 +54,10 @@
             <div class="testimonial-content">
                 <span class="quote">❝</span>
                 <p class="testimonial-text">
-                    "Di setiap cangkir kopi kami, ada kehangatan yang menenangkan. Di setiap kukis yang kami panggang, 
-                    tersimpan rasa manis yang memanjakan hati. Kami tidak sekadar menjual kopi dan kukis — 
-                    kami menghadirkan momen istimewa yang mengubah hari biasa jadi luar biasa. Karena bagi kami, 
-                    kebahagiaan dimulai dari hal sederhana: aroma kopi yang membangkitkan semangat, dan gigitan kukis yang 
-                    membuatmu tersenyum tanpa sadar."</p>
+                    “Pertama kali nyoba Kupi & Kuki, aku langsung jatuh cinta! Aromanya bikin rileks, 
+                    dan kukisnya lembut banget. Cocok buat nemenin kerja atau sekadar santai sore. 
+                    Rasanya seperti pelukan dalam bentuk makanan.”
+— Dina, Mahasiswa</p>
 
                 <div class="testimonial-nav">
                     <button class="nav-btn">←</button>

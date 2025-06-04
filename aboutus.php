@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Clicker+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <title>About Us - Kupi & Kuki - Menu</title>
     <link rel="stylesheet" href="css/aboutus.css">
     <link rel="stylesheet" href="css/navbar.css">
@@ -37,7 +38,7 @@
         <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik dan menjadi bahagia!</p>
         <div class="why-grid">
             <div class="why-box">
-    <img src="img beans.jpg" alt="Supreme Beans" class="why-icon">
+    <img src="img/img beans.jpg" alt="Supreme Beans" class="why-icon">
     <h3>Supreme Beans</h3>
     <p>Biji kopi terbaik pilihan.</p>
 </div>
@@ -47,12 +48,12 @@
     <p>Kualitas rasa terjamin.</p>
 </div>
 <div class="why-box">
-    <img src="img extraordinary.jpg" alt="Extraordinary" class="why-icon">
+    <img src="img/img extraordinary.jpg" alt="Extraordinary" class="why-icon">
     <h3>Extraordinary</h3>
     <p>Kopi yang belum pernah Anda rasakan.</p>
 </div>
 <div class="why-box">
-    <img src="img price.jpg" alt="Affordable Price" class="why-icon">
+    <img src="img/img price.jpg" alt="Affordable Price" class="why-icon">
     <h3>Affordable Price</h3>
     <p>Harga bersahabat di kantong.</p>
 </div>

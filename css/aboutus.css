@@ -30,14 +30,6 @@ body {
 }
 
 .author-list {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-top: 2rem;
-}
-
-.author-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 kolom */
     gap: 1.5rem;
@@ -64,7 +56,6 @@ body {
     color: #7a6e57;
 }
 
-
 /* ================= WHY SECTION ================= */
 .why-section {
     padding: 4rem 2rem;
@@ -81,10 +72,17 @@ body {
 
 .why-box {
     background: #fff;
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 10px;
     width: 200px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.why-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 10px;
 }
 
 /* ================= TESTIMONIAL ================= */

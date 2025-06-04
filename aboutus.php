@@ -44,30 +44,36 @@
 
     <section class="why-section">
         <h2>Mengapa Kami Berbeda?</h2>
-        <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik dan menjadi bahagia!</p>
+        <p>Kami tidak hanya membuat kopi & kukis, kami membuat harimu lebih baik 
+            dan menjadi bahagia karena telah membuat makanan yang menarik!</p>
         <div class="why-grid">
-            <div class="why-box">
+           
+        <div class="why-box">
     <img src="img/img beans.jpg" alt="Supreme Beans" class="why-icon">
-    <h3>Supreme Beans</h3>
-    <p>Biji kopi terbaik pilihan.</p>
+    <h3>Supreme Cookies</h3>
+    <p>Kukis terbaik dengan rasa yang meleleh di setiap gigitan.</p>
+
 </div>
             <div class="why-box">
     <img src="img/img quality.jpg" alt="High Quality" class="why-icon">
     <h3>High Quality</h3>
     <p>Kualitas rasa terjamin.</p>
 </div>
+
 <div class="why-box">
     <img src="img/img extraordinary.jpg" alt="Extraordinary" class="why-icon">
     <h3>Extraordinary</h3>
-    <p>Kopi yang belum pernah Anda rasakan.</p>
+    <p>Kopi yang belum pernah Anda rasakan sensasinya.</p>
 </div>
+
 <div class="why-box">
     <img src="img/img price.jpg" alt="Affordable Price" class="why-icon">
     <h3>Affordable Price</h3>
     <p>Harga bersahabat di kantong.</p>
 </div>
+
         </div>
-        <p class="call">Ayo mulai hari ini bersama kami Kupi&Kuki!</p>
+        <p class="call">Waktunya manjakan dirimu, karena kamu pantas untuk rasa terbaik.!</p>
         <a href="ContactUs.php" class="btn">Contact Us</a>
     </section>
 

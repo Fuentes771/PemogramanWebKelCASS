@@ -20,7 +20,7 @@
   </header>
 
     <header class="hero">
-        <h1>About Bodrin Coffee</h1>
+        <h1>Tentang Kupi & Kuki</h1>
         <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik!</p>
         <a href="menu.php" class="btn">View Menu</a>
     </header>

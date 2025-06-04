@@ -12,7 +12,7 @@ $menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bean Scene - Menu</title>
+    <title>Kupi & Kuki - Menu</title>
     <link rel="stylesheet" href="css/style2.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@ $menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
     <header class="navbar">
-        <div class="logo">Bean Scene</div>
+        <div class="logo">Kupi & Kuki</div>
         <nav>
             <a href="index.php">Home</a>
             <a href="menu.php">Menu</a>

@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Kupi & Kuki - Menu</title>
-    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/aboutus.css">
     <link rel="stylesheet" href="css/navbar.css">
 </head>
+
 <body>
 
   <header class="navbar">
@@ -38,6 +39,9 @@
             Karena bagi kami, kebahagiaan dimulai dari hal sederhana: aroma kopi yang membangkitkan semangat, 
             dan gigitan kukis yang membuatmu tersenyum tanpa sadar."
         </p>
+    <header class="hero">
+        <h1>Tentang Kupi & Kuki</h1>
+        <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik!</p>
         <a href="menu.php" class="btn">View Menu</a>
     </div>
 
@@ -48,7 +52,7 @@
 
     <section class="why-section">
         <h2>Why are we different?</h2>
-        <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik!</p>
+        <p>Kami tidak hanya membuat kopi, kami membuat harimu lebih baik dan menjadi bahagia!</p>
         <div class="why-grid">
             <div class="why-box"><h3>Supreme Beans</h3><p>Biji kopi terbaik pilihan.</p></div>
             <div class="why-box"><h3>High Quality</h3><p>Kualitas rasa terjamin.</p></div>
@@ -69,7 +73,7 @@
             <div class="testimonial-content">
                 <span class="quote">❝</span>
                 <p class="testimonial-text">
-                    Bodrin Coffee adalah tempat terbaik untuk menikmati kopi berkualitas. Pelayanannya ramah dan suasananya nyaman. Sungguh pengalaman yang luar biasa!
+                    Kupi & Kuki adalah tempat terbaik untuk menikmati kopi berkualitas. Pelayanannya ramah dan suasananya nyaman. Sungguh pengalaman yang luar biasa!
                 </p>
 
                 <div class="testimonial-nav">
@@ -103,6 +107,10 @@
             </div>
         </div>
     </section>
+<footer class="footer">
+  <p>&copy; 2025 Kupi & Kuki. All rights reserved.</p>
+  <p>Follow us on <a href="#">Instagram</a> | <a href="#">Facebook</a></p>
+</footer>
 
 </body>
 </html>

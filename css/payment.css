@@ -1,0 +1,49 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center the content */
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: black; /* Set color to black */
+}
+
+p {
+    color: black; /* Set color to black for paragraph text */
+}
+
+img {
+    border: 1px solid #ddd; /* Add border to QRIS image */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 20px; /* Space below the image */
+}
+
+.btn-back {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.btn-back:hover {
+    background-color: #45a049; /* Darker green on hover */
+}

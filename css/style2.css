@@ -1,0 +1,140 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fffaf3;
+    color: #3e2f1c;
+}
+
+/* ================= HERO ================= */
+.hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: url('../img/hero-bg.jpg') no-repeat center center/cover;
+}
+
+/* ================= BUTTON ================= */
+.btn, .btn-order {
+    padding: 10px 20px;
+    background-color: #f4a124;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    text-decoration: none;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.btn-order {
+    padding: 8px 16px;
+    margin-top: 10px;
+}
+
+/* ================= MENU SECTION ================= */
+.menu-section {
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.menu-card {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.menu-card img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+/* ================= WHY SECTION ================= */
+.why-section {
+    padding: 4rem 2rem;
+    background-color: #fff4e6;
+    text-align: center;
+}
+
+.why-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.why-box {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 200px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* ================= TESTIMONIAL ================= */
+.testimonial {
+    padding: 4rem 2rem;
+    background-color: #fff;
+    text-align: center;
+    position: relative;
+}
+
+.testimonial-box {
+    position: relative;
+    padding: 2rem;
+    background: #fffaf3;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    max-width: 700px;
+    margin: 2rem auto;
+}
+
+.testimonial-text {
+    font-style: italic;
+    margin: 1.5rem 0;
+}
+
+/* ================= AUTHOR SECTION ================= */
+.author-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.author-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 kolom */
+    gap: 1.5rem;
+    justify-items: center; /* supaya konten di tengah tiap grid */
+    margin-top: 2rem;
+}
+
+.author-item img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 1rem;
+}
+
+.author-info h3 {
+    margin: 0.5rem 0 0.2rem;
+}
+
+.author-info p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #7a6e57;
+}

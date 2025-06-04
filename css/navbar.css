@@ -1,0 +1,63 @@
+/* Navbar.css */
+
+
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 60px;
+  background-color: rgb(0, 0, 0, 0.8);
+  box-sizing: border-box;
+}
+
+/* Optional: Tambahkan box-shadow agar terlihat lebih rapi */
+.navbar {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0 .1); 
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  font-family: 'Brush Script MT', cursive;
+  color: #fff;
+}
+
+nav a {
+  margin: 0 15px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #f4c06f;
+}
+
+.auth-buttons a {
+  margin-left: 15px;
+  padding: 10px 20px;
+  background-color: #f4c06f;
+  color: #000;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease;
+}
+
+.auth-buttons a:hover {
+  background-color: #d49e42;
+}
+
+.welcome-message {
+  color: #f4c06f;
+  margin-right: 15px;
+  font-weight: 500;
+}

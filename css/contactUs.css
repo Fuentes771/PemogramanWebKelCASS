@@ -1,0 +1,219 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+/* General Styles */
+body {
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f5f0;
+  color: #333;
+  position: relative;
+}
+
+/* Coffee Cup Decorations */
+.coffee-cup {
+  position: absolute;
+  height: 300px;
+  z-index: 10;  /* naikkan dari -1 jadi 10 supaya di atas */
+}
+
+.coffee-cup.left {
+  left: 0;
+  top: 150px;
+}
+
+.coffee-cup.right {
+  right: 0;
+  top: 150px;
+}
+
+
+/* Subscribe Section */
+.subscribe-section {
+  position: relative;
+  padding: 100px 20px 150px;
+  background-image: url('../IMG/Rectangle 14.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.subscribe-section::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(58, 44, 26, 0.8);  /* warna kopi 80% opacity */
+  z-index: 0;
+}
+
+.subscribe-section h1 {
+  font-size: 2.5rem;
+  color: #FFFF;
+  margin-bottom: 20px;
+}
+
+.subscribe-section p {
+  font-size: 1.1rem;
+  color: #FFFF;
+  margin-bottom: 40px;
+}
+
+.subscribe-section form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.subscribe-section input[type="email"] {
+  padding: 15px 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 70%;
+  max-width: 400px;
+}
+
+.subscribe-section button {
+  padding: 15px 30px;
+  background-color: #8b5a2b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.subscribe-section button:hover {
+  background-color: #6d4722;
+}
+
+.subscribe-section .content-wrapper {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  z-index: 1;
+  text-align: center;
+}
+
+.subscribe-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Message Styles */
+.success-message {
+  color: #4caf50;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+.error-message {
+  color: #f44336;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+/* Footer Styles */
+footer {
+  background: #442808 url('../IMG/fotter_image.png') no-repeat center center/cover;
+  color: #fff;
+  padding: 0;
+  position: relative;
+}
+
+.footer-overlay {
+  background-color: rgba(58, 44, 26, 0.85);
+  padding: 80px 20px 50px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.footer-column h2 {
+  color: #d4a762;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.footer-column h3 {
+  color: #d4a762;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
+.footer-column p {
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.footer-column ul li:hover {
+  color: #d4a762;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.social-icons a img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s;
+}
+
+.social-icons a:hover img {
+  filter: brightness(0) invert(0.8);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .coffee-cup {
+    display: none;
+  }
+
+  .subscribe-section {
+    padding: 80px 20px 100px;
+  }
+
+  .subscribe-section form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .subscribe-section input[type="email"] {
+    width: 100%;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-overlay {
+    padding: 50px 20px 30px;
+  }
+}

@@ -1,0 +1,26 @@
+/* manage_orders_style.css */
+body {
+    font-family: 'Georgia', serif;
+    color: #fff;
+    background: url('../img/coffee-bg.jpg') no-repeat center center/cover;
+    height: 100vh;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #fff;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: rgba(0, 0, 0, 0.7);
+}

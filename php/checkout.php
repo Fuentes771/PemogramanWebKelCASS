@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
 <body>
     
   <header class="navbar">
-    <div class="logo">Kupi & Kuki - Checkout</div>
+    <div class="logo">Kupi & Kui - Checkout</div>
     <nav>
       <a href="../index.php">Home</a>
       <a href="../menu.php">Menu</a>

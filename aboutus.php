@@ -21,7 +21,7 @@
 
     <header class="hero">
         <h1>About Bodrin Coffee</h1>
-        <p>“Bukan sekadar kopi dan kukis — ini tentang rasa hangat, senyum manis, dan hari yang lebih bahagia.”!</p>
+        <p>"Di setiap cangkir kopi kami, ada kehangatan yang menenangkan. Di setiap kukis yang kami panggang, tersimpan rasa manis yang memanjakan hati. Kami tidak sekadar menjual kopi dan kukis — kami menghadirkan momen istimewa yang mengubah hari biasa jadi luar biasa. Karena bagi kami, kebahagiaan dimulai dari hal sederhana: aroma kopi yang membangkitkan semangat, dan gigitan kukis yang membuatmu tersenyum tanpa sadar."!</p>
         <a href="menu.php" class="btn">View Menu</a>
     </header>
 

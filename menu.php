@@ -44,13 +44,13 @@ foreach ($_SESSION['cart'] as $item) {
   </header>
 
     <header class="hero">
-        <h1>Discover the best coffee</h1>
-        <p>Rasakan sensasi kopi yang nikmat dan berkualitas tinggi di Kupi Kuki.</p>
+        <h1>Discover the best coffee and desserts</h1>
+        <p>Rasakan sensasi kopi dan makanan penutup yang nikmat dan berkualitas tinggi di Kopi Kuki.</p>
     </header>
 
     <section class="menu-section" id="menu">
-        <h2>Enjoy a new blend of coffee style</h2>
-        <p>Temukan berbagai rasa kopi khas kami yang menggugah selera.</p>
+        <h2>Enjoy a delightful blend of coffee and desserts.</h2>
+        <p>Temukan berbagai rasa kopi dan makanan penutup khas kami yang menggugah selera.</p>
         <div class="menu-grid">
             <?php foreach ($menus as $menu): ?>
                 <div class="menu-card">

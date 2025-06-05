@@ -21,7 +21,6 @@
     </nav>
   </header>
 
- <!-- Cangkir kopi kiri dan kanan -->
 
  <!-- Cangkir kopi kiri dan kanan -->
   <img src="img/Coffee_Left.png" class="coffee-cup left" alt="Coffee Cup Left" />

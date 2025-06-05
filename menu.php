@@ -44,7 +44,7 @@ foreach ($_SESSION['cart'] as $item) {
   </header>
 
     <header class="hero">
-        <h1>Discover the best coffee</h1>
+        <h1>Discover the best coffee and Desserts</h1>
         <p>Rasakan sensasi kopi yang nikmat dan berkualitas tinggi di Kupi Kuki.</p>
     </header>
 

@@ -28,7 +28,7 @@ session_start();
       <p class="description">
       Kopi & Kuki adalah tempat di mana aroma kopi segar berpadu sempurna dengan manisnya kuki hangat. Temukan kenyamanan dalam setiap tegukan dan gigitan.
       </p>
-      <a href="#" class="order-button">Order Sekarang</a>
+      <a href="menu.php" class="order-button">Order Sekarang</a>
     </div>
   </section>
 </body>

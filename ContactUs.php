@@ -26,15 +26,6 @@
   <img src="img/Coffee_Left.png" class="coffee-cup left" alt="Coffee Cup Left" />
   <img src="img/Coffee_Right.png" class="coffee-cup right" alt="Coffee Cup Right" />
 
-  <!-- Dekorasi bagian atas -->
-  <!-- Dekorasi bagian atas -->
-  <div class="top-decoration">
-    <!-- tidak perlu img di sini -->
-  </div>
-
-
- 
-
   <!-- Form subscribe -->
   <section class="subscribe-section">
     <div class="content-wrapper">

@@ -77,51 +77,86 @@
         <a href="ContactUs.php" class="btn">Contact Us</a>
     </section>
 
-    <section class="testimonial">
-        <h2>Ulasan Pelanggan</h2>
-        <p class="subtitle">Pelanggan kami mengatakan hal luar biasa tentang kami</p>
-        <div class="testimonial-box">
-            <img src="img/splash-left.png" class="splash-left" alt="">
-            <img src="img/splash-right.png" class="splash-right" alt="">
 
-            <div class="testimonial-content">
-                <span class="quote">❝</span>
-                <p class="testimonial-text">
-                    “Pertama kali nyoba Kupi & Kuki, aku langsung jatuh cinta! Aromanya bikin rileks, 
-                    dan kukisnya lembut banget. Cocok buat nemenin kerja atau sekadar santai sore. 
-                    Rasanya seperti pelukan dalam bentuk makanan.”
-— Dina, Mahasiswa</p>
+  <!-- Enhanced Testimonial Section -->
+  <section class="testimonial">
+    <h2>Ulasan Pelanggan</h2>
+    <p class="subtitle">Pelanggan kami mengatakan hal luar biasa tentang kami</p>
+    
+    <!-- Review Display -->
+    <div class="testimonial-box">
+      <div class="testimonial-content">
+        <?php
+        // Database connection
+        require_once 'php/config.php';
+        
+        // Fetch approved reviews from database
+        $stmt = $pdo->query("SELECT * FROM customer_reviews WHERE approved = 1 ORDER BY review_date DESC LIMIT 1");
+        $latest_review = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($latest_review):
+        ?>
+        <span class="quote">❝</span>
+        <p class="testimonial-text">
+          "<?php echo htmlspecialchars($latest_review['review_text']); ?>"
+        </p>
+        <p class="review-author">— <?php echo htmlspecialchars($latest_review['customer_name']); ?></p>
+        <?php else: ?>
+        <p class="testimonial-text">Belum ada ulasan. Jadilah yang pertama memberikan ulasan!</p>
+        <?php endif; ?>
+      </div>
+    </div>
 
-                <div class="testimonial-nav">
-                    <button class="nav-btn">←</button>
-                    <button class="nav-btn">→</button>
-                </div>
-
-                <div class="author-list">
-                    <?php
-                    $authors = [
-                        ["Cindy Puji Lestari", "Project Manager", "img/ouner4.jpg"],
-                        ["M.Sulthon Alfarizky", "Project Manager", "img/ouner3.jpg"],
-                        ["Puan Akeyla Maharani", "Project Manager", "img/ouner2.jpg"],
-                        ["Nabila Salwa Alghaida", "Project Manager", "img/ouner1.jpg"],
-                    ];
-
-                    foreach ($authors as $author) {
-                        echo "
-                        <div class='author-item'>
-                            <img src='{$author[2]}' alt='{$author[0]}' width='200'>
-                            <div class='author-info'>
-                                <h3>{$author[0]}</h3>
-                                <p>{$author[1]}</p>
-                            </div>
-                        </div>
-                        ";
-                    }
-                    ?>
-                </div>
-
-            </div>
+    <!-- Review Form -->
+    <div class="review-form-container">
+      <h3>Berikan Ulasan Anda</h3>
+      <form action="php/submit_review.php" method="POST" class="review-form">
+        <div class="form-group">
+          <label for="name">Nama:</label>
+          <input type="text" id="name" name="name" required>
         </div>
-    </section>
+        <div class="form-group">
+          <label for="rating">Rating:</label>
+          <select id="rating" name="rating" required>
+            <option value="5">★★★★★</option>
+            <option value="4">★★★★☆</option>
+            <option value="3">★★★☆☆</option>
+            <option value="2">★★☆☆☆</option>
+            <option value="1">★☆☆☆☆</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="review">Ulasan:</label>
+          <textarea id="review" name="review" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn">Kirim Ulasan</button>
+      </form>
+    </div>
+
+    <!-- Team Members (existing) -->
+    <div class="author-list">
+      <?php
+      $authors = [
+          ["Cindy Puji Lestari", "Project Manager", "img/ouner4.jpg"],
+          ["M.Sulthon Alfarizky", "Project Manager", "img/ouner3.jpg"],
+          ["Puan Akeyla Maharani", "Project Manager", "img/ouner2.jpg"],
+          ["Nabila Salwa Alghaida", "Project Manager", "img/ouner1.jpg"],
+      ];
+
+      foreach ($authors as $author) {
+          echo "
+          <div class='author-item'>
+              <img src='{$author[2]}' alt='{$author[0]}' width='200'>
+              <div class='author-info'>
+                  <h3>{$author[0]}</h3>
+                  <p>{$author[1]}</p>
+              </div>
+          </div>
+          ";
+      }
+      ?>
+    </div>
+  </section>
 </body>
 </html>
+

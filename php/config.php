@@ -1,13 +1,14 @@
 <?php
-$host = 'localhost';
-$dbname = 'toko_kopi';
-$username = 'root';
-$password = '';
+// Database configuration
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'toko_kopi');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
+} catch(PDOException $e) {
     die("Database connection failed: " . $e->getMessage());
 }
 ?>

@@ -9,10 +9,17 @@ require '../php/config.php';
 
 $stmt = $pdo->query("SELECT * FROM subscribers");
 $subscribers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Ambil pesan sukses (jika ada) dari session
+$successMessage = '';
+if (isset($_SESSION['success_message'])) {
+    $successMessage = $_SESSION['success_message'];
+    unset($_SESSION['success_message']);
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,26 +42,38 @@ $subscribers = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <section>
         <h1>Subscribers List</h1>
         <table>
-            <tr>
-                <th>ID</th>
-                <th>Email</th>
-                <th>Subscribed At</th>
-            </tr>
-            <?php foreach ($subscribers as $subscriber): ?>
-            <tr>
-                <td><?php echo $subscriber['id']; ?></td>
-                <td><?php echo htmlspecialchars($subscriber['email']); ?></td>
-                <td><?php echo $subscriber['created_at']; ?></td>
-            </tr>
-            <?php endforeach; ?>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Subscribed At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($subscribers as $subscriber): ?>
+                <tr>
+                    <td><?php echo $subscriber['id']; ?></td>
+                    <td><?php echo htmlspecialchars($subscriber['email']); ?></td>
+                    <td><?php echo $subscriber['created_at']; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
         </table>
     </section>
-    <form action="export_subscribers.php" method="post">
-    <center>
-        <h2>Export Subscribers</h2>
-        <p>Click the button below to export the subscribers list as a CSV file.</p>    
-    <button type="submit" class="export-button">Export Subscribers</button>
-</form>
 
+    <section class="coupon-form">
+    <h2>Send Coupon</h2>
+
+    <?php if (!empty($successMessage)): ?>
+        <div class="success-message"><?php echo $successMessage; ?></div>
+    <?php endif; ?>
+
+    <form action="send_subscribers_email.php" method="post">
+        <div class="form-group">
+            <input type="number" id="discount" name="discount" min="1" max="100" required placeholder="Masukkan diskon kupon">
+        </div>
+        <button type="submit" class="send-button">Send to gmail</button>
+    </form>
+</section>
 </body>
 </html>

@@ -106,7 +106,7 @@
           <h3>Contact Us</h3>
           <p>Jl. Prof. Dr. Sumantri Brojonegoro No. 1 Bandar Lampung, 35145, INDONESIA. </p>
           <p>+62 85712345678</p>
-          <p>KopiKuki@mail.com</p>
+          <p>kopikukicass@gmail.com</p>
           <p>www.Kopikuki.com</p>
         </div>
       </div>

@@ -136,3 +136,123 @@ th {
 }
 
 }
+/* Gaya Umum */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Playfair Display', Georgia, serif;
+    background-image: url('../img/coffee-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff;
+}
+
+/* Header */
+header {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+nav a {
+    color: #fff;
+    margin-left: 1rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Section utama */
+section {
+    padding: 2rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 1rem;
+    border-radius: 12px;
+}
+
+/* Kartu Statistik */
+.stats-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem auto;
+    max-width: 1000px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 220px;
+    text-align: center;
+    color: #222;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card h3 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.card p {
+    margin: 0;
+    color: #555;
+}
+
+/* Tabel */
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.order-table th,
+.order-table td {
+    padding: 12px;
+    border: 1px solid #353232;
+    text-align: center;
+}
+
+.order-table th {
+    background-color: rgba(115, 76, 39, 0.9);
+    color: #f1eded;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav a {
+        display: block;
+        margin: 0.5rem 0;
+    }
+}

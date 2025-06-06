@@ -21,20 +21,10 @@
     </nav>
   </header>
 
- <!-- Cangkir kopi kiri dan kanan -->
 
  <!-- Cangkir kopi kiri dan kanan -->
   <img src="img/Coffee_Left.png" class="coffee-cup left" alt="Coffee Cup Left" />
   <img src="img/Coffee_Right.png" class="coffee-cup right" alt="Coffee Cup Right" />
-
-  <!-- Dekorasi bagian atas -->
-  <!-- Dekorasi bagian atas -->
-  <div class="top-decoration">
-    <!-- tidak perlu img di sini -->
-  </div>
-
-
- 
 
   <!-- Form subscribe -->
   <section class="subscribe-section">
@@ -116,7 +106,7 @@
           <h3>Contact Us</h3>
           <p>Jl. Prof. Dr. Sumantri Brojonegoro No. 1 Bandar Lampung, 35145, INDONESIA. </p>
           <p>+62 85712345678</p>
-          <p>KopiKuki@mail.com</p>
+          <p>kopikukicass@gmail.com</p>
           <p>www.Kopikuki.com</p>
         </div>
       </div>

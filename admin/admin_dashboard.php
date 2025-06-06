@@ -45,7 +45,7 @@ $total_subscriber = $subs_data['total_subscriber'];
 </head>
 <body>
     <header>
-        <div class="logo">Bean Scene Admin</div>
+        <div class="logo">Kopi & Kuki Admin</div>
         <nav>
             <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Penambahan Menu</a>

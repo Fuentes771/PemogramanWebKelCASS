@@ -16,7 +16,6 @@ if (!isset($_SESSION['admin_logged_in'])) {
     exit();
 }
 
-// Statistik Umum
 $menu_query = mysqli_query($conn, "SELECT COUNT(*) AS total_menu FROM menu");
 $total_menu = mysqli_fetch_assoc($menu_query)['total_menu'];
 
@@ -29,7 +28,6 @@ $today_order = mysqli_fetch_assoc($today_query)['today_order'];
 $subs_query = mysqli_query($conn, "SELECT COUNT(*) AS total_subscriber FROM subscribers");
 $total_subscriber = mysqli_fetch_assoc($subs_query)['total_subscriber'];
 
-// Data 7 Hari Terakhir
 $weekly_orders = [];
 $labels = [];
 
@@ -74,13 +72,11 @@ for ($i = 6; $i >= 0; $i--) {
             <div class="card"><h3><?= $total_subscriber ?></h3><p>Subscriber</p></div>
         </div>
 
-        <!-- Pie Chart -->
         <h3>Statistik Order</h3>
         <div style="max-width: 400px; margin: auto;">
             <canvas id="orderChart"></canvas>
         </div>
 
-        <!-- Bar Chart -->
         <h3>Grafik Penjualan Mingguan</h3>
         <div style="max-width: 600px; margin: auto;">
             <canvas id="weeklyChart"></canvas>
@@ -110,9 +106,7 @@ for ($i = 6; $i >= 0; $i--) {
         </table>
     </section>
 
-    <!-- Chart Scripts -->
     <script>
-        // Pie Chart
         const ctx = document.getElementById('orderChart').getContext('2d');
         new Chart(ctx, {
             type: 'pie',
@@ -151,7 +145,6 @@ for ($i = 6; $i >= 0; $i--) {
             }
         });
 
-        // Bar Chart
         const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
         new Chart(weeklyCtx, {
             type: 'bar',

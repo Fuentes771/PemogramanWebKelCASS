@@ -1,102 +1,133 @@
 <?php
 require_once 'config.php';
-
-// Fungsi untuk mengirim email terima kasih
-function sendThankYouEmail($to, $customerName) {
-    $subject = "Terima Kasih atas Ulasan Anda - Kopi & Kuki";
-    
-    $message = '
-    <html>
-    <head>
-        <style>
-            body { font-family: "Arial", sans-serif; color: #333; }
-            .header { background-color: #f4c06f; padding: 20px; text-align: center; }
-            .content { padding: 20px; line-height: 1.6; }
-            .promo-box { background: #f8f1e6; padding: 15px; text-align: center; margin: 20px 0; border-radius: 5px; }
-            .footer { background-color: #f4f4f4; padding: 10px; text-align: center; font-size: 12px; }
-        </style>
-    </head>
-    <body>
-        <div class="header">
-            <h2>Kopi & Kuki</h2>
-        </div>
-        
-        <div class="content">
-            <h3>Halo '.htmlspecialchars($customerName).',</h3>
-            <p>Terima kasih telah meluangkan waktu untuk memberikan ulasan kepada kami!</p>
-            <p>Ulasan Anda sangat berarti untuk membantu kami terus meningkatkan kualitas pelayanan.</p>
-            
-            <div class="promo-box">
-                <h3>KODE PROMO: THANKYOU10</h3>
-                <p>Dapatkan diskon 10% untuk pembelian berikutnya!</p>
-                <p>Berlaku hingga '.date('d M Y', strtotime('+1 month')).'</p>
-            </div>
-            
-            <p>Kami berharap dapat menyambut Anda kembali di kedai Kopi & Kuki.</p>
-        </div>
-        
-        <div class="footer">
-            <p>Kopi & Kuki &copy; '.date('Y').'</p>
-            <p>Jl. Aroma Kopi No. 123, Kota Aromatik</p>
-        </div>
-    </body>
-    </html>
-    ';
-    
-    $headers = "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type:text/html;charset=UTF-8\r\n";
-    $headers .= 'From: Kopi & Kuki <no-reply@kopikuki.com>' . "\r\n";
-    
-    return mail($to, $subject, $message, $headers);
-}
+require __DIR__ . '/../vendor/autoload.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validasi dan sanitasi input
+    // Validate and sanitize input
     $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $rating = filter_input(INPUT_POST, 'rating', FILTER_VALIDATE_INT, 
         ['options' => ['min_range' => 1, 'max_range' => 5]]);
     $review = filter_input(INPUT_POST, 'review', FILTER_SANITIZE_STRING);
-    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 
-    if ($name && $rating !== false && $review) {
+    if ($name && $email && $rating !== false && $review) {
         try {
-            // Mulai transaksi
-            $pdo->beginTransaction();
-            
-            // Simpan ke database
             $stmt = $pdo->prepare("INSERT INTO customer_reviews 
-                                  (customer_name, review_text, rating, email) 
-                                  VALUES (?, ?, ?, ?)");
-            $stmt->execute([$name, $review, $rating, $email]);
+                                   (customer_name, email, review_text, rating) 
+                                   VALUES (?, ?, ?, ?)");
+            $stmt->execute([$name, $email, $review, $rating]);
             
-            // Kirim email jika email valid
-            if ($email) {
-                sendThankYouEmail($email, $name);
-            }
+            // Generate kode promo unik
+            $couponCode = generateCouponCode();
             
-            // Commit transaksi
-            $pdo->commit();
+            // Send thank you email with PHPMailer
+            sendThankYouEmail($name, $email, $couponCode);
             
-            // Redirect dengan pesan sukses
+            // Redirect back with success message
             header('Location: ../aboutus.php?review=success');
             exit();
         } catch(PDOException $e) {
-            // Rollback jika ada error
-            $pdo->rollBack();
-            
-            // Log error
+            // Log error and redirect with error message
             error_log("Error saving review: " . $e->getMessage());
             header('Location: ../aboutus.php?review=error');
             exit();
         }
     } else {
-        // Input tidak valid
+        // Invalid input
         header('Location: ../aboutus.php?review=invalid');
         exit();
     }
 } else {
-    // Bukan request POST
+    // Not a POST request
     header('Location: ../aboutus.php');
     exit();
+}
+
+function generateCouponCode() {
+    $random = strtoupper(substr(md5(uniqid()), 0, 6));
+    return "THANKYOU10-{$random}";
+}
+
+function sendThankYouEmail($name, $email, $couponCode) {
+    $mail = new PHPMailer(true);
+    
+    try {
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'kopikukicass@gmail.com'; // Ganti dengan email Anda
+        $mail->Password = 'xvkj cerh lxxk vivk';    // Gunakan App Password Gmail
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        
+        // Recipients
+        $mail->setFrom('kopikukicass@gmail.com', 'Kupi & Kuki');
+        $mail->addAddress($email, $name);
+        
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = "Terima Kasih atas Ulasan Anda - Kupi & Kuki";
+        
+        $mail->Body = "
+            <div style='font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 30px;'>
+              <div style='max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.05);'>
+                <div style='background-color: #6F4E37; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;'>
+                  <h2 style='margin: 0;'>Kupi & Kuki</h2>
+                </div>
+                
+                <div style='padding: 20px;'>
+                  <h3 style='color: #6F4E37;'>Halo $name,</h3>
+                  
+                  <p style='font-size: 16px; color: #555;'>
+                    Terima kasih telah meluangkan waktu untuk memberikan ulasan kepada kami. 
+                    Ulasan Anda sangat berharga untuk membantu kami meningkatkan pelayanan.
+                  </p>
+                  
+                  <p style='font-size: 16px; color: #555;'>
+                    Sebagai bentuk apresiasi, kami ingin memberikan Anda kode promo khusus:
+                  </p>
+                  
+                  <div style='text-align: center; margin: 30px 0;'>
+                    <span style='display: inline-block; background-color: #6F4E37; color: #fff; font-size: 20px; font-weight: bold; padding: 12px 24px; border-radius: 6px;'>
+                      {$couponCode}
+                    </span>
+                  </div>
+                  
+                  <p style='font-size: 16px; color: #555;'>
+                    Gunakan kode ini untuk mendapatkan diskon 10% pada pembelian berikutnya di Kupi & Kuki.
+                  </p>
+                  
+                  <div style='text-align: center; margin: 30px 0;'>
+                    <a href='http://localhost/PemogramanWebKelCASS/index.php' style='display: inline-block; padding: 12px 24px; background-color: #6F4E37; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;'>
+                      Lihat Menu Kami
+                    </a>
+                  </div>
+                  
+                  <p style='font-size: 16px; color: #555;'>
+                    Kode promo berlaku hingga " . date('d M Y', strtotime('+30 days')) . ".
+                  </p>
+                  
+                  <p style='font-size: 16px; color: #555;'>
+                    Kami berharap dapat melayani Anda kembali segera!
+                  </p>
+                </div>
+                
+                <div style='text-align: center; font-size: 12px; color: #777; padding-top: 20px; border-top: 1px solid #eee;'>
+                  <p>&copy; " . date('Y') . " Kupi & Kuki. Semua hak dilindungi.</p>
+                  <p>Jika Anda tidak merasa melakukan permintaan ini, silakan abaikan email ini.</p>
+                </div>
+              </div>
+            </div>
+        ";
+        
+        $mail->AltBody = "Halo $name,\n\nTerima kasih telah memberikan ulasan kepada Kupi & Kuki.\n\nSebagai apresiasi, berikut kode promo Anda: $couponCode\n\nGunakan kode ini untuk mendapatkan diskon 10% pada pembelian berikutnya.\n\nKode berlaku hingga " . date('d M Y', strtotime('+30 days')) . ".\n\nSalam hangat,\nTim Kupi & Kuki";
+        
+        $mail->send();
+    } catch (Exception $e) {
+        error_log("Email sending failed: " . $mail->ErrorInfo);
+    }
 }
 ?>

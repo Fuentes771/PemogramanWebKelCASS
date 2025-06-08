@@ -57,13 +57,14 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Manajemen Order</title>
     <link rel="stylesheet" href="../css/manage_orders_style.css">
     <link rel="stylesheet" href="../css/admin_style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
+    <header class="navbar">
         <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-            <a href="admin_dashboard.php">Dashboard</a>
+             <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Penambahan Menu</a>
             <a href="manage_orders.php">Manajemen Order</a>
             <a href="view_subscribers.php">View Subscribers</a>

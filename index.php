@@ -13,7 +13,7 @@ session_start();
 </head>
 <body>
   <header class="navbar">
-    <div class="logo">Kopi & Kuki</div>
+    <div class="logo">Kupi & Kuki</div>
     <nav>
       <a href="index.php">Home</a>
       <a href="menu.php">Menu</a>
@@ -24,9 +24,9 @@ session_start();
 
   <section class="hero">
     <div class="hero-text">
-      <h1 class="title">Kopi & Kuki</h1>
+      <h1 class="title">Kupi & Kuki</h1>
       <p class="description">
-      Kopi & Kuki adalah tempat di mana aroma kopi segar berpadu sempurna dengan manisnya kuki hangat. Temukan kenyamanan dalam setiap tegukan dan gigitan.
+      Kupi & Kuki adalah tempat di mana aroma kopi segar berpadu sempurna dengan manisnya kuki hangat. Temukan kenyamanan dalam setiap tegukan dan gigitan.
       </p>
       <a href="menu.php" class="order-button">Order Sekarang</a>
     </div>

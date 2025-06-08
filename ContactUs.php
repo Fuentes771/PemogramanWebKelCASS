@@ -12,7 +12,7 @@
 <body>
 
 <header class="navbar">
-    <div class="logo">Kopi & Kuki</div>
+    <div class="logo">Kupi & Kuki</div>
     <nav>
       <a href="index.php">Home</a>
       <a href="menu.php">Menu</a>
@@ -72,8 +72,8 @@
     <div class="footer-overlay">
       <div class="footer-container">
         <div class="footer-column">
-          <h2>Kopi & Kuki</h2>
-          <p>Awali harimu dengan kopi dan kue terbaik pilihan kami. Nikmati rasa, nikmati hidup — hanya di Kopi & Kuki.</p>
+          <h2>Kupi & Kuki</h2>
+          <p>Awali harimu dengan kopi dan kue terbaik pilihan kami. Nikmati rasa, nikmati hidup — hanya di Kupi & Kuki.</p>
           <div class="social-icons">
             <a href="#"><img src="img/faceb.png" alt="Facebook"/></a>
             <a href="#"><img src="img/Inst.png" alt="Instagram"/></a>

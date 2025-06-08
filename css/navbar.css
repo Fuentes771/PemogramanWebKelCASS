@@ -1,5 +1,4 @@
 /* Navbar.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Clicker+Script&display=swap');
 
@@ -16,13 +15,30 @@
   background-color: rgba(0, 0, 0, 0.8);
   box-sizing: border-box;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Add these new properties */
+  transition: all 0.3s ease;
 }
 
+/* Add this to prevent content from being hidden behind navbar */
+body {
+  padding-top: 80px; /* Adjust this value based on your navbar height */
+}
+
+/* Make logo clickable */
 .logo {
   font-size: 28px;
   font-weight: bold;
   font-family: 'Clicker Script', cursive;
   color: #fff;
+  cursor: pointer;
+  text-decoration: none; /* Remove underline */
+  display: block; /* Make it behave like a link */
+}
+
+/* Add this for scroll effect */
+.navbar.scrolled {
+  background-color: rgba(0, 0, 0, 0.95);
+  padding: 15px 60px;
 }
 
 nav a {

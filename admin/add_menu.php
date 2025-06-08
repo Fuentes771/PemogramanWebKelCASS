@@ -22,19 +22,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_menu'])) {
     // Cek apakah file gambar adalah gambar sebenarnya
     $check = getimagesize($_FILES['menu_image']['tmp_name']);
     if ($check === false) {
-        echo "File is not an image.";
+        echo "File bukan gambar yang valid.";
         $uploadOk = 0;
     }
 
     // Cek ukuran file
     if ($_FILES['menu_image']['size'] > 500000) { // 500KB
-        echo "Sorry, your file is too large.";
+        echo "Maaf, file terlalu besar (maksimal 500KB).";
         $uploadOk = 0;
     }
 
     // Cek format file
     if (!in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif'])) {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+        echo "Maaf, hanya file JPG, JPEG, PNG & GIF yang diperbolehkan.";
         $uploadOk = 0;
     }
 
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_menu'])) {
 
             $success = "Menu berhasil ditambahkan!";
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            echo "Maaf, terjadi kesalahan saat mengunggah file.";
         }
     }
 }
@@ -61,7 +61,7 @@ if (isset($_GET['delete'])) {
     $stmt = $pdo->prepare("DELETE FROM menu WHERE id = :id");
     $stmt->bindParam(':id', $menu_id);
     $stmt->execute();
-    header("Location: add_menu.php"); // Redirect setelah menghapus
+    header("Location: add_menu.php"); // Alihkan setelah menghapus
     exit();
 }
 
@@ -71,24 +71,25 @@ $menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Menu</title>
     <link rel="stylesheet" href="../css/add_menu_style.css">
     <link rel="stylesheet" href="../css/admin_style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
 </head>
 <body>
-    <header>
-        <div class="logo">Bean Scene Admin</div>
+   <header class="navbar">
+        <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-            <a href="admin_dashboard.php">Dashboard</a>
+             <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Penambahan Menu</a>
             <a href="manage_orders.php">Manajemen Order</a>
-            <a href="view_subscribers.php">View Subscribers</a>
+            <a href="view_subscribers.php">Pelanggan</a>
             <a href="ulasan.php">Ulasan</a>
-            <a href="../php/logout.php">Logout</a>
+            <a href="../php/logout.php">Keluar</a>
         </nav>
     </header>
 

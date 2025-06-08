@@ -48,11 +48,12 @@ for ($i = 6; $i >= 0; $i--) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/admin_style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <div class="logo">Kopi & Kuki Admin</div>
+    <header class="navbar">
+        <div class="logo">Kupi & Kuki Admin</div>
         <nav>
              <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Penambahan Menu</a>

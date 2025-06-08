@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
 <body>
     
   <header class="navbar">
-    <div class="logo">Kupi & Kui - Checkout</div>
+    <div class="logo">Kupi & Kuki - Checkout</div>
     <nav>
       <a href="../index.php">Home</a>
       <a href="../menu.php">Menu</a>
@@ -132,6 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
             </div>
         </div>
 
+        <!-- In the QRIS payment section -->
         <div class="payment-details active" id="qris-payment">
             <h3>Scan QR Code Below to Pay</h3>
             <div class="qris-code">
@@ -139,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
                 <img src="images/qris_kupi_kuki.png" alt="QRIS Payment Code">
                 <p>Scan this QR code using your mobile banking app</p>
             </div>
-            <div class="payment-instructions">
+            <div class="payment-instructions" data-method="qris">
                 <p><strong>Payment Instructions:</strong></p>
                 <ol>
                     <li>Open your mobile banking or e-wallet app</li>
@@ -151,6 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
             </div>
         </div>
 
+        <!-- In the Transfer payment section -->
         <div class="payment-details" id="transfer-payment">
             <h3>Bank Transfer Information</h3>
             <div class="bank-details">
@@ -159,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
                 <p><strong>Account Name:</strong> Kupi & Kuki</p>
                 <p><strong>Amount to Transfer:</strong> Rp <?php echo number_format($cart_total, 0, ',', '.'); ?></p>
             </div>
-            <div class="payment-instructions">
+            <div class="payment-instructions" data-method="transfer">
                 <p><strong>Payment Instructions:</strong></p>
                 <ol>
                     <li>Transfer the exact amount to the account above</li>
@@ -170,12 +172,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
             </div>
         </div>
 
+        <!-- In the Cash payment section -->
         <div class="payment-details" id="cash-payment">
             <h3>Cash Payment</h3>
             <div class="cash-instructions">
                 <p>Please prepare exact change for:</p>
                 <p class="cash-amount">Rp <?php echo number_format($cart_total, 0, ',', '.'); ?></p>
                 <p>Payment will be completed when you receive your order at the counter.</p>
+            </div>
+            <div class="payment-instructions" data-method="cash">
+                <p><strong>Payment Instructions:</strong></p>
+                <ol>
+                    <li>Prepare exact cash amount</li>
+                    <li>Inform staff when collecting your order</li>
+                    <li>Complete payment at the counter</li>
+                </ol>
             </div>
         </div>
 
@@ -196,34 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
     </section>
   </main>
 
-  <script src="../js/checkout.js"></script>
-  <script>
-    // Handle payment method selection
-    document.querySelectorAll('.payment-method').forEach(method => {
-        method.addEventListener('click', function() {
-            // Remove active class from all methods
-            document.querySelectorAll('.payment-method').forEach(m => {
-                m.classList.remove('active');
-            });
-            
-            // Add active class to clicked method
-            this.classList.add('active');
-            
-            // Get the method type
-            const methodType = this.getAttribute('data-method');
-            
-            // Hide all payment details
-            document.querySelectorAll('.payment-details').forEach(detail => {
-                detail.classList.remove('active');
-            });
-            
-            // Show selected payment details
-            document.getElementById(methodType + '-payment').classList.add('active');
-            
-            // Update hidden input value
-            document.getElementById('selected_payment_method').value = methodType;
-        });
-    });
-  </script>
+<script src="../js/checkout.js"></script>
+
 </body>
 </html>

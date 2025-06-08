@@ -30,12 +30,13 @@ $coupon_sends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>View Subscribers</title>
     <link rel="stylesheet" href="../css/admin_style.css">
     <link rel="stylesheet" href="../css/view_subscribers_style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
 </head>
 <body>
-    <header>
-        <div class="logo">Kopi & Kuki Admin</div>
+    <header class="navbar">
+        <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-            <a href="admin_dashboard.php">Dashboard</a>
+             <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Penambahan Menu</a>
             <a href="manage_orders.php">Manajemen Order</a>
             <a href="view_subscribers.php">View Subscribers</a>

@@ -34,7 +34,7 @@ foreach ($_SESSION['cart'] as $item) {
 <body>
     
   <header class="navbar">
-    <div class="logo">Kopi & Kuki</div>
+    <div class="logo">Kupi & Kuki</div>
     <nav>
       <a href="index.php">Home</a>
       <a href="menu.php">Menu</a>

@@ -64,18 +64,18 @@ function sendThankYouEmail($name, $email, $couponCode) {
         $mail->Port = 587;
         
         // Recipients
-        $mail->setFrom('kopikukicass@gmail.com', 'Kopi & Kuki');
+        $mail->setFrom('kopikukicass@gmail.com', 'Kupi & Kuki');
         $mail->addAddress($email, $name);
         
         // Content
         $mail->isHTML(true);
-        $mail->Subject = "Terima Kasih atas Ulasan Anda - Kopi & Kuki";
+        $mail->Subject = "Terima Kasih atas Ulasan Anda - Kupi & Kuki";
         
         $mail->Body = "
             <div style='font-family: Arial, sans-serif; background-color: #f7f7f7; padding: 30px;'>
               <div style='max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.05);'>
                 <div style='background-color: #6F4E37; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;'>
-                  <h2 style='margin: 0;'>Kopi & Kuki</h2>
+                  <h2 style='margin: 0;'>Kupi & Kuki</h2>
                 </div>
                 
                 <div style='padding: 20px;'>
@@ -97,7 +97,7 @@ function sendThankYouEmail($name, $email, $couponCode) {
                   </div>
                   
                   <p style='font-size: 16px; color: #555;'>
-                    Gunakan kode ini untuk mendapatkan diskon 10% pada pembelian berikutnya di Kopi & Kuki.
+                    Gunakan kode ini untuk mendapatkan diskon 10% pada pembelian berikutnya di Kupi & Kuki.
                   </p>
                   
                   <div style='text-align: center; margin: 30px 0;'>
@@ -116,14 +116,14 @@ function sendThankYouEmail($name, $email, $couponCode) {
                 </div>
                 
                 <div style='text-align: center; font-size: 12px; color: #777; padding-top: 20px; border-top: 1px solid #eee;'>
-                  <p>&copy; " . date('Y') . " Kopi & Kuki. Semua hak dilindungi.</p>
+                  <p>&copy; " . date('Y') . " Kupi & Kuki. Semua hak dilindungi.</p>
                   <p>Jika Anda tidak merasa melakukan permintaan ini, silakan abaikan email ini.</p>
                 </div>
               </div>
             </div>
         ";
         
-        $mail->AltBody = "Halo $name,\n\nTerima kasih telah memberikan ulasan kepada Kopi & Kuki.\n\nSebagai apresiasi, berikut kode promo Anda: $couponCode\n\nGunakan kode ini untuk mendapatkan diskon 10% pada pembelian berikutnya.\n\nKode berlaku hingga " . date('d M Y', strtotime('+30 days')) . ".\n\nSalam hangat,\nTim Kopi & Kuki";
+        $mail->AltBody = "Halo $name,\n\nTerima kasih telah memberikan ulasan kepada Kupi & Kuki.\n\nSebagai apresiasi, berikut kode promo Anda: $couponCode\n\nGunakan kode ini untuk mendapatkan diskon 10% pada pembelian berikutnya.\n\nKode berlaku hingga " . date('d M Y', strtotime('+30 days')) . ".\n\nSalam hangat,\nTim Kupi & Kuki";
         
         $mail->send();
     } catch (Exception $e) {

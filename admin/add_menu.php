@@ -78,12 +78,13 @@ $menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>Tambah Menu</title>
     <link rel="stylesheet" href="../css/add_menu_style.css">
     <link rel="stylesheet" href="../css/admin_style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
 </head>
 <body>
-    <header>
-        <div class="logo">Bean Scene Admin</div>
+   <header class="navbar">
+        <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-            <a href="admin_dashboard.php">Dashboard</a>
+             <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Penambahan Menu</a>
             <a href="manage_orders.php">Manajemen Order</a>
             <a href="view_subscribers.php">View Subscribers</a>

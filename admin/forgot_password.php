@@ -1,9 +1,7 @@
 <?php
 require '../php/config.php';
-require 'phpmailer/src/PHPMailer.php';
-require 'phpmailer/src/SMTP.php';
-require 'phpmailer/src/Exception.php';
 
+require _DIR_ . '/../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -38,12 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'kopikukibdl@gmail.com'; // GANTI
-            $mail->Password = 'etwn rpbf pzof bmjh';     // GANTI
+            $mail->Username = 'kopikukicass@gmail.com'; // GANTI
+            $mail->Password = 'xvkj cerh lxxk vivk';     // GANTI
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('kopikukibdl@gmail.com', 'Admin Toko Kopi&Kuki');
+            $mail->setFrom('kopikukicass@gmail.com', 'KopiKuki');
             $mail->addAddress($email);
             $mail->Subject = 'Reset Password Admin';
             $mail->Body = "Klik link berikut untuk reset password Anda:\n\n$reset_link\n\nLink berlaku selama 1 jam.";

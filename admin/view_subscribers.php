@@ -123,13 +123,25 @@ $coupon_sends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <!-- Modal History -->
-    <div id="historyModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeHistoryModal()">&times;</span>
-            <h2>History Pengiriman Kupon</h2>
+<div id="historyModal" class="modal">
+    <div class="modal-content" style="max-width: 900px;">
+        <span class="close" onclick="closeHistoryModal()">&times;</span>
+        <h2>History Pengiriman Kupon</h2>
+        
+        <div class="action-buttons">
+            <button class="btn btn-delete" onclick="deleteSelected()">
+                Delete Selected
+            </button>
+        </div>
+        
+        <div class="table-container">
             <table>
                 <thead>
                     <tr>
+                        <th class="checkbox-cell">
+                            <input type="checkbox" id="selectAll" onclick="toggleSelectAll()">
+                            <label id="selectAllText" for="selectAll">Select All</label>
+                        </th>
                         <th>Tanggal Kirim</th>
                         <th>Email Penerima</th>
                         <th>Kode Kupon</th>
@@ -140,10 +152,15 @@ $coupon_sends = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </thead>
                 <tbody>
                     <?php if (empty($coupon_sends)): ?>
-                        <tr><td colspan="6">Belum ada kupon yang dikirim.</td></tr>
+                        <tr>
+                            <td colspan="7">Belum ada kupon yang dikirim.</td>
+                        </tr>
                     <?php else: ?>
                         <?php foreach ($coupon_sends as $send): ?>
-                        <tr>
+                        <tr data-id="<?php echo $send['id']; ?>">
+                            <td class="checkbox-cell">
+                                <input type="checkbox" class="row-checkbox">
+                            </td>
                             <td><?php echo $send['sent_at']; ?></td>
                             <td><?php echo htmlspecialchars($send['recipient_email']); ?></td>
                             <td><?php echo htmlspecialchars($send['coupon_code']); ?></td>
@@ -157,6 +174,7 @@ $coupon_sends = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </table>
         </div>
     </div>
+</div>
 
     <!-- Script Modal -->
     <script>
@@ -208,6 +226,97 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('recipient_count').max = <?php echo count($subscribers); ?>;
     document.getElementById('recipient_count').value = <?php echo count($subscribers); ?>;
 });
+
+
+// Fungsi untuk select/deselect semua
+function toggleSelectAll() {
+    const selectAll = document.getElementById('selectAll');
+    const checkboxes = document.querySelectorAll('.row-checkbox');
+    const selectAllText = document.getElementById('selectAllText');
+
+    const isAllSelected = selectAll.checked; // true jika ingin select all, false jika ingin unselect all
+
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = isAllSelected; // set sesuai status selectAll
+    });
+
+    // Update teks sesuai status checkbox selectAll
+    selectAllText.textContent = isAllSelected ? 'Deselect All' : 'Select All';
+}
+
+// Fungsi untuk delete selected
+function deleteSelected() {
+    const selectedRows = document.querySelectorAll('.row-checkbox:checked');
+    if (selectedRows.length === 0) {
+        alert('Please select at least one item to delete');
+        return;
+    }
+    
+    if (confirm(`Are you sure you want to delete ${selectedRows.length} selected item(s)?`)) {
+        const idsToDelete = [];
+        
+        selectedRows.forEach(checkbox => {
+            const row = checkbox.closest('tr');
+            idsToDelete.push(row.dataset.id);
+            row.style.opacity = '0.5';
+            row.style.backgroundColor = '#ff000033';
+        });
+        
+        // Kirim permintaan AJAX ke server untuk menghapus
+        fetch('delete_coupons.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ids: idsToDelete })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Hapus baris dari tampilan setelah sukses
+                selectedRows.forEach(checkbox => {
+                    checkbox.closest('tr').remove();
+                });
+                
+                // Periksa jika tabel kosong
+                if (document.querySelectorAll('tbody tr').length === 0) {
+                    const tbody = document.querySelector('tbody');
+                    tbody.innerHTML = '<tr><td colspan="7">Belum ada kupon yang dikirim.</td></tr>';
+                }
+                
+                alert(`${data.deleted_count} item(s) deleted successfully`);
+            } else {
+                alert('Error deleting items: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while deleting items');
+        });
+    }
+}
+
+// Event listener untuk checkbox individual
+document.addEventListener('DOMContentLoaded', function() {
+    // Event listener untuk checkbox individual di tbody
+    document.querySelector('tbody').addEventListener('click', function(e) {
+        if (e.target.classList.contains('row-checkbox')) {
+            updateSelectAllCheckbox();
+        }
+    });
+    
+    // Fungsi update checkbox "selectAll" dan teksnya sesuai status checkbox individual
+    function updateSelectAllCheckbox() {
+        const checkboxes = document.querySelectorAll('.row-checkbox');
+        const selectAll = document.getElementById('selectAll');
+        const selectAllText = document.getElementById('selectAllText');
+
+        const allChecked = [...checkboxes].length > 0 && [...checkboxes].every(checkbox => checkbox.checked);
+        selectAll.checked = allChecked;
+        selectAllText.textContent = allChecked ? 'Deselect All' : 'Select All';
+    }
+});
+
 </script>
 
 </body>

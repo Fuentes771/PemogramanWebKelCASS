@@ -196,34 +196,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
     </section>
   </main>
 
-  <script src="../js/checkout.js"></script>
-  <script>
+<script 
+
+    src="../js/checkout.js">
     // Handle payment method selection
-    document.querySelectorAll('.payment-method').forEach(method => {
-        method.addEventListener('click', function() {
-            // Remove active class from all methods
-            document.querySelectorAll('.payment-method').forEach(m => {
+    document.addEventListener('DOMContentLoaded', function() {
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        const paymentDetails = document.querySelectorAll('.payment-details');
+        const paymentMethodInput = document.getElementById('selected_payment_method');
+        
+        // Function to switch payment method
+        function switchPaymentMethod(method) {
+            // Update active state of payment method buttons
+            paymentMethods.forEach(m => {
                 m.classList.remove('active');
+                if (m.dataset.method === method) {
+                    m.classList.add('active');
+                }
             });
             
-            // Add active class to clicked method
-            this.classList.add('active');
-            
-            // Get the method type
-            const methodType = this.getAttribute('data-method');
-            
-            // Hide all payment details
-            document.querySelectorAll('.payment-details').forEach(detail => {
+            // Update visible payment details
+            paymentDetails.forEach(detail => {
                 detail.classList.remove('active');
+                if (detail.id === `${method}-payment`) {
+                    detail.classList.add('active');
+                }
             });
-            
-            // Show selected payment details
-            document.getElementById(methodType + '-payment').classList.add('active');
             
             // Update hidden input value
-            document.getElementById('selected_payment_method').value = methodType;
+            paymentMethodInput.value = method;
+        }
+        
+        // Add click event to all payment methods
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                const methodType = this.dataset.method;
+                switchPaymentMethod(methodType);
+            });
         });
+        
+        // Initialize with QRIS selected
+        switchPaymentMethod('qris');
     });
-  </script>
-</body>
+</script></body>
 </html>

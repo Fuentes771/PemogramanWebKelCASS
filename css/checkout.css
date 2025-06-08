@@ -158,7 +158,7 @@
     }
 }
 
-/* Payment methods */
+/* Payment methods styling */
 .payment-methods {
     display: flex;
     gap: 1rem;
@@ -191,18 +191,27 @@
 }
 
 .payment-details {
-    display: none;
-    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
 }
 
 .payment-details.active {
-    display: block;
+    opacity: 1;
+    height: auto;
+    overflow: visible;
 }
 
-.bank-details {
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.bank-details, .cash-instructions, .qris-code {
     background: #f9f9f9;
-    padding: 1rem;
-    border-radius: 5px;
+    padding: 1.5rem;
+    border-radius: 8px;
     margin: 1rem 0;
 }
 
@@ -211,4 +220,20 @@
     font-weight: bold;
     margin: 1rem 0;
     color: #4CAF50;
+    text-align: center;
+}
+
+.payment-instructions {
+    background: #f5f5f5;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.payment-instructions ol {
+    padding-left: 1.5rem;
+}
+
+.payment-instructions li {
+    margin-bottom: 0.5rem;
 }

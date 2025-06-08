@@ -16,6 +16,10 @@ if (isset($_SESSION['success_message'])) {
     $successMessage = $_SESSION['success_message'];
     unset($_SESSION['success_message']);
 }
+
+// Ambil history pengiriman kupon
+$stmt = $pdo->query("SELECT * FROM coupon_sends ORDER BY sent_at DESC");
+$coupon_sends = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +30,22 @@ if (isset($_SESSION['success_message'])) {
     <title>View Subscribers</title>
     <link rel="stylesheet" href="../css/admin_style.css">
     <link rel="stylesheet" href="../css/view_subscribers_style.css">
+    <style>
+        /* Styling tambahan untuk tabel history */
+        .coupon-history table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .coupon-history th, .coupon-history td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .coupon-history th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -72,36 +92,68 @@ if (isset($_SESSION['success_message'])) {
     <form action="send_subscribers_email.php" method="post">
 
        <div class="form-row">
-  <div class="form-group">
-    <label for="discount">Diskon Kupon (%)</label>
-    <input type="number" id="discount" name="discount"
-           min="1" max="100" required
-           placeholder="Masukkan diskon kupon (%)">
-  </div>
+        <div class="form-group">
+            <label for="discount">Diskon Kupon (%)</label>
+            <input type="number" id="discount" name="discount"
+                   min="1" max="100" required
+                   placeholder="Masukkan diskon kupon (%)">
+        </div>
 
-  <span class="input-separator">s/d</span>   <!-- teks di tengah -->
+        <span class="input-separator">s/d</span>
 
-     <div class="form-group">
-    <input class="input-no-label" type="number" id="max_discount" name="max_discount" min="1000" step="1000" required placeholder="Masukkan diskon maksimal (Rp)">
-  </div>
-</div>
+        <div class="form-group">
+            <input class="input-no-label" type="number" id="max_discount" name="max_discount" min="1000" step="1000" required placeholder="Masukkan diskon maksimal (Rp)">
+        </div>
+    </div>
 
-<div class="form-group">
-  <label for="recipient_count">Jumlah Penerima</label>
-  <input type="number" id="recipient_count" name="recipient_count"
-         min="1" max="<?php echo count($subscribers); ?>" required
-         placeholder="Masukkan jumlah penerima">
-</div>
+    <div class="form-group">
+        <label for="recipient_count">Jumlah Penerima</label>
+        <input type="number" id="recipient_count" name="recipient_count"
+               min="1" max="<?php echo count($subscribers); ?>" required
+               placeholder="Masukkan jumlah penerima">
+    </div>
 
-
-<div class="form-group">
-  <label for="expiry_date">Berlaku Sampai Tanggal:</label>
-  <input type="date" id="expiry_date" name="expiry_date" required>
-</div>
+    <div class="form-group">
+        <label for="expiry_date">Berlaku Sampai Tanggal:</label>
+        <input type="date" id="expiry_date" name="expiry_date" required>
+    </div>
 
         <button type="submit" class="send-button">Send to gmail</button>
     </form>
-</section>
+    </section>
+
+    <!-- Tambahan: History Pengiriman Kupon -->
+    <section class="coupon-history">
+        <h2>History Pengiriman Kupon</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tanggal Kirim</th>
+                    <th>Email Penerima</th>
+                    <th>Kode Kupon</th>
+                    <th>Diskon (%)</th>
+                    <th>Max Diskon (Rp)</th>
+                    <th>Expired Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (empty($coupon_sends)): ?>
+                    <tr><td colspan="6">Belum ada kupon yang dikirim.</td></tr>
+                <?php else: ?>
+                    <?php foreach ($coupon_sends as $send): ?>
+                    <tr>
+                        <td><?php echo $send['sent_at']; ?></td>
+                        <td><?php echo htmlspecialchars($send['recipient_email']); ?></td>
+                        <td><?php echo $send['coupon_code']; ?></td>
+                        <td><?php echo $send['discount']; ?>%</td>
+                        <td>Rp <?php echo number_format($send['max_discount']); ?></td>
+                        <td><?php echo $send['expiry_date']; ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </section>
 
 </body>
 </html>

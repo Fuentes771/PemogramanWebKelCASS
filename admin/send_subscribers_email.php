@@ -105,7 +105,7 @@ try {
                 <hr style='margin: 30px 0; border: none; border-top: 1px solid #eee;'>
 
                 <p style='font-size: 16px; color: #333;'>Salam hangat,</p>
-                <br><br>p
+                <br><br>
                 <p style='font-size: 16px; font-weight: bold; color: #6f4e37;'>Tim KopiKuki</p>
 
             </div>
@@ -114,6 +114,13 @@ try {
         $mail->AltBody = "Halo pelanggan setia KopiKuki,\n\nKami memberikan Anda diskon {$diskon}% hingga maksimal potongan {$maxDiskonFormatted}!\nGunakan kode kupon: {$kupon}\nBerlaku sampai: {$formattedDate}\n\nBelanja sekarang di http://localhost/PemogramanWebKelCASS/\n\nSalam hangat,\nTim KopiKuki";
 
         $mail->send();
+
+        // >>> Tambahkan ke tabel coupon_sends setelah email berhasil dikirim <<<
+        $stmt = $koneksi->prepare("INSERT INTO coupon_sends (recipient_email, coupon_code, discount, max_discount, expiry_date) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssiis", $email, $kupon, $diskon, $maxDiskon, $expiryDate);
+        $stmt->execute();
+        $stmt->close();
+
         $sentCount++;
     }
 

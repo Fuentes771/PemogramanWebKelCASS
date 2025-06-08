@@ -213,7 +213,7 @@ tr:not(:last-child) td {
     background-color: #c62828;
 }
 
-/* ====== REVIEW / APPROVAL KOMPONEN (OPTIONAL) ====== */
+/* ====== REVIEW / RATING STYLES ====== */
 .reviews-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
@@ -232,15 +232,71 @@ tr:not(:last-child) td {
     transform: translateY(-5px);
 }
 
-.review-item.pending { border-left: 5px solid #ffb300; }
-.review-item.approved { border-left: 5px solid #4caf50; }
+.review-item.pending { border-left: 5px solid #ffffff; }
+.review-item.approved { border-left: 5px solid #f4f4f4; }
 
 .review-header h3 {
     margin: 0 0 6px;
     font-weight: bold;
 }
 
-.review-meta { display: flex; justify-content: space-between; }
+.review-meta { 
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* STAR RATING STYLES */
+.rating {
+    color: var(--gold); /* Changed to gold/yellow */
+    font-size: 1.2em;
+    margin: 5px 0;
+}
+
+.star {
+    color: var(--gold);
+    margin: 0 2px;
+}
+
+.star.half {
+    position: relative;
+}
+
+.star.half:before {
+    position: absolute;
+    content: '★';
+    width: 50%;
+    overflow: hidden;
+    color: var(--gold);
+}
+
+.star.empty {
+    color: rgba(244, 192, 111, 0.3); /* Lighter gold for empty stars */
+}
+
+/* For form rating inputs */
+.rating-input {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.rating-input input[type="radio"] {
+    display: none;
+}
+
+.rating-input label {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: rgba(244, 192, 111, 0.3); /* Lighter gold */
+    transition: color 0.2s;
+}
+
+.rating-input input[type="radio"]:checked ~ label,
+.rating-input label:hover,
+.rating-input label:hover ~ label {
+    color: var(--gold); /* Full gold/yellow */
+}
 
 /* ====== RESPONSIVE BREAKPOINT ====== */
 @media (max-width: 768px) {
@@ -248,4 +304,5 @@ tr:not(:last-child) td {
     header nav { margin-top: 10px; flex-wrap: wrap; justify-content: center; gap: 16px; }
     .admin-container { padding: 28px 24px; }
     .dashboard-cards { flex-direction: column; }
+    .reviews-list { grid-template-columns: 1fr; }
 }

@@ -1,7 +1,7 @@
 <?php
 require '../php/config.php';
 
-require _DIR_ . '/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 

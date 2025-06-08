@@ -35,6 +35,7 @@ if (isset($_SESSION['success_message'])) {
             <a href="add_menu.php">Penambahan Menu</a>
             <a href="manage_orders.php">Manajemen Order</a>
             <a href="view_subscribers.php">View Subscribers</a>
+            <a href="ulasan.php">Ulasan</a>
             <a href="../php/logout.php">Logout</a>
         </nav>
     </header>

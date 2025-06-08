@@ -1,4 +1,5 @@
 <?php
+
 $host = "localhost";
 $user = "root";
 $pass = "";
@@ -53,12 +54,12 @@ for ($i = 6; $i >= 0; $i--) {
     <header>
         <div class="logo">Kopi & Kuki Admin</div>
         <nav>
-            <a href="admin_dashboard.php">Dashboard</a>
+             <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Penambahan Menu</a>
             <a href="manage_orders.php">Manajemen Order</a>
             <a href="view_subscribers.php">View Subscribers</a>
             <a href="ulasan.php">Ulasan</a>
-            <a href="logout.php">Logout</a>
+            <a href="../php/logout.php">Logout</a>
         </nav>
     </header>
 

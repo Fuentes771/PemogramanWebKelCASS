@@ -67,6 +67,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="add_menu.php">Penambahan Menu</a>
             <a href="manage_orders.php">Manajemen Order</a>
             <a href="view_subscribers.php">View Subscribers</a>
+            <a href="ulasan.php">Ulasan</a>
             <a href="../php/logout.php">Logout</a>
         </nav>
     </header>

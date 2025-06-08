@@ -84,6 +84,18 @@ for ($i = 6; $i >= 0; $i--) {
             <canvas id="weeklyChart"></canvas>
         </div>
 
+        <h3>Export Laporan Penjualan (CSV)</h3>
+        <form method="post" action="export_csv.php" style="margin-bottom: 20px;">
+        <label>Dari Tanggal:
+            <input type="date" name="start_date" required>
+        </label>
+        <label>Sampai Tanggal:
+            <input type="date" name="end_date" required>
+        </label>
+        <button type="submit">Export ke Excel (CSV)</button>
+        </form>
+
+
         <h3>Order Terbaru</h3>
         <table class="order-table">
             <tr>

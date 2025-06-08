@@ -27,7 +27,7 @@ foreach ($_SESSION['cart'] as $item) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
     $customer_name = trim($_POST['name']);
     $notes = trim($_POST['notes'] ?? '');
-    $payment_method = 'QRIS'; // Default to QRIS for this example
+    $payment_method = $_POST['payment_method'] ?? 'QRIS'; // Get selected payment method
     
     if (empty($customer_name)) {
         $_SESSION['checkout_error'] = "Please enter your name";
@@ -51,12 +51,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
             $items_json
         ]);
         
+        // Store order success data in session
+        $_SESSION['order_success'] = [
+            'message' => "Thank you for your order! Your coffee will be ready soon.",
+            'payment_method' => $payment_method,
+            'total_amount' => $cart_total
+        ];
+        
         // Clear the cart
         $_SESSION['cart'] = [];
-        $_SESSION['order_message'] = "Thank you for your order! Your coffee will be ready soon.";
         
-        // Redirect to success page or menu
-        header("Location: ../menu.php");
+        // Redirect to success page
+        header("Location: order_success.php");
         exit();
         
     } catch (PDOException $e) {
@@ -116,10 +122,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
                 <i class="fas fa-qrcode"></i>
                 <span>QRIS</span>
             </div>
-            <!-- You can add more payment methods here -->
+            <div class="payment-method" data-method="transfer">
+                <i class="fas fa-exchange-alt"></i>
+                <span>Transfer</span>
+            </div>
+            <div class="payment-method" data-method="cash">
+                <i class="fas fa-money-bill-wave"></i>
+                <span>Tunai</span>
+            </div>
         </div>
 
-        <div class="payment-details" id="qris-payment">
+        <div class="payment-details active" id="qris-payment">
             <h3>Scan QR Code Below to Pay</h3>
             <div class="qris-code">
                 <!-- Replace with your actual QRIS image -->
@@ -138,7 +151,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
             </div>
         </div>
 
+        <div class="payment-details" id="transfer-payment">
+            <h3>Bank Transfer Information</h3>
+            <div class="bank-details">
+                <p><strong>Bank Name:</strong> BCA (Bank Central Asia)</p>
+                <p><strong>Account Number:</strong> 1234567890</p>
+                <p><strong>Account Name:</strong> Kupi & Kuki</p>
+                <p><strong>Amount to Transfer:</strong> Rp <?php echo number_format($cart_total, 0, ',', '.'); ?></p>
+            </div>
+            <div class="payment-instructions">
+                <p><strong>Payment Instructions:</strong></p>
+                <ol>
+                    <li>Transfer the exact amount to the account above</li>
+                    <li>Use your name as the transfer reference</li>
+                    <li>Keep the transaction receipt as proof of payment</li>
+                    <li>Show the receipt to our staff when collecting your order</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="payment-details" id="cash-payment">
+            <h3>Cash Payment</h3>
+            <div class="cash-instructions">
+                <p>Please prepare exact change for:</p>
+                <p class="cash-amount">Rp <?php echo number_format($cart_total, 0, ',', '.'); ?></p>
+                <p>Payment will be completed when you receive your order at the counter.</p>
+            </div>
+        </div>
+
         <form method="post" class="order-form">
+            <input type="hidden" name="payment_method" id="selected_payment_method" value="QRIS">
             <div class="form-group">
                 <label for="name">Your Name</label>
                 <input type="text" id="name" name="name" required>
@@ -154,6 +196,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
     </section>
   </main>
 
-  <script src="js/checkout.js"></script>
+  <script src="../js/checkout.js"></script>
+  <script>
+    // Handle payment method selection
+    document.querySelectorAll('.payment-method').forEach(method => {
+        method.addEventListener('click', function() {
+            // Remove active class from all methods
+            document.querySelectorAll('.payment-method').forEach(m => {
+                m.classList.remove('active');
+            });
+            
+            // Add active class to clicked method
+            this.classList.add('active');
+            
+            // Get the method type
+            const methodType = this.getAttribute('data-method');
+            
+            // Hide all payment details
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.classList.remove('active');
+            });
+            
+            // Show selected payment details
+            document.getElementById(methodType + '-payment').classList.add('active');
+            
+            // Update hidden input value
+            document.getElementById('selected_payment_method').value = methodType;
+        });
+    });
+  </script>
 </body>
 </html>

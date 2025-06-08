@@ -1,3 +1,22 @@
+<?php if (isset($_GET['review'])): ?>
+    <div class="notification <?php echo $_GET['review']; ?>">
+        <?php
+        switch ($_GET['review']) {
+            case 'success':
+                echo 'Terima kasih! Ulasan Anda telah berhasil dikirim.';
+                break;
+            case 'error':
+                echo 'Maaf, terjadi kesalahan saat mengirim ulasan.';
+                break;
+            case 'invalid':
+                echo 'Data yang Anda masukkan tidak valid.';
+                break;
+        }
+        ?>
+    </div>
+<?php endif; ?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -10,7 +29,7 @@
     <link rel="stylesheet" href="css/navbar.css">
 </head>
 
-3<body>
+<body>
 
   <header class="navbar">
     <div class="logo">Kopi & Kuki</div>
@@ -115,6 +134,12 @@
           <label for="name">Nama:</label>
           <input type="text" id="name" name="name" required>
         </div>
+
+<div class="form-group">
+    <label for="email">Email (untuk menerima promo):</label>
+    <input type="email" id="email" name="email" required>
+</div>
+
         <div class="form-group">
           <label for="rating">Rating:</label>
           <select id="rating" name="rating" required>

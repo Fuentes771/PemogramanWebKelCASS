@@ -15,7 +15,8 @@ require_once '../php/config.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Kopi & Kuki</title>
     <link rel="stylesheet" href="../css/ulasan.css">
-    
+    <link rel="stylesheet" href="../css/admin_style.css">
+
 </head>
 <body>
      <header>

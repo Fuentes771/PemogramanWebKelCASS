@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div style='font-family: Poppins, Arial, sans-serif; background-color: #fff8f0; padding: 20px; color: #333;'>
                     <h2 style='color: #4E342E;'>Reset Password Admin</h2>
                     <p>Hai <strong>Admin</strong>,</p>
-                    <p>Kami menerima permintaan untuk mengatur ulang password Anda sebagai admin Kuki Coffee.</p>
+                    <p>Kami menerima permintaan untuk mengatur ulang password Anda sebagai admin Kupi & Kuki Coffee.</p>
                     <p>Silakan klik tombol di bawah ini untuk mengatur ulang password Anda:</p>
                     <p style='text-align: center; margin: 30px 0;'>
                         <a href='$reset_link' style='background-color: #7e4406; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;'>Reset Password</a>
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lupa Password Admin | Kuki Coffee</title>
+    <title>Lupa Password Admin | Kupi & Kuki </title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
 

@@ -1,62 +1,62 @@
 <?php
-// Initialize cart if not exists
+// Inisialisasi keranjang jika belum ada
 if (!isset($_SESSION['cart'])) {
     $_SESSION['cart'] = [];
 }
 
-// Add to cart functionality
+// Fungsi tambah ke keranjang
 if (isset($_POST['add_to_cart'])) {
-    $menu_id = (int)$_POST['menu_id'];
-    $quantity = isset($_POST['quantity']) ? max(1, (int)$_POST['quantity']) : 1;
+    $id_menu = (int)$_POST['menu_id'];
+    $jumlah = isset($_POST['quantity']) ? max(1, (int)$_POST['quantity']) : 1;
     
     try {
         $stmt = $pdo->prepare("SELECT * FROM menu WHERE id = ?");
-        $stmt->execute([$menu_id]);
+        $stmt->execute([$id_menu]);
         $item = $stmt->fetch(PDO::FETCH_ASSOC);
         
         if ($item) {
-            if (isset($_SESSION['cart'][$menu_id])) {
-                $_SESSION['cart'][$menu_id]['quantity'] += $quantity;
+            if (isset($_SESSION['cart'][$id_menu])) {
+                $_SESSION['cart'][$id_menu]['jumlah'] += $jumlah;
             } else {
-                $_SESSION['cart'][$menu_id] = [
+                $_SESSION['cart'][$id_menu] = [
                     'id' => $item['id'],
-                    'name' => $item['name'],
-                    'price' => $item['price'],
-                    'image' => $item['image'],
-                    'quantity' => $quantity
+                    'nama' => $item['name'],
+                    'harga' => $item['price'],
+                    'gambar' => $item['image'],
+                    'jumlah' => $jumlah
                 ];
             }
-            $_SESSION['cart_message'] = "Item added to cart!";
+            $_SESSION['pesan_keranjang'] = "Item berhasil ditambahkan ke keranjang!";
         }
     } catch (PDOException $e) {
-        error_log("Database error: " . $e->getMessage());
+        error_log("Kesalahan database: " . $e->getMessage());
     }
     header("Location: menu.php");
     exit();
 }
 
-// Remove from cart functionality
+// Fungsi hapus dari keranjang
 if (isset($_GET['remove_item'])) {
-    $menu_id = (int)$_GET['remove_item'];
-    if (isset($_SESSION['cart'][$menu_id])) {
-        unset($_SESSION['cart'][$menu_id]);
-        $_SESSION['cart_message'] = "Item removed from cart!";
+    $id_menu = (int)$_GET['remove_item'];
+    if (isset($_SESSION['cart'][$id_menu])) {
+        unset($_SESSION['cart'][$id_menu]);
+        $_SESSION['pesan_keranjang'] = "Item berhasil dihapus dari keranjang!";
     }
     header("Location: menu.php");
     exit();
 }
 
-// Update cart quantities
+// Fungsi perbarui jumlah item di keranjang
 if (isset($_POST['update_cart'])) {
-    foreach ($_POST['quantities'] as $menu_id => $quantity) {
-        $menu_id = (int)$menu_id;
-        $quantity = max(1, (int)$quantity);
+    foreach ($_POST['quantities'] as $id_menu => $jumlah) {
+        $id_menu = (int)$id_menu;
+        $jumlah = max(1, (int)$jumlah);
         
-        if (isset($_SESSION['cart'][$menu_id])) {
-            $_SESSION['cart'][$menu_id]['quantity'] = $quantity;
+        if (isset($_SESSION['cart'][$id_menu])) {
+            $_SESSION['cart'][$id_menu]['jumlah'] = $jumlah;
         }
     }
-    $_SESSION['cart_message'] = "Cart updated!";
+    $_SESSION['pesan_keranjang'] = "Keranjang berhasil diperbarui!";
     header("Location: menu.php");
     exit();
 }

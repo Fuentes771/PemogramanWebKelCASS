@@ -1,5 +1,5 @@
 <?php
-// Start session and check admin login
+// Mulai sesi dan periksa login admin
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
     header('Location: admin_login.php');
@@ -13,21 +13,21 @@ require_once '../php/config.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - Kopi & Kuki</title>
+    <title>Dasbor Admin - Kupi & Kuki</title>
     <link rel="stylesheet" href="../css/ulasan.css">
     <link rel="stylesheet" href="../css/admin_style.css">
-
+    <link rel="stylesheet" href="../css/navbar.css">
 </head>
 <body>
-     <header>
-        <div class="logo">Bean Scene Admin</div>
+    <header class="navbar">
+        <div class="logo">Admin Kupi & Kuki</div>
         <nav>
-            <a href="admin_dashboard.php">Dashboard</a>
-            <a href="add_menu.php">Penambahan Menu</a>
-            <a href="manage_orders.php">Manajemen Order</a>
-            <a href="view_subscribers.php">View Subscribers</a>
+            <a href="admin_dashboard.php">Dasbor</a>
+            <a href="add_menu.php">Tambah Menu</a>
+            <a href="manage_orders.php">Kelola Pesanan</a>
+            <a href="view_subscribers.php">Lihat Pelanggan</a>
             <a href="ulasan.php">Ulasan</a>
-            <a href="../php/logout.php">Logout</a>
+            <a href="../php/logout.php">Keluar</a>
         </nav>
     </header>
 
@@ -37,12 +37,12 @@ require_once '../php/config.php';
         <div class="review-filters">
             <a href="?filter=all" class="btn">Semua</a>
             <a href="?filter=approved" class="btn">Disetujui</a>
-            <a href="?filter=pending" class="btn">Menunggu</a>
+            <a href="?filter=pending" class="btn">Menunggu Persetujuan</a>
         </div>
 
         <div class="reviews-list">
             <?php
-            // Determine filter
+            // Menentukan filter
             $filter = $_GET['filter'] ?? 'pending';
             $query = "SELECT * FROM customer_reviews ";
             

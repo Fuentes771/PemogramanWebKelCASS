@@ -1,5 +1,5 @@
 <?php
-// Database configuration
+// Konfigurasi basis data
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'toko_kopi');
 define('DB_USER', 'root');
@@ -9,6 +9,6 @@ try {
     $pdo = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
+    die("Koneksi ke basis data gagal: " . $e->getMessage());
 }
 ?>

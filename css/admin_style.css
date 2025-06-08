@@ -8,38 +8,6 @@ body {
     height: 100vh;
 }
 
-/* Header */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 60px;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.logo {
-    font-family: 'Brush Script MT', cursive;
-    font-size: 28px;
-    font-weight: bold;
-    color: #f4c06f;
-}
-
-nav {
-    display: flex;
-}
-
-nav a {
-    margin: 0 15px;
-    color: #fff;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-nav a:hover {
-    color: #f4c06f;
-}
-
 /* Judul */
 h1 {
     font-size: 36px;
@@ -176,20 +144,6 @@ th {
 
 /* Responsive */
 @media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        text-align: center;
-        padding: 20px;
-    }
-
-    nav {
-        flex-direction: column;
-    }
-
-    nav a {
-        margin: 0.5rem 0;
-    }
-
     .dashboard-cards, .stats-wrapper {
         flex-direction: column;
         align-items: center;

@@ -1,29 +1,55 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Payment method selection
     const paymentMethods = document.querySelectorAll('.payment-method');
+    const paymentDetails = document.querySelectorAll('.payment-details');
+    const paymentMethodInput = document.getElementById('selected_payment_method');
+    const paymentInstructions = document.querySelectorAll('.payment-instructions');
     
+    // Function to switch payment method
+    function switchPaymentMethod(method) {
+        // Update active state of payment method buttons
+        paymentMethods.forEach(m => {
+            m.classList.remove('active');
+            if (m.dataset.method === method) {
+                m.classList.add('active');
+            }
+        });
+        
+        // Update visible payment details
+        paymentDetails.forEach(detail => {
+            detail.classList.remove('active');
+            if (detail.id === `${method}-payment`) {
+                detail.classList.add('active');
+            }
+        });
+
+        // Update payment instructions visibility
+        paymentInstructions.forEach(instruction => {
+            instruction.style.display = 'none';
+            if (instruction.dataset.method === method) {
+                instruction.style.display = 'block';
+            }
+        });
+        
+        // Update hidden input value
+        paymentMethodInput.value = method;
+    }
+    
+    // Add click event to all payment methods
     paymentMethods.forEach(method => {
         method.addEventListener('click', function() {
-            // Remove active class from all methods
-            paymentMethods.forEach(m => m.classList.remove('active'));
-            
-            // Add active class to clicked method
-            this.classList.add('active');
-            
-            // Here you would typically show the corresponding payment details
-            // For this example, we only have QRIS
+            const methodType = this.dataset.method;
+            switchPaymentMethod(methodType);
         });
     });
+    
+    // Initialize with QRIS selected
+    switchPaymentMethod('qris');
     
     // Form submission handling
     const orderForm = document.querySelector('.order-form');
     if (orderForm) {
         orderForm.addEventListener('submit', function(e) {
-            // Here you would typically validate the form
-            // and possibly show a confirmation dialog
-            
-            // For this example, we'll just proceed with submission
-            // You might want to add more validation here
             const nameInput = document.getElementById('name');
             if (nameInput.value.trim() === '') {
                 e.preventDefault();

@@ -191,16 +191,13 @@
 }
 
 .payment-details {
-    transition: all 0.3s ease;
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
+    display: none;
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 .payment-details.active {
-    opacity: 1;
-    height: auto;
-    overflow: visible;
+    display: block;
 }
 
 @keyframes fadeIn {
@@ -224,10 +221,16 @@
 }
 
 .payment-instructions {
+    display: none;
     background: #f5f5f5;
     padding: 1rem;
     border-radius: 8px;
     margin-top: 1rem;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.payment-instructions.active {
+    display: block;
 }
 
 .payment-instructions ol {

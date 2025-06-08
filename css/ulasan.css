@@ -21,44 +21,6 @@ body {
     min-height: 100vh;
 }
 
-/* ====== HEADER (TOPBAR) ====== */
-header {
-    position: sticky;
-    top: 0;
-    z-index: 999;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 48px;
-    height: 64px;
-    background-color: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(6px);
-}
-
-header .logo {
-    font-size: 28px;
-    font-family: 'Brush Script MT', cursive;
-    color: var(--gold);
-    letter-spacing: 1px;
-}
-
-header nav {
-    display: flex;
-    gap: 22px;
-}
-
-header nav a {
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 0.95em;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-header nav a:hover {
-    color: var(--gold);
-}
-
 /* ====== WRAPPER PANEL ====== */
 .admin-container {
     max-width: 1280px;
@@ -300,9 +262,24 @@ tr:not(:last-child) td {
 
 /* ====== RESPONSIVE BREAKPOINT ====== */
 @media (max-width: 768px) {
-    header { padding: 14px 24px; flex-direction: column; height: auto; }
-    header nav { margin-top: 10px; flex-wrap: wrap; justify-content: center; gap: 16px; }
-    .admin-container { padding: 28px 24px; }
-    .dashboard-cards { flex-direction: column; }
-    .reviews-list { grid-template-columns: 1fr; }
+    
+    .admin-container {
+        padding: 20px;
+    }
+    
+    .review-filters {
+        flex-wrap: wrap;
+    }
+    
+    .reviews-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-cards {
+        flex-direction: column;
+    }
+    
+    .card {
+        min-width: 100%;
+    }
 }

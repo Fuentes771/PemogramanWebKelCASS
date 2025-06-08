@@ -2,7 +2,7 @@
 
 /* view_subscribers_style.css */
 body {
-    font-family: 'Display Fair', serif;
+    font-family: 'Playfair Display', serif;
     color: #fff;
     height: 100%;
     margin: 0;
@@ -134,18 +134,37 @@ form button:hover {
     margin-bottom: 15px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
 .form-group input {
-    width: 100%;
+    width:95%;
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
+
+  .form-row {
+    display: flex;
+    gap: 15px; /* jarak antar kolom */
+     width:98% !important;
+  } 
+
+  .form-row .form-group {
+    flex: 1; /* supaya kolom diskon sama lebar */
+  }
+
+  .form-group label {
+    display: flex; /* label di atas input */
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+   .input-no-label {
+    margin-top: 27px; 
+    padding-right: -5px !important;
+  }
+
+  .input-separator{
+    margin-top: 30px !important;
+  }
 
 .send-button {
     background-color: #000;

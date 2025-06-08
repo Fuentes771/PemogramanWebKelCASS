@@ -1,83 +1,230 @@
-/* ===== GAYA UTAMA ===== */
-body {
-    font-family: 'Georgia', serif;
-    color: #fff;
-    background: url('../img/latar-belakang-kopi.jpg') no-repeat center center/cover;
-    min-height: 100vh;
-    margin: 0;
+/* ====== GLOBAL STYLE ====== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+
+:root {
+    /* warna aksen */
+    --gold: #f4c06f;
+    --gold-dark: #d49e42;
+    --panel-bg: rgba(0, 0, 0, 0.72);
 }
 
-/* ===== HEADER YANG LEBIH KECIL ===== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Georgia', serif;
+    color: #fff;
+    /* latar kayu + kopi seperti screenshot  */
+    background: url('../img/latar-belakang-kopi.jpg') no-repeat center center / cover fixed;
+    min-height: 100vh;
+}
+
+/* ====== HEADER (TOPBAR) ====== */
 header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
-    background-color: rgba(0, 0, 0, 0.8);
-    height: 60px;
+    padding: 12px 48px;
+    height: 64px;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(6px);
 }
 
 header .logo {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 28px;
     font-family: 'Brush Script MT', cursive;
-    color: #f4c06f;
+    color: var(--gold);
+    letter-spacing: 1px;
 }
 
 header nav {
     display: flex;
+    gap: 22px;
 }
 
 header nav a {
-    margin: 0 12px;
-    color: #fff;
     text-decoration: none;
+    color: #ffffff;
+    font-size: 0.95em;
     font-weight: 500;
-    font-size: 0.9em;
     transition: color 0.3s ease;
 }
 
 header nav a:hover {
-    color: #f4c06f;
+    color: var(--gold);
 }
 
-/* ===== ADMIN CONTAINER ===== */
+/* ====== WRAPPER PANEL ====== */
 .admin-container {
-    padding: 30px;
-    max-width: 1200px;
-    margin: 20px auto;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 40px 60px;
+    background-color: var(--panel-bg);
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.45);
 }
 
 .admin-container h2 {
-    font-size: 28px;
-    margin: 15px 0;
-    color: #ffffff;
+    font-family: 'Playfair Display', serif;  /* tajuk besar seperti di screenshot */
+    font-size: 42px;
     text-align: center;
+    margin: 0 0 36px 0;
 }
 
-/* ===== REVIEW FILTERS ===== */
-.review-filters {
+/* ====== TABEL SUBSCRIBERS ====== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 60px;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+th, td {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 1.05em;
+}
+
+th {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--gold);
+    font-weight: 600;
+    border-bottom: 2px solid var(--gold);
+}
+
+tr:not(:last-child) td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ====== SEND COUPON SECTION ====== */
+.send-coupon {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 36px 40px 46px;
+    background-color: var(--panel-bg);
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+.send-coupon h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    margin: 0 0 28px 0;
+}
+
+.send-coupon input[type="text"] {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1em;
+    margin-bottom: 24px;
+    outline: none;
+}
+
+.send-coupon button {
+    width: 100%;
+    padding: 14px 0;
+    border: none;
+    border-radius: 6px;
+    background-color: #000;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.send-coupon button:hover {
+    background-color: #111;
+}
+
+/* ====== CARD METRICS (DASHBOARD) ====== */
+.dashboard-cards {
     display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
-    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-top: 32px;
 }
 
-/* ===== REVIEWS LIST - TEKS PUTIH ===== */
+.card {
+    flex: 1;
+    min-width: 220px;
+    padding: 28px 24px 34px;
+    background-color: var(--panel-bg);
+    border-radius: 12px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.5);
+}
+
+.card h3 {
+    font-size: 38px;
+    color: var(--gold);
+    margin: 0 0 10px 0;
+    font-family: 'Playfair Display', serif;
+}
+
+.card p {
+    margin: 0;
+    font-size: 1.05em;
+    color: #ddd;
+}
+
+/* ====== BUTTONS (UMUM) ====== */
+.btn {
+    background-color: var(--gold);
+    color: #000;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Georgia', serif;
+    font-size: 1em;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--gold-dark);
+}
+
+.btn-danger {
+    background-color: #e53935;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c62828;
+}
+
+/* ====== REVIEW / APPROVAL KOMPONEN (OPTIONAL) ====== */
 .reviews-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 20px;
-    margin-top: 20px;
 }
 
 .review-item {
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 15px;
+    background-color: var(--panel-bg);
+    padding: 18px 22px;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(244, 192, 111, 0.2);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.35);
     transition: transform 0.3s;
 }
 
@@ -85,166 +232,20 @@ header nav a:hover {
     transform: translateY(-5px);
 }
 
-.review-item.pending {
-    border-left: 5px solid #ff9800;
-}
-
-.review-item.approved {
-    border-left: 5px solid #4caf50;
-}
-
-.review-header {
-    margin-bottom: 12px;
-}
+.review-item.pending { border-left: 5px solid #ffb300; }
+.review-item.approved { border-left: 5px solid #4caf50; }
 
 .review-header h3 {
+    margin: 0 0 6px;
     font-weight: bold;
-    color: #ffffff;
-    margin: 0 0 5px 0;
-    font-size: 1.1em;
 }
 
-.review-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+.review-meta { display: flex; justify-content: space-between; }
 
-.rating {
-    color: #ffffff;
-    font-size: 1.1em;
-}
-
-.date {
-    font-size: 0.85em;
-    color: #aaa;
-}
-
-.review-text {
-    color: #ffffff;
-    line-height: 1.6;
-    margin-bottom: 12px;
-    font-size: 0.95em;
-}
-
-.review-actions {
-    display: flex;
-    gap: 8px;
-}
-
-/* ===== TOMBOL ===== */
-.btn {
-    background-color: #f4c06f;
-    color: #000;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-family: 'Georgia', serif;
-    text-decoration: none;
-    font-size: 1em;
-    display: inline-block;
-}
-
-.btn:hover {
-    background-color: #d49e42;
-}
-
-.btn-danger {
-    background-color: #f44336;
-    color: white;
-}
-
-.btn-danger:hover {
-    background-color: #d32f2f;
-}
-
-/* ===== TABEL ===== */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid rgba(244, 192, 111, 0.3);
-}
-
-th {
-    background-color: rgba(244, 192, 111, 0.2);
-    color: #f4c06f;
-    font-weight: 600;
-}
-
-/* ===== DASHBOARD CARDS ===== */
-.dashboard-cards {
-    display: flex;
-    gap: 20px;
-    margin-top: 30px;
-    flex-wrap: wrap;
-}
-
-.card {
-    flex: 1;
-    min-width: 200px;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(244, 192, 111, 0.2);
-    text-align: center;
-    transition: transform 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-.card h3 {
-    font-size: 2em;
-    color: #f4c06f;
-    margin: 10px 0;
-}
-
-.card p {
-    font-size: 1em;
-    color: #ddd;
-}
-
-/* ===== TAMPILAN MOBILE ===== */
+/* ====== RESPONSIVE BREAKPOINT ====== */
 @media (max-width: 768px) {
-    header {
-        padding: 15px 20px;
-        flex-direction: column;
-        height: auto;
-    }
-    
-    header nav {
-        margin-top: 15px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .admin-container {
-        padding: 20px;
-    }
-    
-    .review-filters {
-        flex-wrap: wrap;
-    }
-    
-    .reviews-list {
-        grid-template-columns: 1fr;
-    }
-    
-    .dashboard-cards {
-        flex-direction: column;
-    }
-    
-    .card {
-        min-width: 100%;
-    }
+    header { padding: 14px 24px; flex-direction: column; height: auto; }
+    header nav { margin-top: 10px; flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .admin-container { padding: 28px 24px; }
+    .dashboard-cards { flex-direction: column; }
 }

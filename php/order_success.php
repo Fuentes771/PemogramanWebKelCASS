@@ -100,7 +100,7 @@ unset($_SESSION['order_success']);
   </main>
 
   <audio autoplay>
-    <source src="../sounds/notification.mp3" type="audio/mpeg">
+    <source src="../sounds/suara.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 

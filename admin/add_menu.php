@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
-    header('Location: admin_masuk.php');
+    header('Location: admin_login.php');
     exit();
 }
 
@@ -61,7 +61,7 @@ if (isset($_GET['hapus'])) {
     $stmt = $pdo->prepare("DELETE FROM menu WHERE id = :id");
     $stmt->bindParam(':id', $id_menu);
     $stmt->execute();
-    header("Location: tambah_menu.php"); // Alihkan setelah menghapus
+    header("Location: add_menu.php"); // Alihkan setelah menghapus
     exit();
 }
 
@@ -76,27 +76,27 @@ $daftar_menu = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Menu</title>
-    <link rel="stylesheet" href="../css/gaya_tambah_menu.css">
-    <link rel="stylesheet" href="../css/gaya_admin.css">
+    <link rel="stylesheet" href="../css/add_menu_style.css">
+    <link rel="stylesheet" href="../css/admin_style.css">
     <link rel="stylesheet" href="../css/navbar.css">
 </head>
 <body>
    <header class="navbar">
         <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-             <a href="dasbor_admin.php">Dasbor</a>
-            <a href="tambah_menu.php">Tambah Menu</a>
-            <a href="kelola_pesanan.php">Kelola Pesanan</a>
-            <a href="lihat_pelanggan.php">Pelanggan</a>
+             <a href="admin_dashboard.php">Dasbor</a>
+            <a href="add_menu.php">Tambah Menu</a>
+            <a href="manage_orders.php">Kelola Pesanan</a>
+            <a href="view_subscribers.php">Pelanggan</a>
             <a href="ulasan.php">Ulasan</a>
             <a href="../php/logout.php">Keluar</a>
         </nav>
     </header>
 
-    <div class="wadah-auth">
+    <div class="auth-container">
         <h2>Tambah Menu</h2>
         <?php if (isset($berhasil)): ?>
-            <p class="sukses"><?php echo $berhasil; ?></p>
+            <p class="success"><?php echo $berhasil; ?></p>
         <?php endif; ?>
         <form method="POST" enctype="multipart/form-data">
             <input type="text" name="nama_menu" placeholder="Nama Menu" required>
@@ -106,7 +106,7 @@ $daftar_menu = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </form>
     </div>
 
-    <div class="daftar-menu">
+    <div class="menu-list">
         <h2>Daftar Menu</h2>
         <table>
             <tr>

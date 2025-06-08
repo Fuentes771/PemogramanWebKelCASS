@@ -57,7 +57,7 @@ for ($i = 6; $i >= 0; $i--) {
             <a href="add_menu.php">Penambahan Menu</a>
             <a href="manage_orders.php">Manajemen Order</a>
             <a href="view_subscribers.php">View Subscribers</a>
-            <a href="logout.php">Logout</a>
+            <a href="../php/logout.php">Logout</a>
         </nav>
     </header>
 

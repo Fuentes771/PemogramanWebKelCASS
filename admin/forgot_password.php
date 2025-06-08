@@ -40,8 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->setFrom('kopikukicass@gmail.com', 'KopiKuki');
             $mail->addAddress($email);
             $mail->Subject = 'Reset Password Admin';
-            $mail->Body = "Hai Admin,\n\nKlik link berikut untuk mereset password Anda:\n$reset_link\n\nLink hanya berlaku selama 1 jam.\n\nSalam,\nKopiKuki";
-
+            $mail->isHTML(true);
+            $mail->Body = "
+                <div style='font-family: Poppins, Arial, sans-serif; background-color: #fff8f0; padding: 20px; color: #333;'>
+                    <h2 style='color: #4E342E;'>Reset Password Admin</h2>
+                    <p>Hai <strong>Admin</strong>,</p>
+                    <p>Kami menerima permintaan untuk mengatur ulang password Anda sebagai admin Kuki Coffee.</p>
+                    <p>Silakan klik tombol di bawah ini untuk mengatur ulang password Anda:</p>
+                    <p style='text-align: center; margin: 30px 0;'>
+                        <a href='$reset_link' style='background-color: #7e4406; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;'>Reset Password</a>
+                    </p>
+                    <p>Jika Anda tidak meminta pengaturan ulang ini, abaikan email ini.</p>
+                    <p style='margin-top: 30px;'>Salam hangat,<br><strong>Kuki Coffee</strong></p>
+                </div>
+            ";
             $mail->send();
             $success = "Link reset telah dikirim ke email Anda.";
         } catch (Exception $e) {
@@ -59,9 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Lupa Password Admin | Kuki Coffee</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
+
 <body style="margin: 0; padding: 0; background-color: #FFF8F0; font-family: 'Poppins', Arial, sans-serif;">
 
 <div style="max-width: 500px; margin: 60px auto; background-color: #ffffff; padding: 40px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
+    <img src='https://example.com/logo_kuki.png' alt='Kuki Coffee' style='max-width: 120px; margin-bottom: 20px;'>
     <h2 style="color: #4E342E; margin-bottom: 15px;">Lupa Password Admin</h2>
     <p style="color: #7B6F65; font-size: 16px;">Masukkan email admin Anda untuk menerima link reset password.</p>
 

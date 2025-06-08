@@ -77,7 +77,7 @@ try {
         <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px;'>
             <div style='max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; padding: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);'>
 
-                <h2 style='color: #6f4e37; text-align: center;'>KopiKuki</h2>
+                <h2 style='color: #6f4e37; text-align: center;'>Kupi & Kuki</h2>
 
                 <p style='font-size: 16px; color: #333;'>Halo Pelanggan Setia,</p>
 

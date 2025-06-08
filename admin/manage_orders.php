@@ -16,6 +16,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
         $stmt = $pdo->prepare("UPDATE orders SET status = ? WHERE id = ?");
         $stmt->execute([$new_status, $order_id]);
         $_SESSION['admin_message'] = "Order status updated successfully!";
+        
+        // Pindahkan logika update queue position ke dalam blok ini
+        if ($new_status === 'completed' || $new_status === 'cancelled') {
+            // Reset queue position for completed/cancelled orders
+            $stmt = $pdo->prepare("UPDATE orders SET queue_position = NULL WHERE id = ?");
+            $stmt->execute([$order_id]);
+            
+            // Update queue positions for remaining pending orders
+            $stmt = $pdo->query("SELECT id FROM orders WHERE status = 'pending' ORDER BY order_date ASC");
+            $pending_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $position = 1;
+            foreach ($pending_orders as $order) {
+                $stmt = $pdo->prepare("UPDATE orders SET queue_position = ? WHERE id = ?");
+                $stmt->execute([$position, $order['id']]);
+                $position++;
+            }
+        }
+        
     } catch (PDOException $e) {
         error_log("Database error: " . $e->getMessage());
         $_SESSION['admin_error'] = "Error updating order status.";
@@ -48,6 +67,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="add_menu.php">Penambahan Menu</a>
             <a href="manage_orders.php">Manajemen Order</a>
             <a href="view_subscribers.php">View Subscribers</a>
+            <a href="ulasan.php">Ulasan</a>
             <a href="../php/logout.php">Logout</a>
         </nav>
     </header>

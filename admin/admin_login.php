@@ -3,10 +3,9 @@ session_start();
 require '../php/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $admin_username = $_POST['admin_username'];
-    $admin_password = $_POST['admin_password'];
+    $admin_username = trim($_POST['admin_username']);
+    $admin_password = trim($_POST['admin_password']);
 
-    // Cek kredensial admin
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username AND role = 'admin'");
     $stmt->bindParam(':username', $admin_username);
     $stmt->execute();
@@ -14,10 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($user && password_verify($admin_password, $user['password'])) {
         $_SESSION['admin_logged_in'] = true;
+        $_SESSION['admin_username'] = $user['username'];
         header('Location: admin_dashboard.php');
         exit();
     } else {
-        $error = "Invalid admin username or password";
+        $error = "Username atau password admin salah";
     }
 }
 ?>
@@ -41,6 +41,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" name="admin_password" placeholder="Admin Password" required>
             <button type="submit">Login</button>
         </form>
+        <p style="text-align: center; margin-top: 10px;">
+            <a href="forgot_password.php">Lupa password?</a>
+        </p>
     </div>
 </body>
 </html>

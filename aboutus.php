@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/navbar.css">
 </head>
 
-3<body>
+<body>
 
   <header class="navbar">
     <div class="logo">Kopi & Kuki</div>

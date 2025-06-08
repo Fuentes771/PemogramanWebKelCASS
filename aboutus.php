@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Clicker+Script&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-    <title>About Us - Kupi & Kuki - Menu</title>
+    <title>About Uss - Kupi & Kuki - Menu</title>
     <link rel="stylesheet" href="css/aboutus.css">
     <link rel="stylesheet" href="css/navbar.css">
 </head>

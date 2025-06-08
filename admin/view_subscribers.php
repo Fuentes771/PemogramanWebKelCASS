@@ -70,11 +70,38 @@ if (isset($_SESSION['success_message'])) {
     <?php endif; ?>
 
     <form action="send_subscribers_email.php" method="post">
-        <div class="form-group">
-            <input type="number" id="discount" name="discount" min="1" max="100" required placeholder="Masukkan diskon kupon">
-        </div>
+
+       <div class="form-row">
+  <div class="form-group">
+    <label for="discount">Diskon Kupon (%)</label>
+    <input type="number" id="discount" name="discount"
+           min="1" max="100" required
+           placeholder="Masukkan diskon kupon (%)">
+  </div>
+
+  <span class="input-separator">s/d</span>   <!-- teks di tengah -->
+
+     <div class="form-group">
+    <input class="input-no-label" type="number" id="max_discount" name="max_discount" min="1000" step="1000" required placeholder="Masukkan diskon maksimal (Rp)">
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="recipient_count">Jumlah Penerima</label>
+  <input type="number" id="recipient_count" name="recipient_count"
+         min="1" max="<?php echo count($subscribers); ?>" required
+         placeholder="Masukkan jumlah penerima">
+</div>
+
+
+<div class="form-group">
+  <label for="expiry_date">Berlaku Sampai Tanggal:</label>
+  <input type="date" id="expiry_date" name="expiry_date" required>
+</div>
+
         <button type="submit" class="send-button">Send to gmail</button>
     </form>
 </section>
+
 </body>
 </html>

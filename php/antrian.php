@@ -8,7 +8,7 @@ $stmt = $pdo->query("SELECT * FROM orders
                     LIMIT 5");
 $active_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get completed orders count for today
+// Hitung jumlah pesanan yang selesai hari ini
 $stmt = $pdo->query("SELECT COUNT(*) as completed_count FROM orders 
                     WHERE status = 'completed' 
                     AND DATE(order_date) = CURDATE()");
@@ -17,11 +17,11 @@ $completed_count = $completed_data['completed_count'];
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Antrian Coffee Shop</title>
+    <title>Antrian Kupi & Kuki</title>
     <link rel="stylesheet" href="../css/antrian.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -29,7 +29,7 @@ $completed_count = $completed_data['completed_count'];
 <body>
     <div class="queue-container">
         <div class="shop-header">
-            <h1><i class="fas fa-mug-hot"></i> Coffee Shop Queue</h1>
+            <h1><i class="fas fa-mug-hot"></i> Antrian Kupi & Kuki</h1>
             <div class="shop-info">
                 <div class="current-time">
                     <i class="fas fa-clock"></i>
@@ -58,7 +58,7 @@ $completed_count = $completed_data['completed_count'];
                 <div class="empty-queue">
                     <i class="fas fa-check-circle"></i>
                     <p>Tidak ada antrian saat ini</p>
-                    <small>Silahkan melakukan pemesanan di kasir</small>
+                    <small>Silakan melakukan pemesanan di kasir</small>
                 </div>
             <?php else: ?>
                 <?php foreach ($active_orders as $order): 
@@ -73,11 +73,10 @@ $completed_count = $completed_data['completed_count'];
                             <span class="order-time"><i class="fas fa-clock"></i> <?php echo $order_date->format('H:i'); ?></span>
                             <span class="order-status">
                                 <?php if ($order['status'] == 'processing'): ?>
-                                    <i class="fas fa-cog fa-spin"></i>
+                                    <i class="fas fa-cog fa-spin"></i> Sedang Diproses
                                 <?php else: ?>
-                                    <i class="fas fa-hourglass-half"></i>
+                                    <i class="fas fa-hourglass-half"></i> Menunggu
                                 <?php endif; ?>
-                                <?php echo ucfirst($order['status']); ?>
                             </span>
                         </div>
                         <?php if ($order['status'] == 'processing'): ?>
@@ -91,21 +90,21 @@ $completed_count = $completed_data['completed_count'];
         </div>
         
         <div class="queue-footer">
-            <p>Terima kasih telah memesan di Coffee Shop kami</p>
+            <p>Terima kasih telah memesan di Kupi & Kuki</p>
             <small>Antrian diperbarui setiap 30 detik</small>
         </div>
     </div>
     
     <script>
-        // Update clock in real-time
+        // Perbarui jam secara real-time
         function updateClock() {
             const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', {hour12: false});
+            const timeString = now.toLocaleTimeString('id-ID', {hour12: false});
             document.getElementById('live-clock').textContent = timeString;
         }
         setInterval(updateClock, 1000);
         
-        // Animate progress bars
+        // Animasi progress bar
         document.querySelectorAll('.progress-fill').forEach(bar => {
             let progress = 0;
             const interval = setInterval(() => {
@@ -118,7 +117,7 @@ $completed_count = $completed_data['completed_count'];
             }, 1000);
         });
         
-        // Auto-refresh every 30 seconds
+        // Muat ulang otomatis setiap 30 detik
         setTimeout(function(){
             window.location.reload();
         }, 30000);

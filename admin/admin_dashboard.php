@@ -17,26 +17,26 @@ if (!isset($_SESSION['admin_logged_in'])) {
     exit();
 }
 
-$menu_query = mysqli_query($conn, "SELECT COUNT(*) AS total_menu FROM menu");
-$total_menu = mysqli_fetch_assoc($menu_query)['total_menu'];
+$query_menu = mysqli_query($conn, "SELECT COUNT(*) AS total_menu FROM menu");
+$total_menu = mysqli_fetch_assoc($query_menu)['total_menu'];
 
-$order_query = mysqli_query($conn, "SELECT COUNT(*) AS total_order FROM orders");
-$total_order = mysqli_fetch_assoc($order_query)['total_order'];
+$query_order = mysqli_query($conn, "SELECT COUNT(*) AS total_order FROM orders");
+$total_order = mysqli_fetch_assoc($query_order)['total_order'];
 
-$today_query = mysqli_query($conn, "SELECT COUNT(*) AS today_order FROM orders WHERE DATE(order_date) = CURDATE()");
-$today_order = mysqli_fetch_assoc($today_query)['today_order'];
+$query_hari_ini = mysqli_query($conn, "SELECT COUNT(*) AS order_hari_ini FROM orders WHERE DATE(order_date) = CURDATE()");
+$order_hari_ini = mysqli_fetch_assoc($query_hari_ini)['order_hari_ini'];
 
-$subs_query = mysqli_query($conn, "SELECT COUNT(*) AS total_subscriber FROM subscribers");
-$total_subscriber = mysqli_fetch_assoc($subs_query)['total_subscriber'];
+$query_pelanggan = mysqli_query($conn, "SELECT COUNT(*) AS total_pelanggan FROM subscribers");
+$total_pelanggan = mysqli_fetch_assoc($query_pelanggan)['total_pelanggan'];
 
-$weekly_orders = [];
-$labels = [];
+$pesanan_mingguan = [];
+$label_hari = [];
 
 for ($i = 6; $i >= 0; $i--) {
-    $date = date('Y-m-d', strtotime("-$i days"));
-    $labels[] = date('D', strtotime($date));
-    $result = mysqli_query($conn, "SELECT COUNT(*) AS count FROM orders WHERE DATE(order_date) = '$date'");
-    $weekly_orders[] = mysqli_fetch_assoc($result)['count'];
+    $tanggal = date('Y-m-d', strtotime("-$i days"));
+    $label_hari[] = date('D', strtotime($tanggal));
+    $hasil = mysqli_query($conn, "SELECT COUNT(*) AS jumlah FROM orders WHERE DATE(order_date) = '$tanggal'");
+    $pesanan_mingguan[] = mysqli_fetch_assoc($hasil)['jumlah'];
 }
 ?>
 
@@ -44,7 +44,7 @@ for ($i = 6; $i >= 0; $i--) {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Admin</title>
+    <title>Dasbor Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/admin_style.css">
@@ -55,54 +55,54 @@ for ($i = 6; $i >= 0; $i--) {
     <header class="navbar">
         <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-             <a href="admin_dashboard.php">Dashboard</a>
-            <a href="add_menu.php">Penambahan Menu</a>
-            <a href="manage_orders.php">Manajemen Order</a>
-            <a href="view_subscribers.php">View Subscribers</a>
+             <a href="admin_dashboard.php">Dasbor</a>
+            <a href="add_menu.php">Tambah Menu</a>
+            <a href="manage_orders.php">Kelola Pesanan</a>
+            <a href="view_subscribers.php">Lihat Pelanggan</a>
             <a href="ulasan.php">Ulasan</a>
-            <a href="../php/logout.php">Logout</a>
+            <a href="../php/logout.php">Keluar</a>
         </nav>
     </header>
 
     <section>
-        <h2>Selamat datang di Dashboard Admin</h2>
-        <p>Pilih opsi di atas untuk mengelola menu dan order.</p>
+        <h2>Selamat datang di Dasbor Admin</h2>
+        <p>Pilih opsi di atas untuk mengelola menu dan pesanan.</p>
 
         <div class="stats-wrapper">
             <div class="card"><h3><?= $total_menu ?></h3><p>Total Menu</p></div>
-            <div class="card"><h3><?= $total_order ?></h3><p>Total Order</p></div>
-            <div class="card"><h3><?= $today_order ?></h3><p>Order Hari Ini</p></div>
-            <div class="card"><h3><?= $total_subscriber ?></h3><p>Subscriber</p></div>
+            <div class="card"><h3><?= $total_order ?></h3><p>Total Pesanan</p></div>
+            <div class="card"><h3><?= $order_hari_ini ?></h3><p>Pesanan Hari Ini</p></div>
+            <div class="card"><h3><?= $total_pelanggan ?></h3><p>Pelanggan</p></div>
         </div>
 
-        <h3>Statistik Order</h3>
+        <h3>Statistik Pesanan</h3>
         <div style="max-width: 400px; margin: auto;">
-            <canvas id="orderChart"></canvas>
+            <canvas id="grafikPesanan"></canvas>
         </div>
 
         <h3>Grafik Penjualan Mingguan</h3>
         <div style="max-width: 600px; margin: auto;">
-            <canvas id="weeklyChart"></canvas>
+            <canvas id="grafikMingguan"></canvas>
         </div>
 
-        <h3>Order Terbaru</h3>
-        <table class="order-table">
+        <h3>Pesanan Terbaru</h3>
+        <table class="tabel-pesanan">
             <tr>
                 <th>ID</th>
-                <th>Nama Customer</th>
+                <th>Nama Pelanggan</th>
                 <th>Tanggal</th>
                 <th>Total</th>
                 <th>Status</th>
             </tr>
             <?php
-            $recent_orders = mysqli_query($conn, "SELECT * FROM orders ORDER BY order_date DESC LIMIT 5");
-            while ($row = mysqli_fetch_assoc($recent_orders)) {
+            $pesanan_terbaru = mysqli_query($conn, "SELECT * FROM orders ORDER BY order_date DESC LIMIT 5");
+            while ($baris = mysqli_fetch_assoc($pesanan_terbaru)) {
                 echo "<tr>
-                        <td>{$row['id']}</td>
-                        <td>{$row['customer_name']}</td>
-                        <td>{$row['order_date']}</td>
-                        <td>Rp " . number_format($row['total_amount'], 0, ',', '.') . "</td>
-                        <td>{$row['status']}</td>
+                        <td>{$baris['id']}</td>
+                        <td>{$baris['customer_name']}</td>
+                        <td>{$baris['order_date']}</td>
+                        <td>Rp " . number_format($baris['total_amount'], 0, ',', '.') . "</td>
+                        <td>{$baris['status']}</td>
                       </tr>";
             }
             ?>
@@ -110,13 +110,13 @@ for ($i = 6; $i >= 0; $i--) {
     </section>
 
     <script>
-        const ctx = document.getElementById('orderChart').getContext('2d');
+        const ctx = document.getElementById('grafikPesanan').getContext('2d');
         new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['Order Hari Ini', 'Sisa Order'],
+                labels: ['Pesanan Hari Ini', 'Sisa Pesanan'],
                 datasets: [{
-                    data: [<?= $today_order ?>, <?= $total_order - $today_order ?>],
+                    data: [<?= $order_hari_ini ?>, <?= $total_order - $order_hari_ini ?>],
                     backgroundColor: ['#d49e42', 'rgba(255, 255, 255, 0.6)'],
                     borderColor: ['#b3862a', '#ccc'],
                     borderWidth: 1
@@ -137,7 +137,7 @@ for ($i = 6; $i >= 0; $i--) {
                     },
                     title: {
                         display: true,
-                        text: 'Perbandingan Order Hari Ini & Total Order',
+                        text: 'Perbandingan Pesanan Hari Ini & Total Pesanan',
                         color: '#f9f9f9',
                         font: {
                             family: 'Georgia, serif',
@@ -148,14 +148,14 @@ for ($i = 6; $i >= 0; $i--) {
             }
         });
 
-        const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+        const weeklyCtx = document.getElementById('grafikMingguan').getContext('2d');
         new Chart(weeklyCtx, {
             type: 'bar',
             data: {
-                labels: <?= json_encode($labels) ?>,
+                labels: <?= json_encode($label_hari) ?>,
                 datasets: [{
-                    label: 'Jumlah Order',
-                    data: <?= json_encode($weekly_orders) ?>,
+                    label: 'Jumlah Pesanan',
+                    data: <?= json_encode($pesanan_mingguan) ?>,
                     backgroundColor: '#d49e42',
                     borderColor: '#b3862a',
                     borderWidth: 2,
@@ -197,7 +197,7 @@ for ($i = 6; $i >= 0; $i--) {
                     },
                     title: {
                         display: true,
-                        text: 'Order 7 Hari Terakhir',
+                        text: 'Pesanan 7 Hari Terakhir',
                         color: '#f9f9f9',
                         font: {
                             family: 'Georgia, serif',

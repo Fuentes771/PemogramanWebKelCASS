@@ -19,8 +19,8 @@ if ($token) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $new_password = trim($_POST['new_password']);
 
-            if (strlen($new_password) < 6) {
-                echo "<p>Password minimal 6 karakter</p>";
+            if (strlen($new_password) < 1) {
+                echo "<p>Password minimal 1 karakter</p>";
             } else {
                 $new_pass_hash = password_hash($new_password, PASSWORD_DEFAULT);
 

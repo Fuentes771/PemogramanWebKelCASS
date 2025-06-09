@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit">Masuk</button>
         </form>
         <p style="text-align: center; margin-top: 10px;">
-            <a href="lupa_kata_sandi.php">Lupa kata sandi?</a>
+            <a href="forgot_password.php">Lupa kata sandi?</a>
         </p>
     </div>
 </body>

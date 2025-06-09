@@ -65,7 +65,7 @@ for ($i = 6; $i >= 0; $i--) {
     </header>
 
     <section>
-        <h2>Selamat datang di Dasbor Admin</h2>
+        <h2>Selamat datang di Dasboard Admin</h2>
         <p>Pilih opsi di atas untuk mengelola menu dan pesanan.</p>
 
         <div class="stats-wrapper">

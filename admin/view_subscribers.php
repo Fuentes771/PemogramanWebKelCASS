@@ -29,14 +29,14 @@ $coupon_sends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Subscribers</title>
     <link rel="stylesheet" href="../css/admin_style.css">
-    <link rel="stylesheet" href="../css/view_subscribers_style.css">
     <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/view_subscribers_style.css?v=1.1">
 </head>
 <body>
     <header class="navbar">
         <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-             <a href="admin_dashboard.php">Dashboard</a>
+            <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Penambahan Menu</a>
             <a href="manage_orders.php">Manajemen Order</a>
             <a href="view_subscribers.php">View Subscribers</a>
@@ -75,7 +75,7 @@ $coupon_sends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
         </div>
     </div>
-</section>
+</section>  
 
 
     <!-- Modal Send Coupon -->
@@ -127,54 +127,55 @@ $coupon_sends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="modal-content" style="max-width: 900px;">
         <span class="close" onclick="closeHistoryModal()">&times;</span>
         <h2>History Pengiriman Kupon</h2>
-        
-        <div class="action-buttons">
-            <button class="btn btn-delete" onclick="deleteSelected()">
-                Delete Selected
-            </button>
+
+        <!-- Wrapper untuk border-radius dan overflow -->
+        <div class="table-wrapper">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>    
+                            <th class="checkbox-cell"></th>
+                            <th>Tanggal Kirim</th>
+                            <th>Email Penerima</th>
+                            <th>Kode Kupon</th>
+                            <th>Diskon (%)</th>
+                            <th>Max Diskon (Rp)</th>
+                            <th>Expired Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($coupon_sends)): ?>
+                            <tr>
+                                <td colspan="7">Belum ada kupon yang dikirim.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($coupon_sends as $send): ?>
+                            <tr data-id="<?php echo $send['id']; ?>">
+                                <td class="checkbox-cell">
+                                    <input type="checkbox" class="row-checkbox">
+                                </td>
+                                <td><?php echo $send['sent_at']; ?></td>
+                                <td><?php echo htmlspecialchars($send['recipient_email']); ?></td>
+                                <td><?php echo htmlspecialchars($send['coupon_code']); ?></td>
+                                <td><?php echo $send['discount']; ?>%</td>
+                                <td>Rp <?php echo number_format($send['max_discount']); ?></td>
+                                <td><?php echo $send['expiry_date']; ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="checkbox-cell">
-                            <input type="checkbox" id="selectAll" onclick="toggleSelectAll()">
-                            <label id="selectAllText" for="selectAll">Select All</label>
-                        </th>
-                        <th>Tanggal Kirim</th>
-                        <th>Email Penerima</th>
-                        <th>Kode Kupon</th>
-                        <th>Diskon (%)</th>
-                        <th>Max Diskon (Rp)</th>
-                        <th>Expired Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if (empty($coupon_sends)): ?>
-                        <tr>
-                            <td colspan="7">Belum ada kupon yang dikirim.</td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($coupon_sends as $send): ?>
-                        <tr data-id="<?php echo $send['id']; ?>">
-                            <td class="checkbox-cell">
-                                <input type="checkbox" class="row-checkbox">
-                            </td>
-                            <td><?php echo $send['sent_at']; ?></td>
-                            <td><?php echo htmlspecialchars($send['recipient_email']); ?></td>
-                            <td><?php echo htmlspecialchars($send['coupon_code']); ?></td>
-                            <td><?php echo $send['discount']; ?>%</td>
-                            <td>Rp <?php echo number_format($send['max_discount']); ?></td>
-                            <td><?php echo $send['expiry_date']; ?></td>
-                        </tr>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                </tbody>
-            </table>
+
+        <!-- Tombol aksi tetap di bawah dan tidak ikut scroll -->
+        <div class="action-buttons">
+            <button class="custom-button btn-select-all" id="selectAllButton" onclick="toggleSelectAllRows()">Select All</button>
+            <button class="custom-button btn-delete" onclick="deleteSelected()">Delete Selected</button>
         </div>
     </div>
 </div>
+
 
     <!-- Script Modal -->
     <script>
@@ -228,21 +229,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Fungsi untuk select/deselect semua
-function toggleSelectAll() {
-    const selectAll = document.getElementById('selectAll');
-    const checkboxes = document.querySelectorAll('.row-checkbox');
-    const selectAllText = document.getElementById('selectAllText');
+   let allSelected = false;
 
-    const isAllSelected = selectAll.checked; // true jika ingin select all, false jika ingin unselect all
+function toggleSelectAllRows() {
+    const checkboxes = document.querySelectorAll('.row-checkbox');
+    allSelected = !allSelected;
 
     checkboxes.forEach(checkbox => {
-        checkbox.checked = isAllSelected; // set sesuai status selectAll
+        checkbox.checked = allSelected;
     });
 
-    // Update teks sesuai status checkbox selectAll
-    selectAllText.textContent = isAllSelected ? 'Deselect All' : 'Select All';
+    // Update tombol text
+    document.getElementById('selectAllButton').textContent = allSelected ? 'Deselect All' : 'Select All';
 }
+
+
 
 // Fungsi untuk delete selected
 function deleteSelected() {
@@ -298,22 +299,17 @@ function deleteSelected() {
 
 // Event listener untuk checkbox individual
 document.addEventListener('DOMContentLoaded', function() {
-    // Event listener untuk checkbox individual di tbody
     document.querySelector('tbody').addEventListener('click', function(e) {
         if (e.target.classList.contains('row-checkbox')) {
-            updateSelectAllCheckbox();
+            updateSelectAllButton();
         }
     });
     
-    // Fungsi update checkbox "selectAll" dan teksnya sesuai status checkbox individual
-    function updateSelectAllCheckbox() {
+    function updateSelectAllButton() {
         const checkboxes = document.querySelectorAll('.row-checkbox');
-        const selectAll = document.getElementById('selectAll');
-        const selectAllText = document.getElementById('selectAllText');
-
-        const allChecked = [...checkboxes].length > 0 && [...checkboxes].every(checkbox => checkbox.checked);
-        selectAll.checked = allChecked;
-        selectAllText.textContent = allChecked ? 'Deselect All' : 'Select All';
+        const allChecked = checkboxes.length > 0 && Array.from(checkboxes).every(cb => cb.checked);
+        allSelected = allChecked;
+        document.getElementById('selectAllButton').textContent = allChecked ? 'Deselect All' : 'Select All';
     }
 });
 

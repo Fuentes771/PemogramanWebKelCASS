@@ -55,7 +55,7 @@ for ($i = 6; $i >= 0; $i--) {
     <header class="navbar">
         <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-             <a href="admin_dashboard.php">Dasbor</a>
+             <a href="admin_dashboard.php">Dasboard</a>
             <a href="add_menu.php">Tambah Menu</a>
             <a href="manage_orders.php">Kelola Pesanan</a>
             <a href="view_subscribers.php">Lihat Pelanggan</a>

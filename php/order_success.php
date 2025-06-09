@@ -1,108 +1,84 @@
 <?php
 session_start();
 
-// Check if there's a successful order
+// Debugging
+error_log("Session contents: " . print_r($_SESSION, true));
+
+// Redirect jika tidak ada data order
 if (!isset($_SESSION['order_success'])) {
-    header("Location: ../menu.php");
+    $_SESSION['checkout_error'] = "Silakan selesaikan proses checkout terlebih dahulu";
+    header("Location: checkout.php");
     exit();
 }
 
-// Get order details from session
-$order_message = $_SESSION['order_success']['message'];
-$payment_method = $_SESSION['order_success']['payment_method'];
-$total_amount = $_SESSION['order_success']['total_amount'];
+// Ambil data dari session
+$order_data = $_SESSION['order_success'];
+$total_amount = $order_data['total_amount'] ?? 0;
+$discount_amount = $order_data['discount_amount'] ?? 0;
+$payment_method = $order_data['payment_method'] ?? 'Tidak diketahui';
+$final_amount = $total_amount - $discount_amount;
 
-// Clear the success message from session
+// Hapus data session setelah digunakan
 unset($_SESSION['order_success']);
+unset($_SESSION['applied_coupon']);
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kupi & Kuki - Order Success</title>
+    <title>Order Success - Kupi & Kuki</title>
     <link rel="stylesheet" href="../css/style2.css">
     <link rel="stylesheet" href="../css/navbar.css">
-    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        .success-container {
-            max-width: 600px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .success-icon {
-            font-size: 5rem;
-            color: #4CAF50;
-            margin-bottom: 1rem;
-        }
-        
-        .success-message {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .order-details {
-            background: #f9f9f9;
-            padding: 1rem;
-            border-radius: 5px;
-            margin: 1rem 0;
-            text-align: left;
-        }
-        
-        .back-to-menu {
-            display: inline-block;
-            margin-top: 1.5rem;
-            padding: 0.8rem 1.5rem;
-            background: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        
-        .back-to-menu:hover {
-            background: #45a049;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/order_success.css">
 </head>
 <body>
-    
-  <header class="navbar">
-    <div class="logo">Kupi & Kui</div>
-    <nav>
-      <a href="../index.php">Home</a>
-      <a href="../menu.php">Menu</a>
-      <a href="../aboutus.php">About Us</a>
-      <a href="../ContactUs.php">Contact Us</a>
-    </nav>
-  </header>
+    <header class="navbar">
+        <div class="logo">Kupi & Kuki</div>
+        <nav>
+            <a href="../index.php">Home</a>
+            <a href="../menu.php">Menu</a>
+            <a href="../aboutus.php">About Us</a>
+            <a href="../ContactUs.php">Contact Us</a>
+        </nav>
+    </header>
 
-  <main class="success-container">
-        <div class="success-icon">
-            <i class="fas fa-check-circle"></i>
+    <main class="success-container">
+        <div class="success-card">
+            <h1>Order Berhasil!</h1>
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            
+            <div class="order-details <?php echo $discount_amount > 0 ? 'has-discount' : ''; ?>">
+                <div class="detail-row">
+                    <span>Total Pembayaran:</span>
+                    <span>Rp <?php echo number_format($total_amount, 0, ',', '.'); ?></span>
+                </div>
+                
+                <?php if ($discount_amount > 0): ?>
+                <div class="detail-row discount-row">
+                    <span>Diskon:</span>
+                    <span>- Rp <?php echo number_format($discount_amount, 0, ',', '.'); ?></span>
+                </div>
+                <?php endif; ?>
+                
+                <div class="detail-row final-amount">
+                    <span>Total Akhir:</span>
+                    <span>Rp <?php echo number_format($final_amount, 0, ',', '.'); ?></span>
+                </div>
+                
+                <div class="detail-row">
+                    <span>Metode Pembayaran:</span>
+                    <span><?php echo htmlspecialchars($payment_method); ?></span>
+                </div>
+            </div>
+            
+            <p class="success-message"><?php echo $order_data['message'] ?? 'Terima kasih telah memesan di Kupi & Kuki.'; ?></p>
+            
+            <a href="../menu.php" class="back-to-menu">Kembali ke Menu</a>
         </div>
-        <div class="success-message"><?php echo htmlspecialchars($order_message); ?></div>
-        
-        <div class="order-details">
-            <p><strong>Payment Method:</strong> <?php echo htmlspecialchars($payment_method); ?></p>
-            <p><strong>Total Amount:</strong> Rp <?php echo number_format($total_amount, 0, ',', '.'); ?></p>
-        </div>
-        
-        <p>Your order has been received and is being prepared.</p>
-        <a href="../menu.php" class="back-to-menu">Back to Menu</a>
-  </main>
-
-  <audio autoplay>
-    <source src="../sounds/suara.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-
+    </main>
 </body>
 </html>

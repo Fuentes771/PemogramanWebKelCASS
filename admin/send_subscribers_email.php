@@ -7,14 +7,14 @@ use PHPMailer\PHPMailer\Exception;
 // Ambil data dari form
 $diskon = isset($_POST['discount']) ? intval($_POST['discount']) : 0;
 $maxDiskon = isset($_POST['max_discount']) ? intval($_POST['max_discount']) : 0;
-$recipientCount = isset($_POST['recipient_count']) ? intval($_POST['recipient_count']) : 0;
-$expiryDate = isset($_POST['expiry_date']) ? $_POST['expiry_date'] : '';
+$jumlahPenerima = isset($_POST['recipient_count']) ? intval($_POST['recipient_count']) : 0;
+$tanggalKadaluarsa = isset($_POST['expiry_date']) ? $_POST['expiry_date'] : '';
 
 if (
     $diskon <= 0 || $diskon > 100 ||
     $maxDiskon <= 0 || $maxDiskon > 100000000 ||
-    $recipientCount <= 0 ||
-    empty($expiryDate)
+    $jumlahPenerima <= 0 ||
+    empty($tanggalKadaluarsa)
 ) {
     $_SESSION['success_message'] = "Input tidak valid!";
     header("Location: view_subscribers.php");
@@ -34,15 +34,15 @@ $kupon = generateCoupon($diskon);
 // Koneksi database
 $koneksi = new mysqli("localhost", "root", "", "toko_kopi");
 if ($koneksi->connect_error) {
-    $_SESSION['success_message'] = "Koneksi database gagal: " . $koneksi->connect_error;
+    $_SESSION['success_message'] = "Koneksi ke database gagal: " . $koneksi->connect_error;
     header("Location: view_subscribers.php");
     exit();
 }
 
-// Ambil email subscriber secara acak
-$query = $koneksi->query("SELECT email FROM subscribers ORDER BY RAND() LIMIT {$recipientCount}");
+// Ambil email pelanggan secara acak
+$query = $koneksi->query("SELECT email FROM subscribers ORDER BY RAND() LIMIT {$jumlahPenerima}");
 if (!$query || $query->num_rows === 0) {
-    $_SESSION['success_message'] = "Tidak ada email subscriber yang ditemukan.";
+    $_SESSION['success_message'] = "Tidak ada pelanggan yang ditemukan.";
     header("Location: view_subscribers.php");
     exit();
 }
@@ -59,7 +59,7 @@ try {
     $mail->Port = 587;
     $mail->setFrom('kopikukicass@gmail.com', 'KopiKuki');
 
-    $sentCount = 0;
+    $jumlahTerkirim = 0;
 
     while ($row = $query->fetch_assoc()) {
         $email = $row['email'];
@@ -69,9 +69,9 @@ try {
         $mail->addAddress($email);
 
         $mail->isHTML(true);
-        $mail->Subject = "Nikmati Diskon {$diskon}% Spesial dari KopiKuki - Gunakan Kode Promo saat Pembayaran!";
+        $mail->Subject = "Dapatkan Diskon {$diskon}% dari KopiKuki - Gunakan Kode Promo saat Pembayaran!";
 
-        $formattedDate = date('d F Y', strtotime($expiryDate));
+        $tanggalFormat = date('d F Y', strtotime($tanggalKadaluarsa));
 
         $mail->Body = "
         <div style='font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 30px;'>
@@ -86,7 +86,7 @@ try {
                     Sebagai bentuk apresiasi, kami memberikan <strong>diskon sebesar {$diskon}%</strong> hingga maksimal potongan <strong>{$maxDiskonFormatted}</strong> untuk Anda.
                 </p>
 
-                <p style='font-size: 16px; color: #555;'>Gunakan kode promo berikut saat checkout:</p>
+                <p style='font-size: 16px; color: #555;'>Gunakan kode promo berikut saat melakukan pembayaran:</p>
 
                 <div style='text-align: center; margin: 30px 0;'>
                     <span style='display: inline-block; background-color: #6f4e37; color: #fff; font-size: 24px; font-weight: bold; padding: 14px 28px; border-radius: 8px; letter-spacing: 1px;'>
@@ -95,40 +95,32 @@ try {
                 </div>
 
                 <div style='font-size: 14px; color: #555; margin-top: 20px;'>
-                    <p><strong>Berlaku Sampai:</strong> {$formattedDate}</p>
+                    <p><strong>Berlaku Sampai:</strong> {$tanggalFormat}</p>
                     <p><strong>Total Diskon:</strong> {$diskon}% (maks. {$maxDiskonFormatted})</p>
                 </div>
 
                 <p style='font-size: 14px; color: #777; font-style: italic; margin-top: 30px;'>
-                    *Penawaran ini mengikuti syarat dan ketentuan yang ditetapkan. KopiKuki dapat sewaktu-waktu menyesuaikan promo yang berlaku.
+                    *Penawaran ini berlaku sesuai syarat dan ketentuan. KopiKuki berhak mengubah promo sewaktu-waktu.
 
                 <hr style='margin: 30px 0; border: none; border-top: 1px solid #eee;'>
 
                 <p style='font-size: 16px; color: #333;'>Salam hangat,</p>
-                <br><br>
                 <p style='font-size: 16px; font-weight: bold; color: #6f4e37;'>Tim KopiKuki</p>
 
             </div>
         </div>";
 
-        $mail->AltBody = "Halo pelanggan setia KopiKuki,\n\nKami memberikan Anda diskon {$diskon}% hingga maksimal potongan {$maxDiskonFormatted}!\nGunakan kode kupon: {$kupon}\nBerlaku sampai: {$formattedDate}\n\nBelanja sekarang di http://localhost/PemogramanWebKelCASS/\n\nSalam hangat,\nTim KopiKuki";
+        $mail->AltBody = "Halo pelanggan setia KopiKuki,\n\nKami memberikan Anda diskon {$diskon}% hingga maksimal potongan {$maxDiskonFormatted}!\nGunakan kode kupon: {$kupon}\nBerlaku sampai: {$tanggalFormat}\n\nBelanja sekarang di http://localhost/PemogramanWebKelCASS/\n\nSalam hangat,\nTim KopiKuki";
 
         $mail->send();
-
-        // >>> Tambahkan ke tabel coupon_sends setelah email berhasil dikirim <<<
-        $stmt = $koneksi->prepare("INSERT INTO coupon_sends (recipient_email, coupon_code, discount, max_discount, expiry_date) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssiis", $email, $kupon, $diskon, $maxDiskon, $expiryDate);
-        $stmt->execute();
-        $stmt->close();
-
-        $sentCount++;
+        $jumlahTerkirim++;
     }
 
-    $_SESSION['success_message'] = "Kupon berhasil dikirim ke {$sentCount} pelanggan. Kode kupon: <strong>{$kupon}</strong>";
+    $_SESSION['success_message'] = "Kupon berhasil dikirim ke {$jumlahTerkirim} pelanggan. Kode kupon: <strong>{$kupon}</strong>";
     header("Location: view_subscribers.php");
     exit();
 } catch (Exception $e) {
-    $_SESSION['success_message'] = "Kupon gagal dikirim. Error: " . htmlspecialchars($mail->ErrorInfo);
+    $_SESSION['success_message'] = "Kupon gagal dikirim. Kesalahan: " . htmlspecialchars($mail->ErrorInfo);
     header("Location: view_subscribers.php");
     exit();
 }

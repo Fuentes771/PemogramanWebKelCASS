@@ -1,11 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> 
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ContactUs</title>
+  <title>Hubungi Kami</title>
   <link rel="stylesheet" href="css/contactUs.css" />
-    <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Clicker+Script&display=swap" rel="stylesheet">
 </head>
@@ -14,23 +14,22 @@
 <header class="navbar">
     <div class="logo">Kupi & Kuki</div>
     <nav>
-      <a href="index.php">Home</a>
+      <a href="index.php">Beranda</a>
       <a href="menu.php">Menu</a>
-      <a href="aboutus.php">About Us</a>
-      <a href="ContactUs.php">Contact Us</a>
+      <a href="aboutus.php">Tentang Kami</a>
+      <a href="ContactUs.php">Hubungi Kami</a>
     </nav>
   </header>
 
-
  <!-- Cangkir kopi kiri dan kanan -->
-  <img src="img/Coffee_Left.png" class="coffee-cup left" alt="Coffee Cup Left" />
-  <img src="img/Coffee_Right.png" class="coffee-cup right" alt="Coffee Cup Right" />
+  <img src="img/Coffee_Left.png" class="coffee-cup left" alt="Cangkir Kopi Kiri" />
+  <img src="img/Coffee_Right.png" class="coffee-cup right" alt="Cangkir Kopi Kanan" />
 
-  <!-- Form subscribe -->
+  <!-- Form berlangganan -->
   <section class="subscribe-section">
     <div class="content-wrapper">
-    <h1>Berlangganan untuk Penawaran dari Kami</h1>
-    <p>Jangan lewatkan berita terkini, pembaruan, tips menarik, dan penawaran spesial dari kami. </p>
+      <h1>Berlangganan untuk Penawaran dari Kami</h1>
+      <p>Jangan lewatkan berita terkini, pembaruan, tips menarik, dan penawaran spesial dari kami.</p>
 
   <?php
       session_start();
@@ -46,28 +45,27 @@
               
               try {
                   $stmt->execute();
-                  echo '<div class="success-message">Thanks for subscribing!</div>';
+                  echo '<div class="success-message">Terima kasih sudah berlangganan!</div>';
               } catch (PDOException $e) {
                   if ($e->getCode() == 23000) {
-                      echo '<div class="error-message">Email already subscribed.</div>';
+                      echo '<div class="error-message">Email sudah terdaftar.</div>';
                   } else {
-                      echo '<div class="error-message">Error: ' . $e->getMessage() . '</div>';
+                      echo '<div class="error-message">Kesalahan: ' . $e->getMessage() . '</div>';
                   }
               }
           } else {
-              echo '<div class="error-message">Invalid email address.</div>';
+              echo '<div class="error-message">Alamat email tidak valid.</div>';
           }
       }
-      ?>
-
+  ?>
 
     <form method="POST" action="">
-      <input type="email" name="email" placeholder="Enter your mail" required />
+      <input type="email" name="email" placeholder="Masukkan email Anda" required />
       <button type="submit">Berlangganan</button>
     </form>
   </section>
 
-  <!-- Bagian footer dengan gambar sebagai background -->
+  <!-- Bagian footer dengan gambar sebagai latar belakang -->
   <footer class="footer">
     <div class="footer-overlay">
       <div class="footer-container">
@@ -83,28 +81,28 @@
         </div>
 
         <div class="footer-column">
-          <h3>About</h3>
+          <h3>Tentang</h3>
           <ul>
             <li>Menu</li>
-            <li>Features</li>
-            <li>News & Blogs</li>
-            <li>Help & Supports</li>
+            <li>Fitur</li>
+            <li>Berita & Blog</li>
+            <li>Bantuan & Dukungan</li>
           </ul>
         </div>
 
         <div class="footer-column">
-          <h3>Company</h3>
+          <h3>Perusahaan</h3>
           <ul>
-            <li>How we work</li>
-            <li>Terms of service</li>
-            <li>Pricing</li>
+            <li>Cara Kerja Kami</li>
+            <li>Syarat Layanan</li>
+            <li>Harga</li>
             <li>FAQ</li>
           </ul>
         </div>
 
         <div class="footer-column">
-          <h3>Contact Us</h3>
-          <p>Jl. Prof. Dr. Sumantri Brojonegoro No. 1 Bandar Lampung, 35145, INDONESIA. </p>
+          <h3>Hubungi Kami</h3>
+          <p>Jl. Prof. Dr. Sumantri Brojonegoro No. 1 Bandar Lampung, 35145, INDONESIA.</p>
           <p>+62 85712345678</p>
           <p>kopikukicass@gmail.com</p>
           <p>www.Kopikuki.com</p>

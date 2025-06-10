@@ -45,13 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div style='font-family: Poppins, Arial, sans-serif; background-color: #fff8f0; padding: 20px; color: #333;'>
                     <h2 style='color: #4E342E;'>Pengaturan Ulang Kata Sandi Admin</h2>
                     <p>Halo <strong>Admin</strong>,</p>
-                    <p>Kami menerima permintaan untuk mengatur ulang kata sandi Anda sebagai admin <strong>Kupi & Kuki Coffee</strong>.</p>
+                    <p>Kami menerima permintaan untuk mengatur ulang kata sandi Anda sebagai admin <strong>Kupi & Kuki </strong>.</p>
                     <p>Silakan klik tombol di bawah ini untuk melanjutkan pengaturan ulang kata sandi Anda:</p>
                     <p style='text-align: center; margin: 30px 0;'>
                         <a href='$tautan_pengaturan' style='background-color: #7e4406; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;'>Atur Ulang Kata Sandi</a>
                     </p>
                     <p>Jika Anda tidak merasa melakukan permintaan ini, abaikan saja email ini.</p>
-                    <p style='margin-top: 30px;'>Salam hangat,<br><strong>Kupi & Kuki Coffee</strong></p>
+                    <p style='margin-top: 30px;'>Salam hangat,<br><strong>Kupi & Kuki </strong></p>
                 </div>
             ";
             $pengirim_email->send();

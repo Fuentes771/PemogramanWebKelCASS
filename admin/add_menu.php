@@ -8,47 +8,47 @@ if (!isset($_SESSION['admin_logged_in'])) {
 require '../php/config.php';
 
 // Menangani penambahan menu
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tambah_menu'])) {
-    $nama_menu = $_POST['nama_menu'];
-    $harga_menu = $_POST['harga_menu'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_menu'])) {
+    $menu_name = $_POST['menu_name'];
+    $menu_price = $_POST['menu_price'];
 
     // Proses unggah gambar
-    $gambar = $_FILES['gambar_menu']['name'];
-    $folder_tujuan = "../uploads/"; // Pastikan folder ini ada dan dapat ditulis
-    $file_tujuan = $folder_tujuan . basename($gambar);
-    $unggah_ok = 1;
-    $tipe_file = strtolower(pathinfo($file_tujuan, PATHINFO_EXTENSION));
+    $image = $_FILES['menu_image']['name'];
+    $target_dir = "../uploads/"; // Pastikan folder ini ada dan dapat ditulis
+    $target_dir = $target_dir . basename($image);
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_dir, PATHINFO_EXTENSION));
 
     // Cek apakah file gambar adalah gambar asli
-    $cek = getimagesize($_FILES['gambar_menu']['tmp_name']);
-    if ($cek === false) {
+    $check = getimagesize($_FILES['menu_image']['tmp_name']);
+    if ($check === false) {
         echo "File bukan gambar yang valid.";
-        $unggah_ok = 0;
+        $uploadOk = 0;
     }
 
     // Cek ukuran file
-    if ($_FILES['gambar_menu']['size'] > 500000) { // 500KB
+    if ($_FILES['menu_image']['size'] > 500000) { // 500KB
         echo "Maaf, file terlalu besar (maksimal 500KB).";
-        $unggah_ok = 0;
+        $uploadOk = 0;
     }
 
     // Cek format file
-    if (!in_array($tipe_file, ['jpg', 'png', 'jpeg', 'gif'])) {
+    if (!in_array($imageFileType, ['jpg', 'png', 'jpeg', 'gif'])) {
         echo "Maaf, hanya file JPG, JPEG, PNG & GIF yang diperbolehkan.";
-        $unggah_ok = 0;
+        $uploadOk = 0;
     }
 
     // Jika semua cek lolos, unggah file
-    if ($unggah_ok == 1) {
-        if (move_uploaded_file($_FILES['gambar_menu']['tmp_name'], $file_tujuan)) {
+    if ($uploadOk == 1) {
+        if (move_uploaded_file($_FILES['menu_image']['tmp_name'], $target_dir)) {
             // Simpan data menu ke database
-            $stmt = $pdo->prepare("INSERT INTO menu (name, price, image) VALUES (:nama, :harga, :gambar)");
-            $stmt->bindParam(':nama', $nama_menu);
-            $stmt->bindParam(':harga', $harga_menu);
-            $stmt->bindParam(':gambar', $gambar);
+            $stmt = $pdo->prepare("INSERT INTO menu (name, price, image) VALUES (:name, :price, :image)");
+            $stmt->bindParam(':name', $menu_name);
+            $stmt->bindParam(':price', $menu_price);
+            $stmt->bindParam(':image', $image);
             $stmt->execute();
 
-            $berhasil = "Menu berhasil ditambahkan!";
+            $success = "Menu berhasil ditambahkan!";
         } else {
             echo "Maaf, terjadi kesalahan saat mengunggah file.";
         }
@@ -56,10 +56,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['tambah_menu'])) {
 }
 
 // Menangani penghapusan menu
-if (isset($_GET['hapus'])) {
-    $id_menu = $_GET['hapus'];
+if (isset($_GET['delete'])) {
+    $menu_id = $_GET['delete'];
     $stmt = $pdo->prepare("DELETE FROM menu WHERE id = :id");
-    $stmt->bindParam(':id', $id_menu);
+    $stmt->bindParam(':id', $menu_id);
     $stmt->execute();
     header("Location: add_menu.php"); // Alihkan setelah menghapus
     exit();
@@ -67,7 +67,7 @@ if (isset($_GET['hapus'])) {
 
 // Ambil data menu dari database
 $stmt = $pdo->query("SELECT * FROM menu ORDER BY id ASC");
-$daftar_menu = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -95,14 +95,14 @@ $daftar_menu = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <div class="auth-container">
         <h2>Tambah Menu</h2>
-        <?php if (isset($berhasil)): ?>
-            <p class="success"><?php echo $berhasil; ?></p>
+        <?php if (isset($success)): ?>
+            <p class="success"><?php echo $success; ?></p>
         <?php endif; ?>
         <form method="POST" enctype="multipart/form-data">
-            <input type="text" name="nama_menu" placeholder="Nama Menu" required>
-            <input type="number" name="harga_menu" placeholder="Harga Menu" required>
-            <input type="file" name="gambar_menu" accept="image/*" required>
-            <button type="submit" name="tambah_menu">Tambah Menu</button>
+            <input type="text" name="menu_name" placeholder="Nama Menu" required>
+            <input type="number" name="menu_price" placeholder="Harga Menu" required>
+            <input type="file" name="menu_image" accept="image/*" required>
+            <button type="submit" name="add_menu">Tambah Menu</button>
         </form>
     </div>
 
@@ -116,7 +116,7 @@ $daftar_menu = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <th>Gambar</th>
                 <th>Aksi</th>
             </tr>
-            <?php foreach ($daftar_menu as $menu): ?>
+            <?php foreach ($menus as $menu): ?>
             <tr>
                 <td><?php echo $menu['id']; ?></td>
                 <td><?php echo htmlspecialchars($menu['name']); ?></td>
@@ -127,7 +127,7 @@ $daftar_menu = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php endif; ?>
                 </td>
                 <td>
-                    <a href="?hapus=<?php echo $menu['id']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus menu ini?');">Hapus</a>
+                    <a href="?delete=<?php echo $menu['id']; ?>" onclick="return confirm('Apakah Anda yakin ingin menghapus menu ini?');">Hapus</a>
                 </td>
             </tr>
             <?php endforeach; ?>

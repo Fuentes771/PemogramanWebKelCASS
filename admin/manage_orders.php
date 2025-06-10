@@ -9,32 +9,32 @@ require '../php/config.php';
 
 // Proses perubahan status pesanan
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
-    $id_pesanan = (int)$_POST['order_id'];
-    $status_baru = $_POST['status'];
+    $order_id = (int)$_POST['order_id'];
+    $new_status = $_POST['status'];
     
     try {
         $stmt = $pdo->prepare("UPDATE orders SET status = ? WHERE id = ?");
-        $stmt->execute([$status_baru, $id_pesanan]);
+        $stmt->execute([$new_status, $order_id]);
         $_SESSION['admin_message'] = "Status pesanan berhasil diperbarui!";
         
         // Jika status selesai atau dibatalkan, atur ulang antrian
-        if ($status_baru === 'completed' || $status_baru === 'cancelled') {
+        if ($new_status === 'completed' || $new_status === 'cancelled') {
             $stmt = $pdo->prepare("UPDATE orders SET queue_position = NULL WHERE id = ?");
-            $stmt->execute([$id_pesanan]);
+            $stmt->execute([$order_id]);
 
             // Update posisi antrian untuk pesanan yang masih pending
             $stmt = $pdo->query("SELECT id FROM orders WHERE status = 'pending' ORDER BY order_date ASC");
-            $pesanan_pending = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $pending_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $posisi = 1;
-            foreach ($pesanan_pending as $pesanan) {
+            $position = 1;
+            foreach ($pending_orders as $order) {
                 $stmt = $pdo->prepare("UPDATE orders SET queue_position = ? WHERE id = ?");
-                $stmt->execute([$posisi, $pesanan['id']]);
-                $posisi++;
+                $stmt->execute([$position, $order['id']]);
+                $position++;
             }
         }
     } catch (PDOException $e) {
-        error_log("Kesalahan database: " . $e->getMessage());
+        error_log("Database error: " . $e->getMessage());
         $_SESSION['admin_error'] = "Terjadi kesalahan saat memperbarui status pesanan.";
     }
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
 
 // Ambil semua data pesanan
 $stmt = $pdo->query("SELECT * FROM orders ORDER BY order_date DESC");
-$pesanan = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -89,29 +89,29 @@ $pesanan = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
         
         <div class="orders-container">
-            <?php if (empty($pesanan)): ?>
+            <?php if (empty($orders)): ?>
                 <p>Tidak ada pesanan yang ditemukan.</p>
             <?php else: ?>
-                <?php foreach ($pesanan as $pesanan_item): 
-                    $daftar_item = json_decode($pesanan_item['items'], true);
-                    $tanggal_pesanan = new DateTime($pesanan_item['order_date']);
+                <?php foreach ($orders as $order): 
+                    $items = json_decode($order['items'], true);
+                    $order_date = new DateTime($order['order_date']);
                 ?>
                     <div class="order-card">
                         <div class="order-header">
-                            <h3>Pesanan #<?php echo $pesanan_item['id']; ?></h3>
-                            <span class="order-date"><?php echo $tanggal_pesanan->format('d M Y H:i'); ?></span>
+                            <h3>Order #<?php echo $order['id']; ?></h3>
+                            <span class="order-date"><?php echo $order_date->format('d M Y H:i'); ?></span>
                         </div>
                         
                         <div class="customer-info">
-                            <p><strong>Pelanggan:</strong> <?php echo htmlspecialchars($pesanan_item['customer_name']); ?></p>
-                            <p><strong>Total:</strong> Rp <?php echo number_format($pesanan_item['total_amount'], 0, ',', '.'); ?></p>
-                            <p><strong>Metode Pembayaran:</strong> <?php echo htmlspecialchars($pesanan_item['payment_method']); ?></p>
+                            <p><strong>Pelanggan:</strong> <?php echo htmlspecialchars($order['customer_name']); ?></p>
+                            <p><strong>Total:</strong> Rp <?php echo number_format($order['total_amount'], 0, ',', '.'); ?></p>
+                            <p><strong>Metode Pembayaran:</strong> <?php echo htmlspecialchars($order['payment_method']); ?></p>
                         </div>
                         
                         <div class="order-items">
                             <h4>Daftar Item:</h4>
                             <ul>
-                                <?php foreach ($daftar_item as $item): ?>
+                                <?php foreach ($items as $item): ?>
                                     <li>
                                         <?php echo $item['quantity']; ?>x <?php echo htmlspecialchars($item['name']); ?>
                                         <span>Rp <?php echo number_format($item['price'] * $item['quantity'], 0, ',', '.'); ?></span>
@@ -120,36 +120,36 @@ $pesanan = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </ul>
                         </div>
                         
-                        <?php if (!empty($pesanan_item['notes'])): ?>
+                        <?php if (!empty($order['notes'])): ?>
                             <div class="order-notes">
                                 <h4>Catatan:</h4>
-                                <p><?php echo htmlspecialchars($pesanan_item['notes']); ?></p>
+                                <p><?php echo htmlspecialchars($order['notes']); ?></p>
                             </div>
                         <?php endif; ?>
                         
                         <div class="order-footer">
                             <form method="post" class="status-form">
-                                <input type="hidden" name="order_id" value="<?php echo $pesanan_item['id']; ?>">
+                                <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
                                 <select name="status" class="status-select">
-                                    <option value="pending" <?php echo $pesanan_item['status'] === 'pending' ? 'selected' : ''; ?>>Menunggu</option>
-                                    <option value="processing" <?php echo $pesanan_item['status'] === 'processing' ? 'selected' : ''; ?>>Diproses</option>
-                                    <option value="completed" <?php echo $pesanan_item['status'] === 'completed' ? 'selected' : ''; ?>>Selesai</option>
-                                    <option value="cancelled" <?php echo $pesanan_item['status'] === 'cancelled' ? 'selected' : ''; ?>>Dibatalkan</option>
+                                    <option value="pending" <?php echo $order['status'] === 'pending' ? 'selected' : ''; ?>>Menunggu</option>
+                                    <option value="processing" <?php echo $order['status'] === 'processing' ? 'selected' : ''; ?>>Diproses</option>
+                                    <option value="completed" <?php echo $order['status'] === 'completed' ? 'selected' : ''; ?>>Selesai</option>
+                                    <option value="cancelled" <?php echo $order['status'] === 'cancelled' ? 'selected' : ''; ?>>Dibatalkan</option>
                                 </select>
                                 <button type="submit" name="update_status" class="update-btn">
                                     <i class="fas fa-sync-alt"></i> Perbarui
                                 </button>
                             </form>
                             
-                            <span class="status-badge <?php echo $pesanan_item['status']; ?>">
+                            <span class="status-badge <?php echo $order['status']; ?>">
                                 <?php 
                                 // Konversi label status
-                                switch ($pesanan_item['status']) {
+                                switch ($order['status']) {
                                     case 'pending': echo 'Menunggu'; break;
                                     case 'processing': echo 'Diproses'; break;
                                     case 'completed': echo 'Selesai'; break;
                                     case 'cancelled': echo 'Dibatalkan'; break;
-                                    default: echo ucfirst($pesanan_item['status']);
+                                    default: echo ucfirst($order['status']);
                                 }
                                 ?>
                             </span>

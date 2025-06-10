@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require 'config.php';
 require 'cart_functions.php';
 
@@ -23,6 +24,77 @@ foreach ($_SESSION['cart'] as $item) {
     ];
 }
 
+// Process coupon code if submitted
+$discount_amount = 0;
+$coupon_error = '';
+$coupon_success = '';
+$coupon_code = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['apply_coupon'])) {
+    $coupon_code = trim($_POST['coupon_code']);
+    
+    if (!empty($coupon_code)) {
+        try {
+            // Check if coupon is valid (tanpa pengecekan email)
+            $stmt = $pdo->prepare("SELECT * FROM coupon_sends 
+                                  WHERE coupon_code = ? 
+                                  AND expiry_date >= CURDATE() 
+                                  AND is_used = FALSE");
+            $stmt->execute([$coupon_code]);
+            $coupon = $stmt->fetch();
+            
+            if ($coupon) {
+                // Calculate discount
+                $discount_percentage = $coupon['discount'] / 100;
+                $discount_amount = $cart_total * $discount_percentage;
+                
+                // Apply maximum discount limit
+                if ($discount_amount > $coupon['max_discount']) {
+                    $discount_amount = $coupon['max_discount'];
+                }
+                
+                // Store coupon info in session
+                $_SESSION['applied_coupon'] = [
+                    'code' => $coupon_code,
+                    'discount_amount' => $discount_amount,
+                    'coupon_id' => $coupon['id'],
+                    'original_discount' => $coupon['discount'],
+                    'max_discount' => $coupon['max_discount']
+                ];
+                
+                $coupon_success = "Kupon berhasil diterapkan! Diskon: " . $coupon['discount'] . 
+                                 "% (maks: Rp " . number_format($coupon['max_discount'], 0, ',', '.') . ")";
+            } else {
+                // Pesan error lebih informatif
+                $stmt = $pdo->prepare("SELECT expiry_date < CURDATE() as is_expired, is_used 
+                                      FROM coupon_sends 
+                                      WHERE coupon_code = ?");
+                $stmt->execute([$coupon_code]);
+                $status = $stmt->fetch();
+                
+                if (!$status) {
+                    $coupon_error = "Kode kupon tidak ditemukan.";
+                } elseif ($status['is_expired']) {
+                    $coupon_error = "Kupon sudah kadaluarsa.";
+                } elseif ($status['is_used']) {
+                    $coupon_error = "Kupon sudah digunakan sebelumnya.";
+                } else {
+                    $coupon_error = "Kupon tidak valid.";
+                }
+            }
+        } catch (PDOException $e) {
+            error_log("Database error: " . $e->getMessage());
+            $coupon_error = "Terjadi kesalahan sistem. Silakan coba lagi.";
+        }
+    } else {
+        $coupon_error = "Silakan masukkan kode kupon.";
+    }
+}
+
+// Calculate final total after discount
+$final_total = $cart_total - ($_SESSION['applied_coupon']['discount_amount'] ?? 0);
+if ($final_total < 0) $final_total = 0;
+
 // Process checkout if form submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
     $customer_name = trim($_POST['name']);
@@ -41,27 +113,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
         
         // Insert order into database
         $stmt = $pdo->prepare("INSERT INTO orders 
-                              (customer_name, total_amount, payment_method, notes, items) 
-                              VALUES (?, ?, ?, ?, ?)");
+                              (customer_name, total_amount, payment_method, notes, items, discount_amount, coupon_code) 
+                              VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->execute([
             $customer_name,
-            $cart_total,
+            $final_total, // Gunakan final_total yang sudah didiskon
             $payment_method,
             $notes,
-            $items_json
+            $items_json,
+            $_SESSION['applied_coupon']['discount_amount'] ?? 0,
+            $_SESSION['applied_coupon']['code'] ?? null
         ]);
         
-        // Store order success data in session
+        // Mark coupon as used if applied
+        if (isset($_SESSION['applied_coupon'])) {
+            $stmt = $pdo->prepare("UPDATE coupon_sends 
+                                  SET is_used = TRUE, used_at = NOW() 
+                                  WHERE id = ?");
+            $stmt->execute([$_SESSION['applied_coupon']['coupon_id']]);
+        }
+        
+        // Di bagian proses checkout (setelah insert order ke database)
         $_SESSION['order_success'] = [
-            'message' => "Thank you for your order! Your coffee will be ready soon.",
+            'message' => "Terima kasih telah memesan!",
             'payment_method' => $payment_method,
-            'total_amount' => $cart_total
+            'total_amount' => $cart_total,
+            'discount_amount' => $_SESSION['applied_coupon']['discount_amount'] ?? 0,
+            'final_amount' => $final_total
         ];
-        
-        // Clear the cart
-        $_SESSION['cart'] = [];
-        
-        // Redirect to success page
+
+        // Hapus data yang tidak perlu
+        unset($_SESSION['cart']);
+
         header("Location: order_success.php");
         exit();
         
@@ -69,7 +152,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
         error_log("Database error: " . $e->getMessage());
         $_SESSION['checkout_error'] = "Error processing your order. Please try again.";
         header("Location: checkout.php");
-        exit();
     }
 }
 ?>
@@ -98,22 +180,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
   </header>
 
   <main class="checkout-container">
-    <section class="order-summary">
-        <h2>Your Order Summary</h2>
-        <div class="order-items">
-            <?php foreach ($_SESSION['cart'] as $item): ?>
-                <div class="order-item">
-                    <div class="item-name"><?php echo htmlspecialchars($item['name']); ?></div>
-                    <div class="item-quantity">x<?php echo $item['quantity']; ?></div>
-                    <div class="item-price">Rp <?php echo number_format($item['price'] * $item['quantity'], 0, ',', '.'); ?></div>
-                </div>
-            <?php endforeach; ?>
+<section class="order-summary">
+    <h2>Your Order Summary</h2>
+    <div class="order-items">
+        <?php foreach ($_SESSION['cart'] as $item): ?>
+            <div class="order-item">
+                <div class="item-name"><?php echo htmlspecialchars($item['name']); ?></div>
+                <div class="item-quantity">x<?php echo $item['quantity']; ?></div>
+                <div class="item-price">Rp <?php echo number_format($item['price'] * $item['quantity'], 0, ',', '.'); ?></div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    
+    <!-- Coupon Form -->
+    <div class="coupon-section">
+        <form method="post" class="coupon-form">
+            <label for="coupon_code">Kode Kupon:</label>
+            <input type="text" id="coupon_code" name="coupon_code" 
+                   value="<?php echo htmlspecialchars($coupon_code); ?>" 
+                   placeholder="Masukkan kode kupon">
+            <button type="submit" name="apply_coupon" class="apply-coupon-btn">Gunakan</button>
+        </form>
+        
+        <?php if (!empty($coupon_error)): ?>
+            <div class="coupon-error"><?php echo $coupon_error; ?></div>
+        <?php endif; ?>
+        
+        <?php if (!empty($coupon_success)): ?>
+            <div class="coupon-success"><?php echo $coupon_success; ?></div>
+        <?php endif; ?>
+    </div>
+    
+    <div class="order-subtotal">
+        <span>Subtotal:</span>
+        <span>Rp <?php echo number_format($cart_total, 0, ',', '.'); ?></span>
+    </div>
+    
+    <?php if ($discount_amount > 0): ?>
+        <div class="order-discount">
+            <span>Diskon:</span>
+            <span>- Rp <?php echo number_format($discount_amount, 0, ',', '.'); ?></span>
         </div>
-        <div class="order-total">
-            <span>Total:</span>
-            <span>Rp <?php echo number_format($cart_total, 0, ',', '.'); ?></span>
-        </div>
-    </section>
+    <?php endif; ?>
+    
+    <div class="order-total">
+        <span>Total:</span>
+        <span>Rp <?php echo number_format($final_total, 0, ',', '.'); ?></span>
+    </div>
+</section>
 
     <section class="payment-section">
         <h2>Payment Method</h2>
@@ -136,8 +250,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
         <div class="payment-details active" id="qris-payment">
             <h3>Scan QR Code Below to Pay</h3>
             <div class="qris-code">
-                <!-- Replace with your actual QRIS image -->
-                <img src="images/qris_kupi_kuki.png" alt="QRIS Payment Code">
+                <img src="../img/qris_kupi_kuki.jpg" alt="QRIS Payment Code">
                 <p>Scan this QR code using your mobile banking app</p>
             </div>
             <div class="payment-instructions" data-method="qris">
@@ -146,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
                     <li>Open your mobile banking or e-wallet app</li>
                     <li>Select QRIS payment option</li>
                     <li>Scan the QR code above</li>
-                    <li>Confirm the amount (Rp <?php echo number_format($cart_total, 0, ',', '.'); ?>)</li>
+                    <li>Confirm the amount (Rp <?php echo number_format($final_total, 0, ',', '.'); ?>)</li>
                     <li>Complete the payment</li>
                 </ol>
             </div>
@@ -156,10 +269,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
         <div class="payment-details" id="transfer-payment">
             <h3>Bank Transfer Information</h3>
             <div class="bank-details">
-                <p><strong>Bank Name:</strong> BCA (Bank Central Asia)</p>
+                <p><strong>Bank Name:</strong> BNI (Bank Central Asia)</p>
                 <p><strong>Account Number:</strong> 1234567890</p>
                 <p><strong>Account Name:</strong> Kupi & Kuki</p>
-                <p><strong>Amount to Transfer:</strong> Rp <?php echo number_format($cart_total, 0, ',', '.'); ?></p>
+                <p><strong>Amount to Transfer:</strong> Rp <?php echo number_format($final_total, 0, ',', '.'); ?></p>
             </div>
             <div class="payment-instructions" data-method="transfer">
                 <p><strong>Payment Instructions:</strong></p>
@@ -177,7 +290,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
             <h3>Cash Payment</h3>
             <div class="cash-instructions">
                 <p>Please prepare exact change for:</p>
-                <p class="cash-amount">Rp <?php echo number_format($cart_total, 0, ',', '.'); ?></p>
+                <p class="cash-amount">Rp <?php echo number_format($final_total, 0, ',', '.'); ?></p>
                 <p>Payment will be completed when you receive your order at the counter.</p>
             </div>
             <div class="payment-instructions" data-method="cash">

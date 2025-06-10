@@ -61,7 +61,7 @@ for ($i = 6; $i >= 0; $i--) {
         <a href="admin_dashboard.php">Dashboard</a>
         <a href="add_menu.php">Tambah Menu</a>
         <a href="manage_orders.php">Kelola Pesanan</a>
-        <a href="view_subscribers.php">Lihat Pelanggan</a>
+        <a href="view_subscribers.php">Pelanggan</a>
         <a href="ulasan.php">Ulasan</a>
         <a href="../php/logout.php">Keluar</a>
     </nav>
@@ -118,7 +118,7 @@ for ($i = 6; $i >= 0; $i--) {
                         <td>{$row['id']}</td>
                         <td>{$row['customer_name']}</td>
                         <td>" . date('d-m-Y H:i', strtotime($row['order_date'])) . "</td>
-                        <td>Rp " . number_format($baris['total_amount'], 0, ',', '.') . "</td>
+                        <td>Rp " . number_format($row['total_amount'], 0, ',', '.') . "</td>
                         <td>" . ucfirst($row['status']) . "</td>
                       </tr>";
             }

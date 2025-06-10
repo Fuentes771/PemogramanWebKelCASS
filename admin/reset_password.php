@@ -35,7 +35,7 @@ if ($token) {
                     echo "<div style='max-width: 600px; margin: 50px auto; font-family: Arial, sans-serif; text-align: center; background-color: #ffffff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);'>
                             <h2 style='color:rgb(136, 71, 14);'>Kata Sandi Berhasil Direset</h2>
                             <p style='font-size: 16px;'>Silakan masuk kembali menggunakan kata sandi baru Anda.</p>
-                            <a href='admin_login.php' style='display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #5D4037; color: white; text-decoration: none; border-radius: 5px;'>Masuk Sekarang</a>
+                            <a href='admin_login.php' style='display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #7e4406; color: white; text-decoration: none; border-radius: 5px;'>Masuk Sekarang</a>
                           </div>";
                     exit();
                 }
@@ -50,7 +50,7 @@ if ($token) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reset Kata Sandi | Kupi & Kuki Coffee</title>
+    <title>Reset Kata Sandi | Kupi & Kuki </title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 </head>
 <body style="margin: 0; padding: 0; background-color: #FFF8F0; font-family: 'Poppins', Arial, sans-serif;">
@@ -58,7 +58,7 @@ if ($token) {
 <div style="max-width: 600px; margin: 60px auto; background-color: #ffffff; padding: 40px 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center;">
 
     <?php if ($valid): ?>
-        <h2 style="color: #4E342E; margin-bottom: 10px;">Reset Kata Sandi</h2>
+        <h2 style="color: #7e4406; margin-bottom: 10px;">Reset Kata Sandi</h2>
         <p style="color: #7B6F65; font-size: 16px;">Silakan masukkan kata sandi baru Anda.</p>
         <?php if (isset($message)) echo $message; ?>
 
@@ -74,7 +74,7 @@ if ($token) {
 
     <?php else: ?>
         <h2 style="color: #B71C1C;">Token Tidak Valid</h2>
-        <p style="font-size: 16px; color: #5D4037;">Token Anda tidak valid atau sudah kedaluwarsa. Silakan minta reset ulang.</p>
+        <p style="font-size: 16px; color: #7e4406;">Token Anda tidak valid atau sudah kedaluwarsa. Silakan minta reset ulang.</p>
     <?php endif; ?>
 </div>
 

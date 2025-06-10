@@ -127,6 +127,7 @@ try {
     $_SESSION['success_message'] = "Kupon berhasil dikirim ke {$sentCount} pelanggan. Kode kupon: <strong>{$kupon}</strong>";
     header("Location: view_subscribers.php");
     exit();
+    
 } catch (Exception $e) {
     $_SESSION['success_message'] = "Kupon gagal dikirim. Error: " . htmlspecialchars($mail->ErrorInfo);
     header("Location: view_subscribers.php");

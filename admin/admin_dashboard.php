@@ -1,16 +1,16 @@
 <?php
-
+// Koneksi database
 $host = "localhost";
 $user = "root";
 $pass = "";
 $db   = "toko_kopi";
 
 $conn = mysqli_connect($host, $user, $pass, $db);
-
 if (!$conn) {
     die("Koneksi database gagal: " . mysqli_connect_error());
 }
 
+// Cek session login admin
 session_start();
 if (!isset($_SESSION['admin_logged_in'])) {
     header('Location: admin_login.php');
@@ -43,30 +43,33 @@ for ($i = 6; $i >= 0; $i--) {
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard Admin</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/admin_style.css">
-    <link rel="stylesheet" href="../css/navbar.css">
+    <meta charset="UTF-8" />
+    <title>Dashboard Admin - Kupi & Kuki</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+    <!-- CSS kamu -->
+    <link rel="stylesheet" href="../css/admin_style.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo">Kupi & Kuki Admin</div>
-        <nav>
-            <a href="admin_dashboard.php">Dashboard</a>
-            <a href="add_menu.php">Tambah Menu</a>
-            <a href="manage_orders.php">Kelola Pesanan</a>
-            <a href="view_subscribers.php">Pelanggan</a>
-            <a href="ulasan.php">Ulasan</a>
-            <a href="../php/logout.php">Keluar</a>
-        </nav>
-    </header>
+<header class="navbar">
+    <div class="logo">Kupi & Kuki Admin</div>
+    <nav>
+        <a href="admin_dashboard.php">Dashboard</a>
+        <a href="add_menu.php">Tambah Menu</a>
+        <a href="manage_orders.php">Kelola Pesanan</a>
+        <a href="view_subscribers.php">Lihat Pelanggan</a>
+        <a href="ulasan.php">Ulasan</a>
+        <a href="../php/logout.php">Keluar</a>
+    </nav>
+</header>
 
-    <section>
-        <h2>Selamat datang di Dasboard Admin</h2>
-        <p>Pilih opsi di atas untuk mengelola menu dan pesanan.</p>
+<section>
+    <h2>Selamat datang di Dashboard Admin</h2>
+    <p>Pilih opsi di atas untuk mengelola menu dan pesanan.</p>
 
         <div class="stats-wrapper">
             <div class="card"><h3><?= $total_menu ?></h3><p>Total Menu</p></div>
@@ -85,20 +88,20 @@ for ($i = 6; $i >= 0; $i--) {
             <canvas id="WeeklyChart"></canvas>
         </div>
 
-        <h3>Export Laporan Penjualan (CSV)</h3>
-        <form method="post" action="export_csv.php" style="margin-bottom: 20px;">
+    <h3>Export Laporan Penjualan (.xlsx)</h3>
+    <form method="post" action="export_excel.php" style="margin-bottom: 20px;">
         <label>Dari Tanggal:
-            <input type="date" name="start_date" required>
+            <input type="date" name="start_date" required />
         </label>
         <label>Sampai Tanggal:
-            <input type="date" name="end_date" required>
+            <input type="date" name="end_date" required />
         </label>
-        <button type="submit">Export ke Excel (CSV)</button>
-        </form>
+        <button type="submit">Export ke Excel (.xlsx)</button>
+    </form>
 
-
-        <h3>Pesanan Terbaru</h3>
-        <table class="order-table">
+    <h3>Pesanan Terbaru</h3>
+    <table class="tabel-pesanan" border="1" cellpadding="8" cellspacing="0" style="width: 100%; border-collapse: collapse;">
+        <thead>
             <tr>
                 <th>ID</th>
                 <th>Nama Pelanggan</th>
@@ -106,20 +109,23 @@ for ($i = 6; $i >= 0; $i--) {
                 <th>Total</th>
                 <th>Status</th>
             </tr>
+        </thead>
+        <tbody>
             <?php
             $recent_orders = mysqli_query($conn, "SELECT * FROM orders ORDER BY order_date DESC LIMIT 5");
             while ($row = mysqli_fetch_assoc($recent_orders)) {
                 echo "<tr>
                         <td>{$row['id']}</td>
                         <td>{$row['customer_name']}</td>
-                        <td>{$row['order_date']}</td>
-                        <td>Rp " . number_format($row['total_amount'], 0, ',', '.') . "</td>
-                        <td>{$row['status']}</td>
+                        <td>" . date('d-m-Y H:i', strtotime($row['order_date'])) . "</td>
+                        <td>Rp " . number_format($baris['total_amount'], 0, ',', '.') . "</td>
+                        <td>" . ucfirst($row['status']) . "</td>
                       </tr>";
             }
             ?>
-        </table>
-    </section>
+        </tbody>
+    </table>
+</section>
 
     <script>
         const ctx = document.getElementById('orderChart').getContext('2d');

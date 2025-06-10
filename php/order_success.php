@@ -80,5 +80,12 @@ unset($_SESSION['applied_coupon']);
             <a href="../menu.php" class="back-to-menu">Kembali ke Menu</a>
         </div>
     </main>
+
+    <audio autoplay>
+        <source src="../sounds/notification.mp3" type="audio/mpeg">
+        <source src="../sounds/suara.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
 </body>
 </html>

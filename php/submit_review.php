@@ -6,31 +6,31 @@ use PHPMailer\PHPMailer\Exception;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validasi dan sanitasi masukan
-    $nama = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+    $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-    $penilaian = filter_input(INPUT_POST, 'rating', FILTER_VALIDATE_INT, 
-        ['options' => ['min_range' => 1, 'max_range' => 5]]);
-    $ulasan = filter_input(INPUT_POST, 'review', FILTER_SANITIZE_STRING);
+    $rating = filter_input(INPUT_POST, 'rating', FILTER_VALIDATE_INT, 
+        options: ['options' => ['min_range' => 1, 'max_range' => 5]]);
+    $review = filter_input(INPUT_POST, 'review', FILTER_SANITIZE_STRING);
 
-    if ($nama && $email && $penilaian !== false && $ulasan) {
+    if ($name && $email && $rating !== false && $review) {
         try {
             $stmt = $pdo->prepare("INSERT INTO customer_reviews 
                                    (customer_name, email, review_text, rating) 
                                    VALUES (?, ?, ?, ?)");
-            $stmt->execute([$nama, $email, $ulasan, $penilaian]);
+            $stmt->execute([$name, $email, $review, $rating]);
             
             // Buat kode kupon unik
-            $kodeKupon = buatKodeKupon();
+            $couponCode = generateCouponCode();
             
             // Kirim email terima kasih menggunakan PHPMailer
-            kirimEmailTerimaKasih($nama, $email, $kodeKupon);
+            sendThankYouEmail($name, $email, $couponCode);
             
             // Kembali dengan pesan sukses
             header('Location: ../aboutus.php?review=success');
             exit();
         } catch(PDOException $e) {
             // Catat kesalahan dan kembali dengan pesan error
-            error_log("Gagal menyimpan ulasan: " . $e->getMessage());
+            error_log("Error saving review: " . $e->getMessage());
             header('Location: ../aboutus.php?review=error');
             exit();
         }
@@ -45,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-function buatKodeKupon() {
+function generateCouponCode() {
     $acak = strtoupper(substr(md5(uniqid()), 0, 6));
     return "TERIMAKASIH10-{$acak}";
 }
 
-function kirimEmailTerimaKasih($nama, $email, $kodeKupon) {
+function sendThankYouEmail($name, $email, $couponCode) {
     $mail = new PHPMailer(true);
     
     try {
@@ -65,7 +65,7 @@ function kirimEmailTerimaKasih($nama, $email, $kodeKupon) {
         
         // Penerima
         $mail->setFrom('kopikukicass@gmail.com', 'Kupi & Kuki');
-        $mail->addAddress($email, $nama);
+        $mail->addAddress($email, $name);
         
         // Isi Email
         $mail->isHTML(true);
@@ -79,7 +79,7 @@ function kirimEmailTerimaKasih($nama, $email, $kodeKupon) {
                 </div>
                 
                 <div style='padding: 20px;'>
-                  <h3 style='color: #6F4E37;'>Halo $nama,</h3>
+                  <h3 style='color: #6F4E37;'>Halo $name,</h3>
                   
                   <p style='font-size: 16px; color: #555;'>
                     Terima kasih telah meluangkan waktu untuk memberikan ulasan kepada kami. 
@@ -92,7 +92,7 @@ function kirimEmailTerimaKasih($nama, $email, $kodeKupon) {
                   
                   <div style='text-align: center; margin: 30px 0;'>
                     <span style='display: inline-block; background-color: #6F4E37; color: #fff; font-size: 20px; font-weight: bold; padding: 12px 24px; border-radius: 6px;'>
-                      {$kodeKupon}
+                      {$couponCode}
                     </span>
                   </div>
                   
@@ -123,11 +123,11 @@ function kirimEmailTerimaKasih($nama, $email, $kodeKupon) {
             </div>
         ";
         
-        $mail->AltBody = "Halo $nama,\n\nTerima kasih telah memberikan ulasan kepada Kupi & Kuki.\n\nSebagai apresiasi, berikut kode promo Anda: $kodeKupon\n\nGunakan kode ini untuk mendapatkan diskon 10% pada pembelian berikutnya.\n\nKode berlaku hingga " . date('d M Y', strtotime('+30 days')) . ".\n\nSalam hangat,\nTim Kupi & Kuki";
+        $mail->AltBody = "Halo $name,\n\nTerima kasih telah memberikan ulasan kepada Kupi & Kuki.\n\nSebagai apresiasi, berikut kode promo Anda: $couponCode\n\nGunakan kode ini untuk mendapatkan diskon 10% pada pembelian berikutnya.\n\nKode berlaku hingga " . date('d M Y', strtotime('+30 days')) . ".\n\nSalam hangat,\nTim Kupi & Kuki";
         
         $mail->send();
     } catch (Exception $e) {
-        error_log("Pengiriman email gagal: " . $mail->ErrorInfo);
+        error_log("Email sending failed: " . $mail->ErrorInfo);
     }
 }
 ?>

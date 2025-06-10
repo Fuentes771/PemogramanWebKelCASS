@@ -7,60 +7,60 @@ use PHPMailer\PHPMailer\Exception;
 date_default_timezone_set('Asia/Jakarta');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email_admin = trim($_POST['email_admin']);
+    $email = trim($_POST['email']);
 
-    $perintah = $pdo->prepare("SELECT * FROM users WHERE email = :email AND role = 'admin'");
-    $perintah->bindParam(':email', $email_admin);
-    $perintah->execute();
-    $data_admin = $perintah->fetch(PDO::FETCH_ASSOC);
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE email = :email AND role = 'admin'");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($data_admin) {
-        $token_pengaturan = bin2hex(random_bytes(16));
-        $batas_waktu_token = date("Y-m-d H:i:s", time() + 3600); // 1 jam ke depan
+    if ($user) {
+        $token = bin2hex(random_bytes(16));
+        $expiry = date("Y-m-d H:i:s", time() + 3600); // 1 jam ke depan
 
-        $perintah = $pdo->prepare("UPDATE users SET reset_token = :token, token_expiry = :waktu WHERE email = :email");
-        $perintah->execute([
-            'token' => $token_pengaturan,
-            'waktu' => $batas_waktu_token,
-            'email' => $email_admin
+        $stmt = $pdo->prepare("UPDATE users SET reset_token = :token, token_expiry = :expiry WHERE email = :email");
+        $stmt->execute([
+            'token' => $token,
+            'expiry' => $expiry,
+            'email' => $email
         ]);
 
-        $tautan_pengaturan = "http://localhost/PemogramanWebKelCASS/admin/reset_password.php?token=" . $token_pengaturan;
+        $reset_link = "http://localhost/PemogramanWebKelCASS/admin/reset_password.php?token=" . $token;
 
-        $pengirim_email = new PHPMailer(true);
+        $mail = new PHPMailer(true);
         try {
-            $pengirim_email->isSMTP();
-            $pengirim_email->Host = 'smtp.gmail.com';
-            $pengirim_email->SMTPAuth = true;
-            $pengirim_email->Username = 'kopikukicass@gmail.com'; // GANTI
-            $pengirim_email->Password = 'xvkj cerh lxxk vivk';     // GANTI
-            $pengirim_email->SMTPSecure = 'tls';
-            $pengirim_email->Port = 587;
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'kopikukicass@gmail.com'; // GANTI
+            $mail->Password = 'xvkj cerh lxxk vivk';     // GANTI
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
 
-            $pengirim_email->setFrom('kopikukicass@gmail.com', 'Kupi & Kuki');
-            $pengirim_email->addAddress($email_admin);
-            $pengirim_email->Subject = 'Pengaturan Ulang Kata Sandi Admin';
-            $pengirim_email->isHTML(true);
-            $pengirim_email->Body = "
+            $mail->setFrom('kopikukicass@gmail.com', 'Kupi & Kuki');
+            $mail->addAddress($email);
+            $mail->Subject = 'Pengaturan Ulang Kata Sandi Admin';
+            $mail->isHTML(true);
+            $mail->Body = "
                 <div style='font-family: Poppins, Arial, sans-serif; background-color: #fff8f0; padding: 20px; color: #333;'>
                     <h2 style='color: #4E342E;'>Pengaturan Ulang Kata Sandi Admin</h2>
                     <p>Halo <strong>Admin</strong>,</p>
                     <p>Kami menerima permintaan untuk mengatur ulang kata sandi Anda sebagai admin <strong>Kupi & Kuki </strong>.</p>
                     <p>Silakan klik tombol di bawah ini untuk melanjutkan pengaturan ulang kata sandi Anda:</p>
                     <p style='text-align: center; margin: 30px 0;'>
-                        <a href='$tautan_pengaturan' style='background-color: #7e4406; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;'>Atur Ulang Kata Sandi</a>
+                        <a href='$reset_link' style='background-color: #7e4406; color: #fff; padding: 12px 24px; text-decoration: none; border-radius: 6px;'>Atur Ulang Kata Sandi</a>
                     </p>
                     <p>Jika Anda tidak merasa melakukan permintaan ini, abaikan saja email ini.</p>
                     <p style='margin-top: 30px;'>Salam hangat,<br><strong>Kupi & Kuki </strong></p>
                 </div>
             ";
-            $pengirim_email->send();
-            $berhasil = "Tautan pengaturan ulang telah dikirim ke email Anda.";
+            $mail->send();
+            $success = "Tautan pengaturan ulang telah dikirim ke email Anda.";
         } catch (Exception $e) {
-            $gagal = "Gagal mengirim email. Pesan kesalahan: " . $pengirim_email->ErrorInfo;
+            $error = "Gagal mengirim email. Pesan kesalahan: " . $mail->ErrorInfo;
         }
     } else {
-        $gagal = "Email tidak ditemukan atau bukan akun admin.";
+        $error = "Email tidak ditemukan atau bukan akun admin.";
     }
 }
 ?>
@@ -79,16 +79,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <h2 style="color: #4E342E; margin-bottom: 15px;">Lupa Kata Sandi Admin</h2>
     <p style="color: #7B6F65; font-size: 16px;">Masukkan email admin Anda untuk menerima tautan pengaturan ulang kata sandi.</p>
 
-    <?php if (isset($gagal)) echo "<p style='color:red; margin-top: 20px;'>$gagal</p>"; ?>
-    <?php if (isset($berhasil)) echo "<p style='color:green; margin-top: 20px;'>$berhasil</p>"; ?>
+    <?php if (isset($error)) echo "<p style='color:red; margin-top: 20px;'>$error</p>"; ?>
+    <?php if (isset($success)) echo "<p style='color:green; margin-top: 20px;'>$success</p>"; ?>
 
     <form method="POST" style="margin-top: 25px;">
-        <input type="email" name="email_admin" placeholder="Masukkan email admin Anda" required
+        <input type="email" name="email" placeholder="Masukkan email admin Anda" required
                style="width: 85%; padding: 14px; font-size: 16px; border: 1px solid #D7CCC8; border-radius: 6px;">
         <br><br>
         <button type="submit"
                 style="padding: 12px 26px; font-size: 16px; background-color: rgb(126, 68, 6); color: #fff; border: none; border-radius: 6px; cursor: pointer;">
-            Kirim Tautan
+            Kirim Link Reset
         </button>
     </form>
 </div>

@@ -240,3 +240,68 @@
 .payment-instructions li {
     margin-bottom: 0.5rem;
 }
+
+/* Coupon Section Styles */
+.coupon-section {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.coupon-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.coupon-form input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.apply-coupon-btn {
+    padding: 10px 15px;
+    background-color: #6f4e37;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.apply-coupon-btn:hover {
+    background-color: #5a3d2a;
+}
+
+.coupon-error {
+    color: #d9534f;
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #fdf7f7;
+    border: 1px solid #ebccd1;
+    border-radius: 4px;
+}
+
+.coupon-success {
+    color: #5cb85c;
+    margin-top: 5px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #d6e9c6;
+    border-radius: 4px;
+}
+
+.order-subtotal, 
+.order-discount {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-discount {
+    color: #5cb85c;
+}

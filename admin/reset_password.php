@@ -63,7 +63,7 @@ if ($token) {
         <?php if (isset($message)) echo $message; ?>
 
         <form method="POST" style="margin-top: 25px;">
-            <input type="password" name="new_password" placeholder="Kata Sandi Baru" required
+            <input type="password" name="new_password" placeholder="Password Baru" required
                    style="width: 80%; padding: 14px; font-size: 16px; border: 1px solid #D7CCC8; border-radius: 6px;">
             <br><br>
             <button type="submit"

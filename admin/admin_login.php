@@ -3,17 +3,17 @@ session_start();
 require '../php/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nama_pengguna_admin = trim($_POST['nama_pengguna_admin']);
-    $kata_sandi_admin = trim($_POST['kata_sandi_admin']);
+    $admin_username = trim($_POST['admin_username']);
+    $admin_password = trim($_POST['admin_password']);
 
     $stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username AND role = 'admin'");
-    $stmt->bindParam(':username', $nama_pengguna_admin);
+    $stmt->bindParam(':username', $admin_username);
     $stmt->execute();
-    $pengguna = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($pengguna && password_verify($kata_sandi_admin, $pengguna['password'])) {
+    if ($user && password_verify($admin_password, $user['password'])) {
         $_SESSION['admin_logged_in'] = true;
-        $_SESSION['admin_username'] = $pengguna['username'];
+        $_SESSION['admin_username'] = $user['username'];
         header('Location: admin_dashboard.php');
         exit();
     } else {
@@ -37,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="error"><?php echo $pesan_error; ?></p>
         <?php endif; ?>
         <form method="POST">
-            <input type="text" name="nama_pengguna_admin" placeholder="Nama Pengguna Admin" required>
-            <input type="password" name="kata_sandi_admin" placeholder="Kata Sandi Admin" required>
+            <input type="text" name="admin_username" placeholder="Nama Pengguna Admin" required>
+            <input type="password" name="admin_password" placeholder="Kata Sandi Admin" required>
             <button type="submit">Masuk</button>
         </form>
         <p style="text-align: center; margin-top: 10px;">

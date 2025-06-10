@@ -17,27 +17,26 @@ if (!isset($_SESSION['admin_logged_in'])) {
     exit();
 }
 
-// Ambil data statistik
-$query_menu = mysqli_query($conn, "SELECT COUNT(*) AS total_menu FROM menu");
-$total_menu = mysqli_fetch_assoc($query_menu)['total_menu'];
+$menu_query = mysqli_query($conn, "SELECT COUNT(*) AS total_menu FROM menu");
+$total_menu = mysqli_fetch_assoc($menu_query)['total_menu'];
 
-$query_order = mysqli_query($conn, "SELECT COUNT(*) AS total_order FROM orders");
-$total_order = mysqli_fetch_assoc($query_order)['total_order'];
+$order_query = mysqli_query($conn, "SELECT COUNT(*) AS total_order FROM orders");
+$total_order = mysqli_fetch_assoc($order_query)['total_order'];
 
-$query_hari_ini = mysqli_query($conn, "SELECT COUNT(*) AS order_hari_ini FROM orders WHERE DATE(order_date) = CURDATE()");
-$order_hari_ini = mysqli_fetch_assoc($query_hari_ini)['order_hari_ini'];
+$today_query = mysqli_query($conn, "SELECT COUNT(*) AS today_order FROM orders WHERE DATE(order_date) = CURDATE()");
+$today_order = mysqli_fetch_assoc($today_query)['today_order'];
 
-$query_pelanggan = mysqli_query($conn, "SELECT COUNT(*) AS total_pelanggan FROM subscribers");
-$total_pelanggan = mysqli_fetch_assoc($query_pelanggan)['total_pelanggan'];
+$subs_query = mysqli_query($conn, "SELECT COUNT(*) AS total_subscriber FROM subscribers");
+$total_subscriber = mysqli_fetch_assoc($subs_query)['total_subscriber'];
 
-// Data pesanan mingguan untuk grafik bar
-$pesanan_mingguan = [];
-$label_hari = [];
+$weekly_orders = [];
+$labels = [];
+
 for ($i = 6; $i >= 0; $i--) {
-    $tanggal = date('Y-m-d', strtotime("-$i days"));
-    $label_hari[] = date('D', strtotime($tanggal));
-    $hasil = mysqli_query($conn, "SELECT COUNT(*) AS jumlah FROM orders WHERE DATE(order_date) = '$tanggal'");
-    $pesanan_mingguan[] = mysqli_fetch_assoc($hasil)['jumlah'];
+    $date = date('Y-m-d', strtotime("-$i days"));
+    $labels[] = date('D', strtotime($date));
+    $result = mysqli_query($conn, "SELECT COUNT(*) AS count FROM orders WHERE DATE(order_date) = '$date'");
+    $weekly_orders[] = mysqli_fetch_assoc($result)['count'];
 }
 ?>
 
@@ -72,22 +71,22 @@ for ($i = 6; $i >= 0; $i--) {
     <h2>Selamat datang di Dashboard Admin</h2>
     <p>Pilih opsi di atas untuk mengelola menu dan pesanan.</p>
 
-    <div class="stats-wrapper">
-        <div class="card"><h3><?= $total_menu ?></h3><p>Total Menu</p></div>
-        <div class="card"><h3><?= $total_order ?></h3><p>Total Pesanan</p></div>
-        <div class="card"><h3><?= $order_hari_ini ?></h3><p>Pesanan Hari Ini</p></div>
-        <div class="card"><h3><?= $total_pelanggan ?></h3><p>Pelanggan</p></div>
-    </div>
+        <div class="stats-wrapper">
+            <div class="card"><h3><?= $total_menu ?></h3><p>Total Menu</p></div>
+            <div class="card"><h3><?= $total_order ?></h3><p>Total Pesanan</p></div>
+            <div class="card"><h3><?= $today_order ?></h3><p>Pesanan Hari Ini</p></div>
+            <div class="card"><h3><?= $total_subscriber ?></h3><p>Pelanggan</p></div>
+        </div>
 
-    <h3>Statistik Pesanan</h3>
-    <div style="max-width: 400px; margin: auto;">
-        <canvas id="grafikPesanan"></canvas>
-    </div>
+        <h3>Statistik Pesanan</h3>
+        <div style="max-width: 400px; margin: auto;">
+            <canvas id="orderChart"></canvas>
+        </div>
 
-    <h3>Grafik Penjualan Mingguan</h3>
-    <div style="max-width: 600px; margin: auto;">
-        <canvas id="grafikMingguan"></canvas>
-    </div>
+        <h3>Grafik Penjualan Mingguan</h3>
+        <div style="max-width: 600px; margin: auto;">
+            <canvas id="WeeklyChart"></canvas>
+        </div>
 
     <h3>Export Laporan Penjualan (.xlsx)</h3>
     <form method="post" action="export_excel.php" style="margin-bottom: 20px;">
@@ -113,14 +112,14 @@ for ($i = 6; $i >= 0; $i--) {
         </thead>
         <tbody>
             <?php
-            $pesanan_terbaru = mysqli_query($conn, "SELECT * FROM orders ORDER BY order_date DESC LIMIT 5");
-            while ($baris = mysqli_fetch_assoc($pesanan_terbaru)) {
+            $recent_orders = mysqli_query($conn, "SELECT * FROM orders ORDER BY order_date DESC LIMIT 5");
+            while ($row = mysqli_fetch_assoc($recent_orders)) {
                 echo "<tr>
-                        <td>{$baris['id']}</td>
-                        <td>{$baris['customer_name']}</td>
-                        <td>" . date('d-m-Y H:i', strtotime($baris['order_date'])) . "</td>
+                        <td>{$row['id']}</td>
+                        <td>{$row['customer_name']}</td>
+                        <td>" . date('d-m-Y H:i', strtotime($row['order_date'])) . "</td>
                         <td>Rp " . number_format($baris['total_amount'], 0, ',', '.') . "</td>
-                        <td>" . ucfirst($baris['status']) . "</td>
+                        <td>" . ucfirst($row['status']) . "</td>
                       </tr>";
             }
             ?>
@@ -128,61 +127,104 @@ for ($i = 6; $i >= 0; $i--) {
     </table>
 </section>
 
-<script>
-    const ctx = document.getElementById('grafikPesanan').getContext('2d');
-    new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Pesanan Hari Ini', 'Sisa Pesanan'],
-            datasets: [{
-                data: [<?= $order_hari_ini ?>, <?= $total_order - $order_hari_ini ?>],
-                backgroundColor: ['#d49e42', 'rgba(255, 255, 255, 0.6)'],
-                borderColor: ['#b3862a', '#ccc'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'bottom', labels: { color: '#f9f9f9', font: { family: 'Georgia, serif', size: 14 } } },
-                title: { display: true, text: 'Perbandingan Pesanan Hari Ini & Total Pesanan', color: '#f9f9f9', font: { family: 'Georgia, serif', size: 16 } }
-            }
-        }
-    });
-
-    const weeklyCtx = document.getElementById('grafikMingguan').getContext('2d');
-    new Chart(weeklyCtx, {
-        type: 'bar',
-        data: {
-            labels: <?= json_encode($label_hari) ?>,
-            datasets: [{
-                label: 'Jumlah Pesanan',
-                data: <?= json_encode($pesanan_mingguan) ?>,
-                backgroundColor: '#d49e42',
-                borderColor: '#b3862a',
-                borderWidth: 2,
-                borderRadius: 4
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: { precision: 0, color: '#f9f9f9', font: { family: 'Georgia, serif' } },
-                    grid: { display: true, color: 'rgba(111, 78, 55, 0.2)' }
-                },
-                x: {
-                    ticks: { color: '#f9f9f9', font: { family: 'Georgia, serif' } },
-                    grid: { display: true, color: 'rgba(111, 78, 55, 0.2)' }
-                }
+    <script>
+        const ctx = document.getElementById('orderChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Order Hari ini', 'Sisa Order'],
+                datasets: [{
+                    data: [<?= $today_order ?>, <?= $total_order - $today_order ?>],
+                    backgroundColor: ['#d49e42', 'rgba(255, 255, 255, 0.6)'],
+                    borderColor: ['#b3862a', '#ccc'],
+                    borderWidth: 1
+                }]
             },
-            plugins: {
-                legend: { display: false },
-                title: { display: true, text: 'Pesanan 7 Hari Terakhir', color: '#f9f9f9', font: { family: 'Georgia, serif', size: 16 } }
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#f9f9f9',
+                            font: {
+                                family: 'Georgia, serif',
+                                size: 14
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Perbandingan Order Hari Ini & Total Pesanan',
+                        color: '#f9f9f9',
+                        font: {
+                            family: 'Georgia, serif',
+                            size: 16
+                        }
+                    }
+                }
             }
-        }
-    });
-</script>
+        });
 
+        const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+        new Chart(weeklyCtx, {
+            type: 'bar',
+            data: {
+                labels: <?= json_encode($labels) ?>,
+                datasets: [{
+                    label: 'Jumlah Order',
+                    data: <?= json_encode($weekly_orders) ?>,
+                    backgroundColor: '#d49e42',
+                    borderColor: '#b3862a',
+                    borderWidth: 2,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            precision: 0,
+                            color: '#f9f9f9',
+                            font: {
+                                family: 'Georgia, serif'
+                            }
+                        },
+                        grid: {
+                            display: true,
+                            color: 'rgba(111, 78, 55, 0.2)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#f9f9f9',
+                            font: {
+                                family: 'Georgia, serif'
+                            }
+                        },
+                        grid: {
+                            display: true,
+                            color: 'rgba(111, 78, 55, 0.2)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Order 7 Hari Terakhir',
+                        color: '#f9f9f9',
+                        font: {
+                            family: 'Georgia, serif',
+                            size: 16
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

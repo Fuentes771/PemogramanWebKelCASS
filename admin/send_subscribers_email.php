@@ -114,11 +114,30 @@ try {
 
         $mail->send();
         $jumlahTerkirim++;
+
+        // Simpan ke database
+        $stmt = $koneksi->prepare("
+            INSERT INTO coupon_sends 
+            (sent_at, recipient_email, coupon_code, discount, max_discount, expiry_date)
+            VALUES (NOW(), ?, ?, ?, ?, ?)
+        ");
+        $stmt->bind_param(
+            "ssiis",
+            $email,
+            $kupon,
+            $diskon,
+            $maxDiskon,
+            $tanggalKadaluarsa
+        );
+        $stmt->execute();
+        $stmt->close();
     }
 
+    // Ini dipindah KELUAR dari WHILE → biar gak langsung redirect pas 1x kirim
     $_SESSION['success_message'] = "Kupon berhasil dikirim ke {$jumlahTerkirim} pelanggan. Kode kupon: <strong>{$kupon}</strong>";
     header("Location: view_subscribers.php");
     exit();
+    
 } catch (Exception $e) {
     $_SESSION['success_message'] = "Kupon gagal dikirim. Kesalahan: " . htmlspecialchars($mail->ErrorInfo);
     header("Location: view_subscribers.php");

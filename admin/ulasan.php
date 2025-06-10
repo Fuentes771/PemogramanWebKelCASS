@@ -13,19 +13,19 @@ require_once '../php/config.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dasbor Admin - Kupi & Kuki</title>
+    <title>Dashboard Admin - Kupi & Kuki</title>
     <link rel="stylesheet" href="../css/ulasan.css">
     <link rel="stylesheet" href="../css/admin_style.css">
     <link rel="stylesheet" href="../css/navbar.css">
 </head>
 <body>
     <header class="navbar">
-        <div class="logo">Admin Kupi & Kuki</div>
+        <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-            <a href="admin_dashboard.php">Dasbor</a>
+            <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Tambah Menu</a>
             <a href="manage_orders.php">Kelola Pesanan</a>
-            <a href="view_subscribers.php">Lihat Pelanggan</a>
+            <a href="view_subscribers.php">Pelanggan</a>
             <a href="ulasan.php">Ulasan</a>
             <a href="../php/logout.php">Keluar</a>
         </nav>

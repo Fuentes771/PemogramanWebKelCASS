@@ -44,7 +44,7 @@ for ($i = 6; $i >= 0; $i--) {
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dasbor Admin</title>
+    <title>Dashboard Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/admin_style.css">
@@ -55,10 +55,10 @@ for ($i = 6; $i >= 0; $i--) {
     <header class="navbar">
         <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-             <a href="admin_dashboard.php">Dasboard</a>
+            <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Tambah Menu</a>
             <a href="manage_orders.php">Kelola Pesanan</a>
-            <a href="view_subscribers.php">Lihat Pelanggan</a>
+            <a href="view_subscribers.php">Pelanggan</a>
             <a href="ulasan.php">Ulasan</a>
             <a href="../php/logout.php">Keluar</a>
         </nav>

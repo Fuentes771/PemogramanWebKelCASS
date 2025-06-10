@@ -62,10 +62,10 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <header class="navbar">
         <div class="logo">Kupi & Kuki Admin</div>
         <nav>
-            <a href="admin_dashboard.php">Dasbor</a>
+            <a href="admin_dashboard.php">Dashboard</a>
             <a href="add_menu.php">Tambah Menu</a>
-            <a href="manage_orders.php">Manajemen Pesanan</a>
-            <a href="view_subscribers.php">Pelanggan Terdaftar</a>
+            <a href="manage_orders.php">Kelola Pesanan</a>
+            <a href="view_subscribers.php">Pelanggan</a>
             <a href="ulasan.php">Ulasan</a>
             <a href="../php/logout.php">Keluar</a>
         </nav>

@@ -60,7 +60,7 @@ for ($i = 6; $i >= 0; $i--) {
         <a href="admin_dashboard.php">Dashboard</a>
         <a href="add_menu.php">Tambah Menu</a>
         <a href="manage_orders.php">Kelola Pesanan</a>
-        <a href="view_subscribers.php">Lihat Pelanggan</a>
+        <a href="view_subscribers.php">Pelanggan</a>
         <a href="ulasan.php">Ulasan</a>
         <a href="../php/logout.php">Keluar</a>
     </nav>

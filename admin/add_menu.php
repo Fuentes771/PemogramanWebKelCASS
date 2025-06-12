@@ -110,7 +110,7 @@ $menus = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h2>Daftar Menu</h2>
         <table>
             <tr>
-                <th>ID</th>
+                <th>Id</th>
                 <th>Nama Menu</th>
                 <th>Harga</th>
                 <th>Gambar</th>

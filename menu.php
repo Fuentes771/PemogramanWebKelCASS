@@ -44,6 +44,11 @@ foreach ($_SESSION['cart'] as $item) {
     </nav>
 </header>
 
+ <!-- Cangkir kopi kiri dan kanan -->
+  <img src="img/Coffee_Left.png" class="coffee-cup left" alt="Cangkir Kopi Kiri" />
+  <img src="img/Coffee_Right.png" class="coffee-cup right" alt="Cangkir Kopi Kanan" />
+
+
 <header class="hero">
     <h1>Temukan kopi dan kudapan terbaik</h1>
     <p>Rasakan sensasi kopi dan makanan penutup yang nikmat dan berkualitas tinggi di Kupi & Kuki.</p>

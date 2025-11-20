@@ -270,8 +270,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['complete_order'])) {
             <h3>Bank Transfer Information</h3>
             <div class="bank-details">
                 <p><strong>Bank Name:</strong> BNI (Bank Central Asia)</p>
-                <p><strong>Account Number:</strong> 1234567890</p>
-                <p><strong>Account Name:</strong> Kupi & Kuki</p>
+                <p><strong>Account Number:</strong> 1792018463</p>
+                <p><strong>Account Name:</strong> M Sulthon Alfarizky</p>
                 <p><strong>Amount to Transfer:</strong> Rp <?php echo number_format($final_total, 0, ',', '.'); ?></p>
             </div>
             <div class="payment-instructions" data-method="transfer">

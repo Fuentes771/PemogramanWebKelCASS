@@ -7,6 +7,25 @@ body {
     color: #3e2f1c;
 }
 
+/* Coffee Cup Decorations */
+.coffee-cup {
+  position: absolute;
+  height: 300px;
+  z-index: 10;  /* naikkan dari -1 jadi 10 supaya di atas */
+}
+
+.coffee-cup.left {
+  left: 0;
+  top: 1100px;
+  margin-top: 100px;
+}
+
+.coffee-cup.right {
+  right: 0;
+  top: 1100px;
+  margin-top: 100px;
+}
+
 /* ================= HERO ================= */
 .hero {
     background-color: #f8f1e6;

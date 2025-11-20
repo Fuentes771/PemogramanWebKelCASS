@@ -96,6 +96,10 @@
     <a href="ContactUs.php" class="btn">Hubungi Kami</a>
 </section>
 
+ <!-- Cangkir kopi kiri dan kanan -->
+  <img src="img/Coffee_Left.png" class="coffee-cup left" alt="Cangkir Kopi Kiri" />
+  <img src="img/Coffee_Right.png" class="coffee-cup right" alt="Cangkir Kopi Kanan" />
+
 <section class="testimonial">
     <h2>Ulasan Pelanggan</h2>
     <p class="subtitle">Pelanggan kami mengatakan hal luar biasa tentang kami</p>

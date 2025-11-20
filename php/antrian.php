@@ -14,6 +14,12 @@ $stmt = $pdo->query("SELECT COUNT(*) as completed_count FROM orders
                     AND DATE(order_date) = CURDATE()");
 $completed_data = $stmt->fetch(PDO::FETCH_ASSOC);
 $completed_count = $completed_data['completed_count'];
+
+// Cek apakah ada pesanan yang baru selesai sejak terakhir diperiksa
+session_start();
+$last_completed_count = $_SESSION['last_completed_count'] ?? 0;
+$new_completed = ($completed_count > $last_completed_count);
+$_SESSION['last_completed_count'] = $completed_count;
 ?>
 
 <!DOCTYPE html>
@@ -94,6 +100,12 @@ $completed_count = $completed_data['completed_count'];
             <small>Antrian diperbarui setiap 30 detik</small>
         </div>
     </div>
+
+        <!-- Tambahkan elemen audio untuk notifikasi -->
+    <audio id="notification-sound" preload="auto">
+        <source src="../sounds/antrian.mp3" type="audio/mpeg">
+        <source src="../sounds/antrian.ogg" type="audio/ogg">
+    </audio>
     
     <script>
         // Perbarui jam secara real-time
@@ -120,7 +132,29 @@ $completed_count = $completed_data['completed_count'];
         // Muat ulang otomatis setiap 30 detik
         setTimeout(function(){
             window.location.reload();
-        }, 30000);
+        }, 5000);
+
+        // Periksa apakah ada pesanan baru yang selesai
+        <?php if ($new_completed): ?>
+            window.onload = function() {
+                // Mainkan suara notifikasi
+                const notificationSound = document.getElementById('notification-sound');
+                notificationSound.play().catch(e => console.log("Autoplay prevented: ", e));
+                
+                // Tampilkan alert visual (opsional)
+                const alertBox = document.createElement('div');
+                alertBox.className = 'completed-alert';
+                alertBox.innerHTML = '<i class="fas fa-check-circle"></i> Pesanan telah selesai!';
+                document.body.appendChild(alertBox);
+                
+                // Hilangkan alert setelah 3 detik
+                setTimeout(() => {
+                    alertBox.style.opacity = '0';
+                    setTimeout(() => alertBox.remove(), 500);
+                }, 3000);
+            };
+        <?php endif; ?>
+
     </script>
 </body>
 </html>
